@@ -249,6 +249,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/09/template-geometry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/09/template-geometry/" itemprop="url">[模板]计算几何</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-09T15:27:10+08:00">
+                2020-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A8%A1%E6%9D%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">模板</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><del>不存在的</del></p>
+<h1 id="二维"><a href="#二维" class="headerlink" title="二维"></a>二维</h1><h2 id="起手式-待补充"><a href="#起手式-待补充" class="headerlink" title="起手式(待补充):"></a>起手式(待补充):</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> PI = <span class="number">3.14159265358979</span>; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">double</span> x,y;</span><br><span class="line">	Point(<span class="keyword">double</span> x = <span class="number">0</span>,<span class="keyword">double</span> y = <span class="number">0</span>):x(x),y(y)&#123;&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> Point &amp; A) <span class="keyword">const</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x == A.x?y &lt; A.y:x &lt; A.x);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;raw[maxn],hull[maxn];</span><br><span class="line"><span class="keyword">typedef</span> Point Vector;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">double</span> <span class="title">torad</span><span class="params">(<span class="keyword">double</span> deg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> deg*(PI/<span class="number">180</span>);</span><br><span class="line">&#125;</span><br><span class="line">Vector <span class="keyword">operator</span> + (Vector A,Vector B)&#123;</span><br><span class="line">	<span class="keyword">return</span> Vector(A.x+B.x,A.y+B.y);</span><br><span class="line">&#125;</span><br><span class="line">Vector <span class="keyword">operator</span> - (Vector A,Vector B)&#123;</span><br><span class="line">	<span class="keyword">return</span> Vector(A.x-B.x,A.y-B.y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Cross</span><span class="params">(Vector A,Vector B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> A.x*B.y - A.y*B.x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Dist</span><span class="params">(Point A,Point B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">sqrt</span>(<span class="built_in">pow</span>(A.x-B.x,<span class="number">2</span>)+<span class="built_in">pow</span>(A.y-B.y,<span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Vector <span class="title">Rotate</span><span class="params">(Vector A,<span class="keyword">double</span> rad)</span></span>&#123;<span class="comment">//逆时针 </span></span><br><span class="line">	<span class="keyword">return</span> Vector(A.x*<span class="built_in">cos</span>(rad) - A.y*<span class="built_in">sin</span>(rad),A.x*<span class="built_in">sin</span>(rad) + A.y*<span class="built_in">cos</span>(rad));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="凸包"><a href="#凸包" class="headerlink" title="凸包:"></a>凸包:</h2><p>ConvexHull输入顶点个数,返回凸包上点的个数.raw为原顶点数组,hull为凸包顶点数组</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ConvexHull</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	sort(raw+<span class="number">1</span>,raw+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> idx = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">while</span>(idx &gt; <span class="number">2</span> <span class="keyword">and</span> Cross(hull[idx<span class="number">-1</span>] - hull[idx<span class="number">-2</span>],raw[i] - hull[idx<span class="number">-2</span>]) &lt;= <span class="number">0</span>)idx--;</span><br><span class="line">		hull[idx++] = raw[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> k = idx;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>;i &gt;= <span class="number">1</span>;i--)&#123;</span><br><span class="line">		<span class="keyword">while</span>(idx &gt; k <span class="keyword">and</span> Cross(hull[idx<span class="number">-1</span>] - hull[idx<span class="number">-2</span>],raw[i] - hull[idx<span class="number">-2</span>]) &lt;= <span class="number">0</span>)idx--;</span><br><span class="line">		hull[idx++] = raw[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> idx<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">## 多边形面积:</span><br><span class="line"></span><br><span class="line">_Point为多边形点集,n为顶点数</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">PolyArea</span><span class="params">(Point * _Point,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> area = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; n;i++)&#123;</span><br><span class="line">		area += Cross(_Point[i] - _Point[<span class="number">1</span>],_Point[i+<span class="number">1</span>] - _Point[<span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> area/<span class="number">2</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="三维"><a href="#三维" class="headerlink" title="三维"></a>三维</h1><h2 id="起手式"><a href="#起手式" class="headerlink" title="起手式:"></a>起手式:</h2><p>鸽子biss</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/09/template-graph-theory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,7 +414,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/09/template-graph-theory/" itemprop="url">template-graph-theory</a></h1>
+                <a class="post-title-link" href="/2020/05/09/template-graph-theory/" itemprop="url">[模板]图论</a></h1>
         
 
         <div class="post-meta">
@@ -858,7 +1004,7 @@ f_Y(y) & = f_X[h(y)]|h'(y)| \\[2ex]
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -880,7 +1026,7 @@ f_Y(y) & = f_X[h(y)]|h'(y)| \\[2ex]
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
