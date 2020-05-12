@@ -93,7 +93,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"right","display":"always","offset":20,"b2t":true,"scrollpercent":false,"onmobile":true},
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
     fancybox: true,
     tabs: true,
     motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -147,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -193,26 +193,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-folder-open"></i> <br />
-            
-            Archives
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br />
-            
-            About
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
@@ -223,12 +203,32 @@
         </li>
       
         
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br />
+            
+            About
           </a>
         </li>
       
@@ -381,7 +381,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives%7C%7C%20folder-open">
+                <a href="/archives">
               
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
@@ -416,6 +416,16 @@
           
 
           
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://codeforces.com/profile/LinkinPony" target="_blank" title="CodeForces">
+                      
+                        <i class="fa fa-fw fa-code"></i>CodeForces</a>
+                  </span>
+                
+            </div>
+          
 
           
           
@@ -430,11 +440,6 @@
 
       
 
-      
-        <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
-          
-        </div>
       
 
     </div>
@@ -482,6 +487,11 @@
       </div>
     </footer>
 
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
     
