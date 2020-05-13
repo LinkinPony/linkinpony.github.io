@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="题解,数学," />
 
 
 
@@ -77,12 +77,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="I always love dashie">
-<meta property="og:url" content="http://linkinpony.github.io/tags/math/index.html">
+<meta name="description" content="题目大意​        给定集合${a_1,a_2,…,a_n}$,求$gcd({lcm({a_i,a_j})|i&lt;j})$   ​        $2 \leq n \leq 1e5 $ , $1 \leq a_i \leq 2e5$ 思路​        考虑唯一分解定理: ​                $a &#x3D; \prod^{n}_{1}p_i^{k_i}$  ​">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[题解]CF1350C-Orac and LCM">
+<meta property="og:url" content="http://linkinpony.github.io/2020/05/13/solution-CF1350C/index.html">
 <meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="题目大意​        给定集合${a_1,a_2,…,a_n}$,求$gcd({lcm({a_i,a_j})|i&lt;j})$   ​        $2 \leq n \leq 1e5 $ , $1 \leq a_i \leq 2e5$ 思路​        考虑唯一分解定理: ​                $a &#x3D; \prod^{n}_{1}p_i^{k_i}$  ​">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-13T00:54:47.000Z">
+<meta property="article:modified_time" content="2020-05-13T01:50:07.193Z">
 <meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="数学">
 <meta name="twitter:card" content="summary">
 
 
@@ -113,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://linkinpony.github.io/tags/math/"/>
+  <link rel="canonical" href="http://linkinpony.github.io/2020/05/13/solution-CF1350C/"/>
 
 
 
 
 
-  <title>Tag: math | I always love dashie</title>
+  <title>[题解]CF1350C-Orac and LCM | I always love dashie</title>
   
 
 
@@ -147,7 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -285,54 +291,189 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>math<small>Tag</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/13/solution-CF1350C/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/05/09/template-math/" itemprop="url">
-              
-                <span itemprop="name">[模板]数学</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">[题解]CF1350C-Orac and LCM</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-09T01:09:32+08:00"
-              content="2020-05-09" >
-          05-09
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-13T08:54:47+08:00">
+                2020-05-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h1><p>​        给定集合${a_1,a_2,…,a_n}$,求$gcd({lcm({a_i,a_j})|i&lt;j})$  </p>
+<p>​        $2 \leq n \leq 1e5 $ , $1 \leq a_i \leq 2e5$</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>​        考虑唯一分解定理:</p>
+<p>​                $a = \prod^{n}_{1}p_i^{k_i}$ </p>
+<p>​                $b = \prod^{n}_{1}p_i^{g_i}$</p>
+<p>​        对于 $gcd$ 和 $lcm$ ,我们有:</p>
+<p>​                $gcd(a,b) = \prod^{n}_{1}p_i^{min(k_i,g_i)}$</p>
+<p>​                $lcm(a,b) = \prod^{n}_{1}p_i^{max(k_i,g_i)}$</p>
+<p>​        观察易得,对于答案中的每个质因子$p_i$,它的指数$k_i$为${a_1,…,a_n}$中 $p_i$ <strong>第二小</strong> 的指数$k$</p>
+<p>​        我们预处理出$i$的所有质因数$p[i]$,将$a_i$分解,用$d[i][j]$表示$a_j$的质因子$i$的指数,排序后扫一遍$d[i]$即可得到答案</p>
+<p>​        具体来说</p>
+<script type="math/tex; mode=display">
+ans *= \left\{
+\begin{array}{lcl}
+i^{d[i][0]}&& {d[i].size() == n-1} \\
+i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
+1 && otherwise
+\end{array}
+\right.</script><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">2e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> raw[maxn];</span><br><span class="line"><span class="keyword">int</span> vis[maxn];</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> d)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	ll a = Pow(x,d/<span class="number">2</span>);</span><br><span class="line">	tans = a*a;</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = tans*x; </span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">bool</span> n_prime[maxn];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;p[maxn],d[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">prime</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;maxn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!n_prime[i])&#123;</span><br><span class="line">			p[i].push_back(i); </span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = i*<span class="number">2</span>;j &lt; maxn;j += i)&#123;</span><br><span class="line">				n_prime[j] = <span class="number">1</span>;</span><br><span class="line">				p[j].push_back(i);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	n_prime[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	prime();</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)<span class="built_in">cin</span> &gt;&gt; raw[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> u = raw[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> x:p[u])&#123;</span><br><span class="line">			<span class="keyword">int</span> yay = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(u%x == <span class="number">0</span>)&#123;</span><br><span class="line">				yay++;</span><br><span class="line">				u /= x;</span><br><span class="line">			&#125;</span><br><span class="line">			d[x].push_back(yay);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	ll ans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; maxn;i++)&#123;</span><br><span class="line">		sort(d[i].begin(),d[i].end());</span><br><span class="line">		<span class="keyword">if</span>(d[i].size() == n<span class="number">-1</span>)&#123;</span><br><span class="line">			ans *= Pow(i,d[i][<span class="number">0</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(d[i].size() &gt; n<span class="number">-1</span>)ans *= Pow(i,d[i][<span class="number">1</span>]); </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+          
+            <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/11/math-misc/" rel="next" title="math-misc">
+                <i class="fa fa-chevron-left"></i> math-misc
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -340,6 +481,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -362,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -437,6 +591,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目大意"><span class="nav-number">1.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -577,6 +747,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
