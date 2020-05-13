@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="题解,数论," />
 
 
 
@@ -77,13 +77,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="I always love dashie">
-<meta property="og:url" content="http://linkinpony.github.io/categories/%E6%A8%A1%E6%9D%BF/index.html">
+<meta name="description" content="题意给定序列$w_1,w_2,…,w_n$和$q$组询问,对于每组询问,求 当然,需要对这个值膜$m$  (hexo渲染多重幂有问题,只好放原题图片了) $1 \leq n \leq 1e5$, $1 \leq m \leq 1e9$, $1 \leq q \leq 1e5$ 思路很显然我们可以递归求解这个式子,但是这样每组询问复杂度为$O(n)$,不够优秀   考虑扩展欧拉定理:  a^b &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[题解] CF906D-Power Tower">
+<meta property="og:url" content="http://linkinpony.github.io/2020/05/13/solution-CF906D/index.html">
 <meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="题意给定序列$w_1,w_2,…,w_n$和$q$组询问,对于每组询问,求 当然,需要对这个值膜$m$  (hexo渲染多重幂有问题,只好放原题图片了) $1 \leq n \leq 1e5$, $1 \leq m \leq 1e9$, $1 \leq q \leq 1e5$ 思路很显然我们可以递归求解这个式子,但是这样每组询问复杂度为$O(n)$,不够优秀   考虑扩展欧拉定理:  a^b &#x3D;">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linkinpony.github.io/2020/05/13/images/CF906D_1.png">
+<meta property="article:published_time" content="2020-05-13T01:55:17.000Z">
+<meta property="article:modified_time" content="2020-05-13T02:30:35.401Z">
 <meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="数论">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linkinpony.github.io/2020/05/13/images/CF906D_1.png">
 
 
 
@@ -113,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://linkinpony.github.io/categories/模板/"/>
+  <link rel="canonical" href="http://linkinpony.github.io/2020/05/13/solution-CF906D/"/>
 
 
 
 
 
-  <title>Category: 模板 | I always love dashie</title>
+  <title>[题解] CF906D-Power Tower | I always love dashie</title>
   
 
 
@@ -147,7 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -285,139 +293,185 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>模板<small>Category</small>
-        </h2>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/13/solution-CF906D/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/05/09/template-geometry/" itemprop="url">
-              
-                <span itemprop="name">[模板]计算几何</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">[题解] CF906D-Power Tower</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-09T15:27:10+08:00"
-              content="2020-05-09" >
-          05-09
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-13T09:55:17+08:00">
+                2020-05-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/09/template-graph-theory/" itemprop="url">
-              
-                <span itemprop="name">[模板]图论</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-09T15:10:34+08:00"
-              content="2020-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/09/template-data-structure/" itemprop="url">
-              
-                <span itemprop="name">[模板]数据结构</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-09T14:56:55+08:00"
-              content="2020-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/09/template-math/" itemprop="url">
-              
-                <span itemprop="name">[模板]数学</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-09T01:09:32+08:00"
-              content="2020-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>给定序列$w_1,w_2,…,w_n$和$q$组询问,对于每组询问,求<img src="../images/CF906D_1.png" alt="img1"></p>
+<p>当然,需要对这个值膜$m$ </p>
+<p>(hexo渲染多重幂有问题,只好放原题图片了)</p>
+<p>$1 \leq n \leq 1e5$, $1 \leq m \leq 1e9$, $1 \leq q \leq 1e5$</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>很显然我们可以递归求解这个式子,但是这样每组询问复杂度为$O(n)$,不够优秀  </p>
+<p>考虑扩展欧拉定理:</p>
+<script type="math/tex; mode=display">
+a^b = \left\{
+\begin{array}{lcl}
+a^b && {b < φ(p)} \\
+a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
+\end{array}
+\right.</script><p>由于$p \geq 2$时$φ(p)$为偶数,故$p = φ(p)$的下降速度是log级别的,换句话说经过最多$log(p)$次迭代之后$p$便会变为1.由于$x \bmod 1 == 0$,我们在$l == r$或者$p == 1$时便可跳出递归,单组询问的复杂度降为$O(logp)$,可以接受</p>
+<p>在具体实现时,应预处理出$p,φ(p),φ(φ(p)),…,1$来减少时间开销,同时修改快速幂来适应扩欧定理(upd函数),细节见代码</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CF906D </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line">ll raw[maxn],n,mod;</span><br><span class="line"><span class="built_in">map</span>&lt;ll,ll&gt;vis;</span><br><span class="line"><span class="function">ll <span class="title">phi</span><span class="params">(ll x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = (ll)<span class="built_in">sqrt</span>(x+<span class="number">0.5</span>);</span><br><span class="line">	ll tans = x;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= m;i++)<span class="keyword">if</span>(!(x%i))&#123;</span><br><span class="line">		tans = tans/i*(i<span class="number">-1</span>);</span><br><span class="line">		<span class="keyword">while</span>(!(x%i))x /= i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(x &gt; <span class="number">1</span>)tans = tans / x * (x<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">upd</span><span class="params">(ll x,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;p?x:x%p+p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d,ll p)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	ll a = Pow(x,d/<span class="number">2</span>,p);</span><br><span class="line">	tans = upd(a*a,p);</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = upd(tans*x,p); </span><br><span class="line">	<span class="keyword">return</span> upd(tans,p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(ll l,ll r,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r <span class="keyword">or</span> p == <span class="number">1</span>)<span class="keyword">return</span> upd(raw[l],p);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> Pow(raw[l],cal(l+<span class="number">1</span>,r,vis[p]),p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; mod;</span><br><span class="line">	ll qwq = mod;</span><br><span class="line">	<span class="keyword">while</span>(qwq != <span class="number">1</span>)&#123;</span><br><span class="line">		vis[qwq] = phi(qwq);</span><br><span class="line">		qwq = vis[qwq];</span><br><span class="line">	&#125;</span><br><span class="line">	vis[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)<span class="built_in">cin</span> &gt;&gt; raw[i];</span><br><span class="line">	<span class="keyword">int</span> q;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; q;</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> l,r;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; l &gt;&gt; r;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cal(l,r,mod)%mod &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+          
+            <a href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag"># 数论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/13/solution-CF1350C/" rel="next" title="[题解]CF1350C-Orac and LCM">
+                <i class="fa fa-chevron-left"></i> [题解]CF1350C-Orac and LCM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -425,6 +479,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -447,8 +505,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -522,6 +589,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -662,6 +745,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
