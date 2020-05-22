@@ -333,6 +333,7 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
 <p>​    考虑这个图的特殊性质:任意正整数$N$最多只有一个大于$\sqrt{N}$的素因子,换句话说这个图里每条边都至少有一个点标号小于$\sqrt{max{a_i}}$.只需枚举这些点即可.</p>
 <p>​    总复杂度:$O(\sqrt{max{a_i}}n)$</p>
 <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//CF1325E</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = <span class="number">1e7</span>+<span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> f,t,next;</span><br><span class="line">	Edge(<span class="keyword">int</span> f = <span class="number">0</span>,<span class="keyword">int</span> t = <span class="number">0</span>,<span class="keyword">int</span> next = <span class="number">0</span>):f(f),t(t),next(next)&#123;&#125;</span><br><span class="line">&#125;edge[maxn];</span><br><span class="line"><span class="keyword">int</span> cnt,head[maxn],dis[maxn],ans = <span class="number">1e9</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addedge</span><span class="params">(<span class="keyword">int</span> f,<span class="keyword">int</span> t)</span></span>&#123;</span><br><span class="line">	edge[cnt] = Edge(f,t,head[f]);</span><br><span class="line">	head[f] = cnt++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> f,<span class="keyword">int</span> t)</span></span>&#123;</span><br><span class="line">	addedge(f,t);</span><br><span class="line">	addedge(t,f);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">bool</span> visp[maxn],vis[maxn];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;P,d[maxn];</span><br><span class="line"><span class="keyword">int</span> n,raw[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">	visp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; maxn;i++)<span class="keyword">if</span>(!visp[i])&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i*<span class="number">2</span>;j &lt; maxn;j+=i)visp[j] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; maxn;i++)<span class="keyword">if</span>(!visp[i])&#123;</span><br><span class="line">		P.push_back(i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; raw[i];</span><br><span class="line">		<span class="keyword">int</span> cur = raw[i];</span><br><span class="line">		<span class="keyword">if</span>(!visp[cur])&#123;</span><br><span class="line">			d[i].push_back(cur);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">2</span>;j*j &lt;= raw[i];j++)&#123;</span><br><span class="line">			<span class="keyword">int</span> cnt2 = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(cur%j == <span class="number">0</span>)&#123;</span><br><span class="line">				cur /= j;cnt2++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(cnt2%<span class="number">2</span>)d[i].push_back(j);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(cur &gt; <span class="number">1</span>)d[i].push_back(cur);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!d[i].size())&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="number">1</span>;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(d[i].size() == <span class="number">1</span>)&#123;</span><br><span class="line">			add(<span class="number">1</span>,d[i][<span class="number">0</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> add(d[i][<span class="number">0</span>],d[i][<span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BFS</span><span class="params">(<span class="keyword">int</span> s)</span></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(dis,<span class="number">-1</span>,<span class="keyword">sizeof</span>(dis));</span><br><span class="line">	dis[s] = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">queue</span>&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; &gt;q;</span><br><span class="line">	q.push(make_pair(s,<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">		<span class="keyword">auto</span> now = q.front();</span><br><span class="line">		q.pop();</span><br><span class="line">		<span class="keyword">int</span> u = now.first,fa = now.second;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = head[u];~i;i = edge[i].next)&#123;</span><br><span class="line">			<span class="keyword">int</span> v = edge[i].t;</span><br><span class="line">			<span class="keyword">if</span>(v == fa)<span class="keyword">continue</span>;</span><br><span class="line">			<span class="keyword">if</span>(dis[v] == <span class="number">-1</span>)&#123;</span><br><span class="line">				dis[v] = dis[u]+<span class="number">1</span>;</span><br><span class="line">				q.push(make_pair(v,u));</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				ans = min(ans,dis[v]+dis[u]+<span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(head,<span class="number">-1</span>,<span class="keyword">sizeof</span>(head));</span><br><span class="line">	init();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= <span class="number">1010</span>;i++)BFS(i);</span><br><span class="line">	<span class="keyword">if</span>(ans == <span class="number">1e9</span>)ans = <span class="number">-1</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$2^{2n-1}+2^{2n-2}-2^n$</p>
 ]]></content>
       <categories>
         <category>题解</category>
@@ -362,6 +363,83 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
         <tag>题解</tag>
         <tag>数学</tag>
         <tag>我是sb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高数笔记</title>
+    <url>/2020/05/22/calculus/</url>
+    <content><![CDATA[<p>=-=老年人记录一些自己会忘的东西</p>
+<p>页码以Thomas’s Calculus中文版第十版(高等教育出版社)为准</p>
+<h1 id="5-积分的应用"><a href="#5-积分的应用" class="headerlink" title="[5]积分的应用"></a>[5]积分的应用</h1><h2 id="5-3-平面曲线的长度"><a href="#5-3-平面曲线的长度" class="headerlink" title="[5.3]平面曲线的长度"></a>[5.3]平面曲线的长度</h2><script type="math/tex; mode=display">
+L = \int_a^b \sqrt{1+(\frac{dx}{dy})^2}dy</script><p>极坐标下:</p>
+<script type="math/tex; mode=display">
+L = \int_a^b\sqrt{r^2+(\frac{dr}{dθ})^2}dθ</script><h1 id="9-平面向量和极坐标函数"><a href="#9-平面向量和极坐标函数" class="headerlink" title="[9]平面向量和极坐标函数"></a>[9]平面向量和极坐标函数</h1><h2 id="9-2-点积"><a href="#9-2-点积" class="headerlink" title="[9.2]点积"></a>[9.2]点积</h2><h3 id="向量投影"><a href="#向量投影" class="headerlink" title="向量投影"></a>向量投影</h3><p>$\textbf{u}$在$\textbf{v}$上的向量投影:</p>
+<script type="math/tex; mode=display">
+proj_{\textbf{v}}\textbf{u} = (|\textbf{u}|cosθ)\frac{\textbf{v}}{\textbf{|v|}}=(\frac{\textbf{u} \cdot \textbf{v}}{|\textbf{v}|^2})\textbf{v}</script><p>$\textbf{u}$在$\textbf{v}$方向上的数值分量:</p>
+<script type="math/tex; mode=display">
+|\textbf{u}|cosθ = \frac{\textbf{u} \cdot \textbf{v}}{|\textbf{v}|}</script><h3 id="向量正交化"><a href="#向量正交化" class="headerlink" title="向量正交化"></a>向量正交化</h3><p>把$\textbf{u}$改写为平行于$\textbf{v}$加与$\textbf{v}$正交的向量:</p>
+<script type="math/tex; mode=display">
+\textbf{u} = proj_\textbf{v}\textbf{u} + (\textbf{u} - proj_\textbf{v}\textbf{u})</script><h2 id="9-6-极坐标曲线的微积分"><a href="#9-6-极坐标曲线的微积分" class="headerlink" title="[9.6] 极坐标曲线的微积分"></a>[9.6] 极坐标曲线的微积分</h2><h3 id="极坐标中的面积"><a href="#极坐标中的面积" class="headerlink" title="极坐标中的面积"></a>极坐标中的面积</h3><p>介于原点和曲线$r = f(θ)$,$α \leq θ \leq β$之间的区域的<strong>面积</strong>A为:</p>
+<script type="math/tex; mode=display">
+A =  \int_α^β\frac{1}{2}r^2dθ</script><p>面积微分:</p>
+<script type="math/tex; mode=display">
+dA = \frac{1}{2}r^2dθ</script><h3 id="极坐标曲线之间的面积"><a href="#极坐标曲线之间的面积" class="headerlink" title="极坐标曲线之间的面积"></a>极坐标曲线之间的面积</h3><p>区域$0 \leq r_1(θ) \leq r_2(θ)$,$α \leq θ \leq β$的面积A为:</p>
+<script type="math/tex; mode=display">
+A = \int_α^β\frac{1}{2}(r_2^2 - r_1^2)dθ</script><h3 id="极坐标曲线的长度"><a href="#极坐标曲线的长度" class="headerlink" title="极坐标曲线的长度"></a>极坐标曲线的长度</h3><script type="math/tex; mode=display">
+L = \int_a^b\sqrt{r^2+(\frac{dr}{dθ})^2}dθ$</script><h1 id="10-空间中的向量和运动"><a href="#10-空间中的向量和运动" class="headerlink" title="[10]空间中的向量和运动"></a>[10]空间中的向量和运动</h1><h2 id="10-2-点积和叉积"><a href="#10-2-点积和叉积" class="headerlink" title="[10.2]点积和叉积"></a>[10.2]点积和叉积</h2><h3 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h3><p>行列式计算叉积:</p>
+<script type="math/tex; mode=display">
+若\textbf{u} = u_1\textbf{i} + u_2\textbf{j} + u_3\textbf{k},\textbf{v} = v_1\textbf{i} + v_2\textbf{j} + v_3\textbf{k},则
+\\
+\textbf{u} \times \textbf{v} = \ 
+\left|\begin{array}{cccc} 
+    \textbf{i} &    \textbf{j}    & \textbf{k} \\ 
+    u_1        &    u_2             & u_3           \\ 
+    v_1           &     v_2              & v_3 
+\end{array}\right|</script><p>其中$|\textbf{u} \times \textbf{v}| = |\textbf{u}||\textbf{v}|sinθ$为$\textbf{u}$和$\textbf{v}$确定的平行四边形的<strong>有向</strong>面积</p>
+<h3 id="箱积-三元数量积"><a href="#箱积-三元数量积" class="headerlink" title="箱积(三元数量积)"></a>箱积(三元数量积)</h3><p>积$(\textbf{u} \cdot \textbf{v}) \cdot \textbf{w}$称为$\textbf{u},\textbf{v}$和$\textbf{w}$(注意次序)的<strong>三元数量积</strong></p>
+<p>由$|(\textbf{u} \cdot \textbf{v}) \cdot \textbf{w}| = |\textbf{u} \cdot \textbf{v}||\textbf{w}|cosθ$可以看出其几何意义为$\textbf{u},\textbf{v}$和$\textbf{w}$确定的平行六面体的<strong>有向</strong>体积</p>
+<p>计算:</p>
+<script type="math/tex; mode=display">
+(\textbf{u} \cdot \textbf{v}) \cdot \textbf{w}  = \ 
+\left|\begin{array}{cccc} 
+    u_1        &    u_2             & u_3           \\ 
+    v_1           &     v_2              & v_3         \\
+    w_1        &    w_2              & w_3
+\end{array}\right|</script><h2 id="10-3-空间中的直线与曲面"><a href="#10-3-空间中的直线与曲面" class="headerlink" title="[10.3]空间中的直线与曲面"></a>[10.3]空间中的直线与曲面</h2><h3 id="直线"><a href="#直线" class="headerlink" title="直线"></a>直线</h3><p>空间中的直线由一个点和给出直线方向的一个向量确定.</p>
+<p>过点$P_0(x_0,y_0,z_0)$平行于$\textbf{v} = v_1\textbf{i} + v_2\textbf{j} + v_3\textbf{k}$的直线的</p>
+<p><strong>向量方程</strong>:</p>
+<script type="math/tex; mode=display">
+\textbf{r}(t) = \textbf{r}_0 + t\textbf{v}</script><p><strong>参数方程</strong>:</p>
+<script type="math/tex; mode=display">
+x = x_0 + tv_1 \\
+y = y_0 + tv_2 \\
+z = z_0 + tv_3</script><p><strong>点到直线距离</strong>:</p>
+<p>点$S$到过点$P$,方向为$\textbf{v}$的直线的距离:</p>
+<script type="math/tex; mode=display">
+d = |\overrightarrow{PS}|sinθ = \frac{|\overrightarrow{PS} \times \textbf{v}|}{|\textbf{v}|}</script><h3 id="平面"><a href="#平面" class="headerlink" title="平面"></a>平面</h3><p>空间中的平面由它上面的一个点和它的”倾斜”或方位确定.</p>
+<p>过点$P_0(x_0,y_0,z_0)$且垂直于$\textbf{n} = A\textbf{i}+ B\textbf{j} + C\textbf{k}$的平面有:</p>
+<p><strong>向量方程</strong>:</p>
+<script type="math/tex; mode=display">
+\textbf{n} \cdot \overrightarrow{P_0P} = 0</script><p><strong>分量方程</strong>:</p>
+<script type="math/tex; mode=display">
+A(x - x_0) + B(y - y_0) + C(z - z_0) = 0</script><p><strong>简化分量方程</strong>:</p>
+<script type="math/tex; mode=display">
+Ax + By + Cz = D\\
+D = Ax_0 + By_0 + Cz_0</script><p>其中$x,y,z$缺少哪一变量便平行于哪一轴.</p>
+<p><strong>点到平面距离</strong>:</p>
+<p>点$S$到平面$Ax+By+C=D$的距离:</p>
+<script type="math/tex; mode=display">
+d = |\overrightarrow{PS} \cdot \frac{\textbf{n}}{|\textbf{n}|}|</script><p><strong>两平面夹角</strong>:</p>
+<script type="math/tex; mode=display">
+cosθ = \frac{\textbf{n}_1 \cdot \textbf{n}_2}{|\textbf{n}_1||\textbf{n}_2|}</script><p>$\textbf{n}_1 \cdot \textbf{n}_2 = 0$时,两平面垂直. $\textbf{n}_1 // \textbf{n}_2$时,两平面平行</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>笔记</tag>
+        <tag>微积分</tag>
       </tags>
   </entry>
 </search>
