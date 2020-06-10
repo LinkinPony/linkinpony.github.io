@@ -69,6 +69,7 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
 <p>(↑这是一个很大的质数)</p>
 <p>19260817</p>
 <p>(↑这是一颗很大的子弹)</p>
+<p>cout不使用科学计数法输出，设置精度:<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cout</span>.setf(ios::fixed,ios::floatfield);</span><br><span class="line"><span class="built_in">cout</span>.precision(<span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
 <hr>
 <h1 id="数论"><a href="#数论" class="headerlink" title="数论"></a>数论</h1><h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><p>计算$x^d \mod p$</p>
 <p>注意$a^b % p = ((a % p)^b) % p$</p>
