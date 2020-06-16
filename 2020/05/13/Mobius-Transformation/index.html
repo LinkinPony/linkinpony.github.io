@@ -85,7 +85,7 @@
 <meta property="og:description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块结论设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\su">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-13T11:06:38.000Z">
-<meta property="article:modified_time" content="2020-05-14T03:38:42.038Z">
+<meta property="article:modified_time" content="2020-06-16T06:33:36.626Z">
 <meta property="article:author" content="LinkinPony">
 <meta property="article:tag" content="数论">
 <meta property="article:tag" content="笔记">
@@ -401,15 +401,31 @@
 <p>对于类似$\sum_{i = 1}^{n}\lfloor \frac{k}{i} \rfloor$的式子,可分块在$O(\sqrt{n})$时间内计算完毕</p>
 <p>代码:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">1</span>;l &lt;= n;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k/l)r = min(n,k/(k/l));</span><br><span class="line">		<span class="keyword">else</span> r = n;</span><br><span class="line">		ans += (r-l+<span class="number">1</span>)*(k/l);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="正确性证明"><a href="#正确性证明" class="headerlink" title="正确性证明"></a>正确性证明</h3><p>不会</p>
-<ul>
-<li><p>引理1: $\forall a,b,c \in \mathbb{Z},\lfloor \frac{ab}{c} \rfloor = \lfloor \frac{\lfloor \frac{a}{b} \rfloor}{c} \rfloor$</p>
-<p>  证明:</p>
-<p>  $\frac{a}{b} = \lfloor \frac{a}{b} \rfloor + r (0 \leq r &lt; 1)$</p>
-</li>
-</ul>
 <h3 id="复杂度证明"><a href="#复杂度证明" class="headerlink" title="复杂度证明"></a>复杂度证明</h3><p>不会</p>
 <p>这个菜鸡只会这些 摸了</p>
+<h1 id="套路题"><a href="#套路题" class="headerlink" title="套路题"></a>套路题</h1><h2 id="sum-i-1-ngcd-i-n"><a href="#sum-i-1-ngcd-i-n" class="headerlink" title="$\sum_{i=1}^ngcd(i,n)$"></a>$\sum_{i=1}^ngcd(i,n)$</h2><script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i=1}^n\gcd(i,n)\\
+&=\sum_{d|n}d\sum_{i=1}^n[\gcd(i,n)==d]\\
+&=\sum_{d|n}d\sum_{i=1}^{\frac{n}{d}}[\gcd(i,n)==1]\\
+&=\sum_{d|n}d\cdotφ(\frac{n}{d})
+\end{align}</script><h2 id="sum-i-1-n-sum-j-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^n\sum{j=1}^n\gcd(i,j)$"></a>$\sum<em>{i = 1}^n\sum</em>{j=1}^n\gcd(i,j)$</h2><script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i = 1}^n\sum_{j=1}^n\gcd(i,j)\\
+&= \sum_{d=1}^nd\sum_{i=1}^n\sum_{j=1}^n[gcd(i,j) == d]\\
+&=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=1}^{\frac{n}{d}}[gcd(i,j)==1]\\
+&=\sum_{d=1}^nd(2\cdot\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
+\end{align}</script><p>关于最后一步,我们设$f(x) = \sum<em>{i=1}^{n}\sum</em>{j=1}^{n}[gcd(i,j)==1]$</p>
+<p>手画一下,容易看出$f(x) = 2\cdot\sum_{i=1}^n\varphi(i) - 1$</p>
+<p>洛谷P2398</p>
+<h2 id="sum-i-1-n-sum-j-i-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^n\sum{j=i+1}^n\gcd(i,j)$"></a>$\sum<em>{i = 1}^n\sum</em>{j=i+1}^n\gcd(i,j)$</h2><p>和上面那个基本一样</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i = 1}^n\sum_{j=i+1}^n\gcd(i,j)\\
+&= \sum_{d=1}^nd\sum_{i=1}^n\sum_{j=i+1}^n[gcd(i,j) == d]\\
+&=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=i+1}^{\frac{n}{d}}[gcd(i,j)==1]\\
+&=\sum_{d=1}^nd(\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
+\end{align}</script><p>(最后一步的化简和上一题大同小异,手画一下就有了)</p>
 
       
     </div>
@@ -604,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前置知识"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整除分块"><span class="nav-number">1.1.</span> <span class="nav-text">整除分块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.1.1.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确性证明"><span class="nav-number">1.1.2.</span> <span class="nav-text">正确性证明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度证明"><span class="nav-number">1.1.3.</span> <span class="nav-text">复杂度证明</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前置知识"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整除分块"><span class="nav-number">1.1.</span> <span class="nav-text">整除分块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.1.1.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度证明"><span class="nav-number">1.1.2.</span> <span class="nav-text">复杂度证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套路题"><span class="nav-number">2.</span> <span class="nav-text">套路题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-ngcd-i-n"><span class="nav-number">2.1.</span> <span class="nav-text">$\sum_{i&#x3D;1}^ngcd(i,n)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-1-n-gcd-i-j"><span class="nav-number">2.2.</span> <span class="nav-text">$\sum{i &#x3D; 1}^n\sum{j&#x3D;1}^n\gcd(i,j)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j"><span class="nav-number">2.3.</span> <span class="nav-text">$\sum{i &#x3D; 1}^n\sum{j&#x3D;i+1}^n\gcd(i,j)$</span></a></li></ol></li></ol></div>
             
 
           </div>
