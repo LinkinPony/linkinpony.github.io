@@ -544,9 +544,14 @@ E(k) = Σ_{i = 1}^k\frac{n}{i}</script>]]></content>
     <title>[题解]洛谷P2257-YY的GCD</title>
     <url>/2020/06/17/solution-P2257/</url>
     <content><![CDATA[<p><em>*本文思路来自于这篇题解</em>:<a href="https://www.luogu.com.cn/blog/qlwpc/" target="_blank" rel="noopener">凄魉</a> <a href="https://www.luogu.com.cn/blog/qlwpc/solution-p2257" target="_blank" rel="noopener">题解 P2257 【YY的GCD】</a></p>
-<h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>多组数据,求$\sum<em>{i = 1}^n\sum</em>{j = 1}^m [\gcd(i,j) == k],k \in prime$</p>
-<p>$T = 10^4,1 \leq n,m \leq 10^7$</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h2><p>首先我们在求$\sum<em>{i = 1}^n\sum</em>{j = 1}^m [\gcd(i,j) == 1]$时有这么一种做法,利用了莫比乌斯函数$\sum_{d|n}\mu(d) = [n = 1]$的性质:</p>
+<h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>多组数据,求</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n\sum_{j = 1}^m [\gcd(i,j) == k],k \in prime</script><p>$T = 10^4,1 \leq n,m \leq 10^7$</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h2><p>首先我们在求</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n\sum_{j = 1}^m [\gcd(i,j) == 1]</script><p>时有这么一种做法,利用了莫比乌斯函数$\mu$的性质:</p>
+<script type="math/tex; mode=display">
+\sum_{d|n}\mu(d) = [n = 1]</script><hr>
 <script type="math/tex; mode=display">
 \begin{align}
 &\sum_{i=1}^{n}\sum_{i=1}^{m}[\gcd(i,j) == 1] \\
@@ -554,8 +559,11 @@ E(k) = Σ_{i = 1}^k\frac{n}{i}</script>]]></content>
 &=\sum_{i=1}^{n}\sum_{i=1}^{m}\sum_{d|gcd(i,j)}\mu(d)\\
 &=\sum_{d = 1}^{\min(n,m)}\mu(d)\sum_{i = 1}^n[d|i]\sum_{j = 1}^{m}[d|j]\\
 &=\sum_{d=1}^{\min(n,m)}\mu(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor
-\end{align}</script><p>那么我们只要构造一个数论函数$f$,使得$\sum<em>{d|n}f(d) = [n \in prime]$,答案就变为了$\sum</em>{d=1}^{\min(n,m)}f(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor$</p>
-<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>形式化地,设数论函数$g$,构造$f$使得$\sum_{d|n}f(d) = g(n)$</p>
+\end{align}</script><p>那么我们只要构造一个数论函数$f$,使得</p>
+<script type="math/tex; mode=display">
+\sum_{d|n}f(d) = [n \in prime]</script><p>答案就变为了</p>
+<script type="math/tex; mode=display">
+\sum_{d=1}^{\min(n,m)}f(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor</script><h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>形式化地,设数论函数$g$,构造$f$使得$\sum_{d|n}f(d) = g(n)$</p>
 <ol>
 <li>对于$k \in [1,n]$,使$f(k) = g(k)$</li>
 <li>$f(n) = f(n) - \sum_{d|n,d \neq n}f(d)$</li>
@@ -567,6 +575,7 @@ E(k) = Σ_{i = 1}^k\frac{n}{i}</script>]]></content>
 <p>对于本题,我们设$g(n) = [n \in prine]$即可,可以在$O(n)$时间内筛出$g$.</p>
 <p>总复杂度:$O(n + n\ln n + T \sqrt{\min(n,m)})$</p>
 <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//P2257</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e7</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> f[maxn];</span><br><span class="line"><span class="keyword">bool</span> not_p[maxn];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;prime;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sieve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	not_p[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; maxn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!not_p[i])&#123;</span><br><span class="line">			f[i] = <span class="number">1</span>;</span><br><span class="line">			prime.push_back(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> p:prime)&#123;</span><br><span class="line">			<span class="keyword">if</span>(ll(p)*i &gt;= maxn)<span class="keyword">break</span>;</span><br><span class="line">			not_p[p*i] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(i%p == <span class="number">0</span>)<span class="keyword">break</span>; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i+i;j &lt; maxn;j += i)f[j] -= f[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)f[i] += f[i<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">1</span>,r = <span class="number">0</span>;l &lt;= min(x,y);l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		r = min(x/(x/l),y/(y/l));</span><br><span class="line">		tans += <span class="number">1L</span>L*(f[r] - f[l<span class="number">-1</span>])*(x/l)*(y/l);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	sieve();</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>); </span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--)&#123;</span><br><span class="line">		<span class="keyword">int</span> n,m;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cal(n,m) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PS.不是我不喜欢用行间公式,是hexo渲染行间LaTex总出奇怪的bug,凑合着看吧=-=</p>
 ]]></content>
       <categories>
         <category>题解</category>
