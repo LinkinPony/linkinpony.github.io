@@ -300,6 +300,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/17/solution-P2257/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/17/solution-P2257/" itemprop="url">[题解]洛谷P2257-YY的GCD</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-17T21:05:28+08:00">
+                2020-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><em>*本文思路来自于这篇题解</em>:<a href="https://www.luogu.com.cn/blog/qlwpc/" target="_blank" rel="noopener">凄魉</a> <a href="https://www.luogu.com.cn/blog/qlwpc/solution-p2257" target="_blank" rel="noopener">题解 P2257 【YY的GCD】</a></p>
+<h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>多组数据,求$\sum<em>{i = 1}^n\sum</em>{j = 1}^m [\gcd(i,j) == k],k \in prime$</p>
+<p>$T = 10^4,1 \leq n,m \leq 10^7$</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h2><p>首先我们在求$\sum<em>{i = 1}^n\sum</em>{j = 1}^m [\gcd(i,j) == 1]$时有这么一种做法,利用了莫比乌斯函数$\sum_{d|n}\mu(d) = [n = 1]$的性质:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i=1}^{n}\sum_{i=1}^{m}[\gcd(i,j) == 1] \\
+&=\sum_{i=1}^{n}\sum_{i=1}^{m}\epsilon(\gcd(i,j))\\
+&=\sum_{i=1}^{n}\sum_{i=1}^{m}\sum_{d|gcd(i,j)}\mu(d)\\
+&=\sum_{d = 1}^{\min(n,m)}\mu(d)\sum_{i = 1}^n[d|i]\sum_{j = 1}^{m}[d|j]\\
+&=\sum_{d=1}^{\min(n,m)}\mu(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor
+\end{align}</script><p>那么我们只要构造一个数论函数$f$,使得$\sum<em>{d|n}f(d) = [n \in prime]$,答案就变为了$\sum</em>{d=1}^{\min(n,m)}f(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor$</p>
+<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>形式化地,设数论函数$g$,构造$f$使得$\sum_{d|n}f(d) = g(n)$</p>
+<ol>
+<li>对于$k \in [1,n]$,使$f(k) = g(k)$</li>
+<li>$f(n) = f(n) - \sum_{d|n,d \neq n}f(d)$</li>
+</ol>
+<p>如此,我们有:</p>
+<script type="math/tex; mode=display">
+\sum_{d|n}f(d) = \sum_{d|n,d \neq n}f(d) + f(n) = g(n)</script><p>第二步可以采用类似埃氏筛的方法,复杂度$O(n\ln n)$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)f[i] = g[i];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j = i+i;j &lt; maxn;j += i)f[j] -= f[i];</span><br></pre></td></tr></table></figure>
+<p>对于本题,我们设$g(n) = [n \in prine]$即可,可以在$O(n)$时间内筛出$g$.</p>
+<p>总复杂度:$O(n + n\ln n + T \sqrt{\min(n,m)})$</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//P2257</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e7</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> f[maxn];</span><br><span class="line"><span class="keyword">bool</span> not_p[maxn];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;prime;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sieve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	not_p[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; maxn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!not_p[i])&#123;</span><br><span class="line">			f[i] = <span class="number">1</span>;</span><br><span class="line">			prime.push_back(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> p:prime)&#123;</span><br><span class="line">			<span class="keyword">if</span>(ll(p)*i &gt;= maxn)<span class="keyword">break</span>;</span><br><span class="line">			not_p[p*i] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(i%p == <span class="number">0</span>)<span class="keyword">break</span>; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i+i;j &lt; maxn;j += i)f[j] -= f[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)f[i] += f[i<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">1</span>,r = <span class="number">0</span>;l &lt;= min(x,y);l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		r = min(x/(x/l),y/(y/l));</span><br><span class="line">		tans += <span class="number">1L</span>L*(f[r] - f[l<span class="number">-1</span>])*(x/l)*(y/l);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	sieve();</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>); </span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--)&#123;</span><br><span class="line">		<span class="keyword">int</span> n,m;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cal(n,m) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/14/solution-CF1364D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1223,14 +1388,25 @@ E(k) = Σ_{i = 1}^k\frac{n}{i}</script>
         
           
             <p>这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧</p>
-<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="整除分块"><a href="#整除分块" class="headerlink" title="整除分块"></a>整除分块</h2><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>设$f(x) = \lfloor \frac{k}{x} \rfloor$</p>
+<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="整除分块"><a href="#整除分块" class="headerlink" title="整除分块"></a>整除分块</h2><p>设$f(x) = \lfloor \frac{k}{x} \rfloor$</p>
 <p>$f(x)$分布呈块状,对于任意一个$i$,有最大的$j = \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) == f(i+1) == … = f(j)$</p>
 <p>对于类似$\sum_{i = 1}^{n}\lfloor \frac{k}{i} \rfloor$的式子,可分块在$O(\sqrt{n})$时间内计算完毕</p>
 <p>代码:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">1</span>;l &lt;= n;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k/l)r = min(n,k/(k/l));</span><br><span class="line">		<span class="keyword">else</span> r = n;</span><br><span class="line">		ans += (r-l+<span class="number">1</span>)*(k/l);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="复杂度证明"><a href="#复杂度证明" class="headerlink" title="复杂度证明"></a>复杂度证明</h3><p>不会</p>
-<p>这个菜鸡只会这些 摸了</p>
-<h1 id="套路题"><a href="#套路题" class="headerlink" title="套路题"></a>套路题</h1><h2 id="sum-i-1-ngcd-i-n"><a href="#sum-i-1-ngcd-i-n" class="headerlink" title="$\sum_{i=1}^ngcd(i,n)$"></a>$\sum_{i=1}^ngcd(i,n)$</h2><script type="math/tex; mode=display">
+<h2 id="狄利克雷-Dirichlet-卷积"><a href="#狄利克雷-Dirichlet-卷积" class="headerlink" title="狄利克雷(Dirichlet)卷积"></a>狄利克雷(Dirichlet)卷积</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>设$f,g$为两个数论函数,其狄利克雷卷积$f*g$为:</p>
+<script type="math/tex; mode=display">
+f \ast g(n) = \sum_{d|n}f(d)g(\frac{n}{d})</script><h3 id="常用式子"><a href="#常用式子" class="headerlink" title="常用式子"></a>常用式子</h3><script type="math/tex; mode=display">
+\begin{aligned}
+
+\varepsilon=\mu \ast 1&\iff\varepsilon(n)=\sum_{d\mid n}\mu(d)\\
+d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
+\sigma=\text{id} \ast 1&\iff\sigma(n)=\sum_{d\mid n}d\\
+\varphi=\mu \ast \text{id}&\iff\varphi(n)=\sum_{d\mid n}d\cdot\mu(\frac{n}{d}) \\
+
+
+\end{aligned}</script><h2 id="常用结论"><a href="#常用结论" class="headerlink" title="常用结论"></a>常用结论</h2><script type="math/tex; mode=display">
+\sum_{d|n}^n\varphi(d) = n</script><script type="math/tex; mode=display">
+[\gcd(i,j) == 1] = \epsilon(\gcd(i,j) = \sum_{d|\gcd(i,j)}\mu(d)</script><h1 id="套路题"><a href="#套路题" class="headerlink" title="套路题"></a>套路题</h1><h2 id="sum-i-1-ngcd-i-n"><a href="#sum-i-1-ngcd-i-n" class="headerlink" title="$\sum_{i=1}^ngcd(i,n)$"></a>$\sum_{i=1}^ngcd(i,n)$</h2><script type="math/tex; mode=display">
 \begin{align}
 &\sum_{i=1}^n\gcd(i,n)\\
 &=\sum_{d|n}d\sum_{i=1}^n[\gcd(i,n)==d]\\
@@ -1244,8 +1420,8 @@ E(k) = Σ_{i = 1}^k\frac{n}{i}</script>
 &=\sum_{d=1}^nd(2\cdot\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
 \end{align}</script><p>关于最后一步,我们设$f(x) = \sum<em>{i=1}^{n}\sum</em>{j=1}^{n}[gcd(i,j)==1]$</p>
 <p>手画一下,容易看出$f(x) = 2\cdot\sum_{i=1}^n\varphi(i) - 1$</p>
-<p>洛谷P2398</p>
-<h2 id="sum-i-1-n-sum-j-i-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^n\sum{j=i+1}^n\gcd(i,j)$"></a>$\sum<em>{i = 1}^n\sum</em>{j=i+1}^n\gcd(i,j)$</h2><p>和上面那个基本一样</p>
+<p>例题:洛谷P2398</p>
+<h2 id="sum-i-1-n-sum-j-i-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^{n}\sum{j=i+1}^{n}\gcd(i,j)$"></a>$\sum<em>{i = 1}^{n}\sum</em>{j=i+1}^{n}\gcd(i,j)$</h2><p>和上面那个基本一样</p>
 <script type="math/tex; mode=display">
 \begin{align}
 &\sum_{i = 1}^n\sum_{j=i+1}^n\gcd(i,j)\\
@@ -1253,7 +1429,21 @@ E(k) = Σ_{i = 1}^k\frac{n}{i}</script>
 &=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=i+1}^{\frac{n}{d}}[gcd(i,j)==1]\\
 &=\sum_{d=1}^nd(\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
 \end{align}</script><p>(最后一步的化简和上一题大同小异,手画一下就有了)</p>
-
+<h2 id="sum-i-1-n-sum-i-1-m-gcd-i-j-1"><a href="#sum-i-1-n-sum-i-1-m-gcd-i-j-1" class="headerlink" title="$\sum{i=1}^{n}\sum{i=1}^{m}[\gcd(i,j) == 1]$"></a>$\sum<em>{i=1}^{n}\sum</em>{i=1}^{m}[\gcd(i,j) == 1]$</h2><p>前置知识:</p>
+<script type="math/tex; mode=display">
+\epsilon(n)=\sum_{d|n}\mu(d)= \begin{cases} 1&n=1\\ 
+0&otherwise 
+\end{cases}</script><p>开始愉快地推式子:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i=1}^{n}\sum_{i=1}^{m}[\gcd(i,j) == 1] \\
+&=\sum_{i=1}^{n}\sum_{i=1}^{m}\epsilon(\gcd(i,j))\\
+&=\sum_{i=1}^{n}\sum_{i=1}^{m}\sum_{d|gcd(i,j)}\mu(d)\\
+&=\sum_{d = 1}^{\min(n,m)}\mu(d)\sum_{i = 1}^n[d|i]\sum_{j = 1}^{m}[d|j]\\
+&=\sum_{d=1}^{\min(n,m)}\mu(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor
+\end{align}</script><p>同理,我们有:</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n\sum_{j = 1}^n\sum_{k = 1}^n [\gcd(i,j,k) == 1] = \sum_{d = 1}^n \mu(d)(\lfloor \frac{n}{d}\rfloor)^3</script>
           
         
       
@@ -1748,152 +1938,6 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/09/template-geometry/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LinkinPony">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I always love dashie">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/09/template-geometry/" itemprop="url">[模板]计算几何</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-09T15:27:10+08:00">
-                2020-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%A8%A1%E6%9D%BF/" itemprop="url" rel="index">
-                    <span itemprop="name">模板</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><del>不存在的</del></p>
-<h1 id="二维"><a href="#二维" class="headerlink" title="二维"></a>二维</h1><h2 id="起手式-待补充"><a href="#起手式-待补充" class="headerlink" title="起手式(待补充):"></a>起手式(待补充):</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> PI = <span class="number">3.14159265358979</span>; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">double</span> x,y;</span><br><span class="line">	Point(<span class="keyword">double</span> x = <span class="number">0</span>,<span class="keyword">double</span> y = <span class="number">0</span>):x(x),y(y)&#123;&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> Point &amp; A) <span class="keyword">const</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x == A.x?y &lt; A.y:x &lt; A.x);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;raw[maxn],hull[maxn];</span><br><span class="line"><span class="keyword">typedef</span> Point Vector;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">double</span> <span class="title">torad</span><span class="params">(<span class="keyword">double</span> deg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> deg*(PI/<span class="number">180</span>);</span><br><span class="line">&#125;</span><br><span class="line">Vector <span class="keyword">operator</span> + (Vector A,Vector B)&#123;</span><br><span class="line">	<span class="keyword">return</span> Vector(A.x+B.x,A.y+B.y);</span><br><span class="line">&#125;</span><br><span class="line">Vector <span class="keyword">operator</span> - (Vector A,Vector B)&#123;</span><br><span class="line">	<span class="keyword">return</span> Vector(A.x-B.x,A.y-B.y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Cross</span><span class="params">(Vector A,Vector B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> A.x*B.y - A.y*B.x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Dist</span><span class="params">(Point A,Point B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">sqrt</span>(<span class="built_in">pow</span>(A.x-B.x,<span class="number">2</span>)+<span class="built_in">pow</span>(A.y-B.y,<span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Vector <span class="title">Rotate</span><span class="params">(Vector A,<span class="keyword">double</span> rad)</span></span>&#123;<span class="comment">//逆时针 </span></span><br><span class="line">	<span class="keyword">return</span> Vector(A.x*<span class="built_in">cos</span>(rad) - A.y*<span class="built_in">sin</span>(rad),A.x*<span class="built_in">sin</span>(rad) + A.y*<span class="built_in">cos</span>(rad));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="凸包"><a href="#凸包" class="headerlink" title="凸包:"></a>凸包:</h2><p>ConvexHull输入顶点个数,返回凸包上点的个数.raw为原顶点数组,hull为凸包顶点数组</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ConvexHull</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	sort(raw+<span class="number">1</span>,raw+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> idx = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">while</span>(idx &gt; <span class="number">2</span> <span class="keyword">and</span> Cross(hull[idx<span class="number">-1</span>] - hull[idx<span class="number">-2</span>],raw[i] - hull[idx<span class="number">-2</span>]) &lt;= <span class="number">0</span>)idx--;</span><br><span class="line">		hull[idx++] = raw[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> k = idx;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>;i &gt;= <span class="number">1</span>;i--)&#123;</span><br><span class="line">		<span class="keyword">while</span>(idx &gt; k <span class="keyword">and</span> Cross(hull[idx<span class="number">-1</span>] - hull[idx<span class="number">-2</span>],raw[i] - hull[idx<span class="number">-2</span>]) &lt;= <span class="number">0</span>)idx--;</span><br><span class="line">		hull[idx++] = raw[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> idx<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">## 多边形面积:</span><br><span class="line"></span><br><span class="line">_Point为多边形点集,n为顶点数</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">PolyArea</span><span class="params">(Point * _Point,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> area = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; n;i++)&#123;</span><br><span class="line">		area += Cross(_Point[i] - _Point[<span class="number">1</span>],_Point[i+<span class="number">1</span>] - _Point[<span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> area/<span class="number">2</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="三维"><a href="#三维" class="headerlink" title="三维"></a>三维</h1><h2 id="起手式"><a href="#起手式" class="headerlink" title="起手式:"></a>起手式:</h2><p>鸽子biss</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1950,7 +1994,7 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1972,7 +2016,7 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

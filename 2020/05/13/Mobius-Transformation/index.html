@@ -77,15 +77,15 @@
 
 
 
-<meta name="description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块结论设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\su">
+<meta name="description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\sum_">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mobius-Transformation">
 <meta property="og:url" content="http://linkinpony.github.io/2020/05/13/Mobius-Transformation/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块结论设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\su">
+<meta property="og:description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\sum_">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-13T11:06:38.000Z">
-<meta property="article:modified_time" content="2020-06-16T06:33:36.626Z">
+<meta property="article:modified_time" content="2020-06-17T13:25:29.213Z">
 <meta property="article:author" content="LinkinPony">
 <meta property="article:tag" content="数论">
 <meta property="article:tag" content="笔记">
@@ -396,14 +396,25 @@
 
       
         <p>这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧</p>
-<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="整除分块"><a href="#整除分块" class="headerlink" title="整除分块"></a>整除分块</h2><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>设$f(x) = \lfloor \frac{k}{x} \rfloor$</p>
+<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="整除分块"><a href="#整除分块" class="headerlink" title="整除分块"></a>整除分块</h2><p>设$f(x) = \lfloor \frac{k}{x} \rfloor$</p>
 <p>$f(x)$分布呈块状,对于任意一个$i$,有最大的$j = \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) == f(i+1) == … = f(j)$</p>
 <p>对于类似$\sum_{i = 1}^{n}\lfloor \frac{k}{i} \rfloor$的式子,可分块在$O(\sqrt{n})$时间内计算完毕</p>
 <p>代码:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">1</span>;l &lt;= n;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k/l)r = min(n,k/(k/l));</span><br><span class="line">		<span class="keyword">else</span> r = n;</span><br><span class="line">		ans += (r-l+<span class="number">1</span>)*(k/l);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="复杂度证明"><a href="#复杂度证明" class="headerlink" title="复杂度证明"></a>复杂度证明</h3><p>不会</p>
-<p>这个菜鸡只会这些 摸了</p>
-<h1 id="套路题"><a href="#套路题" class="headerlink" title="套路题"></a>套路题</h1><h2 id="sum-i-1-ngcd-i-n"><a href="#sum-i-1-ngcd-i-n" class="headerlink" title="$\sum_{i=1}^ngcd(i,n)$"></a>$\sum_{i=1}^ngcd(i,n)$</h2><script type="math/tex; mode=display">
+<h2 id="狄利克雷-Dirichlet-卷积"><a href="#狄利克雷-Dirichlet-卷积" class="headerlink" title="狄利克雷(Dirichlet)卷积"></a>狄利克雷(Dirichlet)卷积</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>设$f,g$为两个数论函数,其狄利克雷卷积$f*g$为:</p>
+<script type="math/tex; mode=display">
+f \ast g(n) = \sum_{d|n}f(d)g(\frac{n}{d})</script><h3 id="常用式子"><a href="#常用式子" class="headerlink" title="常用式子"></a>常用式子</h3><script type="math/tex; mode=display">
+\begin{aligned}
+
+\varepsilon=\mu \ast 1&\iff\varepsilon(n)=\sum_{d\mid n}\mu(d)\\
+d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
+\sigma=\text{id} \ast 1&\iff\sigma(n)=\sum_{d\mid n}d\\
+\varphi=\mu \ast \text{id}&\iff\varphi(n)=\sum_{d\mid n}d\cdot\mu(\frac{n}{d}) \\
+
+
+\end{aligned}</script><h2 id="常用结论"><a href="#常用结论" class="headerlink" title="常用结论"></a>常用结论</h2><script type="math/tex; mode=display">
+\sum_{d|n}^n\varphi(d) = n</script><script type="math/tex; mode=display">
+[\gcd(i,j) == 1] = \epsilon(\gcd(i,j) = \sum_{d|\gcd(i,j)}\mu(d)</script><h1 id="套路题"><a href="#套路题" class="headerlink" title="套路题"></a>套路题</h1><h2 id="sum-i-1-ngcd-i-n"><a href="#sum-i-1-ngcd-i-n" class="headerlink" title="$\sum_{i=1}^ngcd(i,n)$"></a>$\sum_{i=1}^ngcd(i,n)$</h2><script type="math/tex; mode=display">
 \begin{align}
 &\sum_{i=1}^n\gcd(i,n)\\
 &=\sum_{d|n}d\sum_{i=1}^n[\gcd(i,n)==d]\\
@@ -417,8 +428,8 @@
 &=\sum_{d=1}^nd(2\cdot\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
 \end{align}</script><p>关于最后一步,我们设$f(x) = \sum<em>{i=1}^{n}\sum</em>{j=1}^{n}[gcd(i,j)==1]$</p>
 <p>手画一下,容易看出$f(x) = 2\cdot\sum_{i=1}^n\varphi(i) - 1$</p>
-<p>洛谷P2398</p>
-<h2 id="sum-i-1-n-sum-j-i-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^n\sum{j=i+1}^n\gcd(i,j)$"></a>$\sum<em>{i = 1}^n\sum</em>{j=i+1}^n\gcd(i,j)$</h2><p>和上面那个基本一样</p>
+<p>例题:洛谷P2398</p>
+<h2 id="sum-i-1-n-sum-j-i-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^{n}\sum{j=i+1}^{n}\gcd(i,j)$"></a>$\sum<em>{i = 1}^{n}\sum</em>{j=i+1}^{n}\gcd(i,j)$</h2><p>和上面那个基本一样</p>
 <script type="math/tex; mode=display">
 \begin{align}
 &\sum_{i = 1}^n\sum_{j=i+1}^n\gcd(i,j)\\
@@ -426,7 +437,21 @@
 &=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=i+1}^{\frac{n}{d}}[gcd(i,j)==1]\\
 &=\sum_{d=1}^nd(\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
 \end{align}</script><p>(最后一步的化简和上一题大同小异,手画一下就有了)</p>
-
+<h2 id="sum-i-1-n-sum-i-1-m-gcd-i-j-1"><a href="#sum-i-1-n-sum-i-1-m-gcd-i-j-1" class="headerlink" title="$\sum{i=1}^{n}\sum{i=1}^{m}[\gcd(i,j) == 1]$"></a>$\sum<em>{i=1}^{n}\sum</em>{i=1}^{m}[\gcd(i,j) == 1]$</h2><p>前置知识:</p>
+<script type="math/tex; mode=display">
+\epsilon(n)=\sum_{d|n}\mu(d)= \begin{cases} 1&n=1\\ 
+0&otherwise 
+\end{cases}</script><p>开始愉快地推式子:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i=1}^{n}\sum_{i=1}^{m}[\gcd(i,j) == 1] \\
+&=\sum_{i=1}^{n}\sum_{i=1}^{m}\epsilon(\gcd(i,j))\\
+&=\sum_{i=1}^{n}\sum_{i=1}^{m}\sum_{d|gcd(i,j)}\mu(d)\\
+&=\sum_{d = 1}^{\min(n,m)}\mu(d)\sum_{i = 1}^n[d|i]\sum_{j = 1}^{m}[d|j]\\
+&=\sum_{d=1}^{\min(n,m)}\mu(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor
+\end{align}</script><p>同理,我们有:</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n\sum_{j = 1}^n\sum_{k = 1}^n [\gcd(i,j,k) == 1] = \sum_{d = 1}^n \mu(d)(\lfloor \frac{n}{d}\rfloor)^3</script>
       
     </div>
     
@@ -555,7 +580,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -577,7 +602,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -620,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前置知识"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整除分块"><span class="nav-number">1.1.</span> <span class="nav-text">整除分块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.1.1.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度证明"><span class="nav-number">1.1.2.</span> <span class="nav-text">复杂度证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套路题"><span class="nav-number">2.</span> <span class="nav-text">套路题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-ngcd-i-n"><span class="nav-number">2.1.</span> <span class="nav-text">$\sum_{i&#x3D;1}^ngcd(i,n)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-1-n-gcd-i-j"><span class="nav-number">2.2.</span> <span class="nav-text">$\sum{i &#x3D; 1}^n\sum{j&#x3D;1}^n\gcd(i,j)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j"><span class="nav-number">2.3.</span> <span class="nav-text">$\sum{i &#x3D; 1}^n\sum{j&#x3D;i+1}^n\gcd(i,j)$</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前置知识"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整除分块"><span class="nav-number">1.1.</span> <span class="nav-text">整除分块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#狄利克雷-Dirichlet-卷积"><span class="nav-number">1.2.</span> <span class="nav-text">狄利克雷(Dirichlet)卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用式子"><span class="nav-number">1.2.2.</span> <span class="nav-text">常用式子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用结论"><span class="nav-number">1.3.</span> <span class="nav-text">常用结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套路题"><span class="nav-number">2.</span> <span class="nav-text">套路题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-ngcd-i-n"><span class="nav-number">2.1.</span> <span class="nav-text">$\sum_{i&#x3D;1}^ngcd(i,n)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-1-n-gcd-i-j"><span class="nav-number">2.2.</span> <span class="nav-text">$\sum{i &#x3D; 1}^n\sum{j&#x3D;1}^n\gcd(i,j)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j"><span class="nav-number">2.3.</span> <span class="nav-text">$\sum{i &#x3D; 1}^{n}\sum{j&#x3D;i+1}^{n}\gcd(i,j)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-i-1-m-gcd-i-j-1"><span class="nav-number">2.4.</span> <span class="nav-text">$\sum{i&#x3D;1}^{n}\sum{i&#x3D;1}^{m}[\gcd(i,j) &#x3D;&#x3D; 1]$</span></a></li></ol></li></ol></div>
             
 
           </div>
