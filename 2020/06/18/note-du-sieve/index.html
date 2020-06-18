@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="题解,图论," />
+  <meta name="keywords" content="数学,数论,笔记,杜教筛," />
 
 
 
@@ -77,18 +77,20 @@
 
 
 
-<meta name="description" content="很妙的一题 题意给出$n$个节点$m$条边的无向连通图和参数$k$,求:  严格$\lceil \frac{k}{2} \rceil$大小的点独立集 或大小$ \leq k$的简单环  $3 \leq k \leq n \leq 10^5,n-1 \leq m \leq 2 \cdot 10^5$ 思路解法1​    我们求出一个原图的DFS树,当某个节点$u$存在反向边时,找出终点$v$深度最深">
+<meta name="description" content="dlstxdy! 杜教筛用于快速求数论函数的前缀和.当预处理了小于$n^\frac{2}{3}$的前缀和时,杜教筛的时间复杂度为$O(n^\frac{2}{3})$ 形式化定义给出数论函数$f$,快速求$S(n) &#x3D; \sum_{i &#x3D; 1}^nf(i)$ 解法引理:  \sum_{i &#x3D; 1}^n f \ast g (i) &#x3D; \sum_{i &#x3D; 1}^ng(i) \cdot S(\lfloor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[题解]CF1364-D Ehab&#39;s Last Corollary">
-<meta property="og:url" content="http://linkinpony.github.io/2020/06/14/solution-CF1364D/index.html">
+<meta property="og:title" content="[笔记]杜教筛">
+<meta property="og:url" content="http://linkinpony.github.io/2020/06/18/note-du-sieve/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="很妙的一题 题意给出$n$个节点$m$条边的无向连通图和参数$k$,求:  严格$\lceil \frac{k}{2} \rceil$大小的点独立集 或大小$ \leq k$的简单环  $3 \leq k \leq n \leq 10^5,n-1 \leq m \leq 2 \cdot 10^5$ 思路解法1​    我们求出一个原图的DFS树,当某个节点$u$存在反向边时,找出终点$v$深度最深">
+<meta property="og:description" content="dlstxdy! 杜教筛用于快速求数论函数的前缀和.当预处理了小于$n^\frac{2}{3}$的前缀和时,杜教筛的时间复杂度为$O(n^\frac{2}{3})$ 形式化定义给出数论函数$f$,快速求$S(n) &#x3D; \sum_{i &#x3D; 1}^nf(i)$ 解法引理:  \sum_{i &#x3D; 1}^n f \ast g (i) &#x3D; \sum_{i &#x3D; 1}^ng(i) \cdot S(\lfloor">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-06-14T02:30:06.000Z">
-<meta property="article:modified_time" content="2020-06-14T02:55:23.846Z">
+<meta property="article:published_time" content="2020-06-18T07:17:31.000Z">
+<meta property="article:modified_time" content="2020-06-18T07:55:33.674Z">
 <meta property="article:author" content="LinkinPony">
-<meta property="article:tag" content="题解">
-<meta property="article:tag" content="图论">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="数论">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="杜教筛">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://linkinpony.github.io/2020/06/14/solution-CF1364D/"/>
+  <link rel="canonical" href="http://linkinpony.github.io/2020/06/18/note-du-sieve/"/>
 
 
 
 
 
-  <title>[题解]CF1364-D Ehab's Last Corollary | I always love dashie</title>
+  <title>[笔记]杜教筛 | I always love dashie</title>
   
 
 
@@ -305,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/14/solution-CF1364D/">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/18/note-du-sieve/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LinkinPony">
@@ -322,7 +324,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">[题解]CF1364-D Ehab's Last Corollary</h2>
+          <h2 class="post-title" itemprop="name headline">[笔记]杜教筛</h2>
         
 
         <div class="post-meta">
@@ -334,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-14T10:30:06+08:00">
-                2020-06-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-18T15:17:31+08:00">
+                2020-06-18
               </time>
             
 
@@ -357,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
-                    <span itemprop="name">题解</span>
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
                   </a>
                 </span>
 
@@ -394,22 +396,50 @@
       
 
       
-        <p>很妙的一题</p>
-<h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>给出$n$个节点$m$条边的无向连通图和参数$k$,求:</p>
-<ul>
-<li>严格$\lceil \frac{k}{2} \rceil$大小的点独立集</li>
-<li>或大小$ \leq k$的简单环</li>
-</ul>
-<p>$3 \leq k \leq n \leq 10^5,n-1 \leq m \leq 2 \cdot 10^5$</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h5 id="解法1"><a href="#解法1" class="headerlink" title="解法1"></a>解法1</h5><p>​    我们求出一个原图的DFS树,当某个节点$u$存在反向边时,找出终点$v$深度最深的反向边.容易看出这个反向边在一个简单环中,且这个简单环不会被其他边分割.如果这个环的大小$\leq k$,直接输出即可,否则我们取不相邻的$\lceil \frac{k}{2} \rceil$个点,它们形成一个点独立集.</p>
-<p>​    如果原图无环(或者说是一棵树),那么我们很容易就能求出大小$\lceil \frac{k}{2} \rceil$的点独立集.</p>
-<h5 id="解法2"><a href="#解法2" class="headerlink" title="解法2"></a>解法2</h5><p>​    我们求出任意一个环,然后枚举所有的边$1…m$.如果某条边把这个环分割开(即起点终点都在环上),那么保留这个环的任意一半,继续该过程.最后我们会得到一个不被其他边分割的简单环.之后的处理同解法1.</p>
-<p>​    如果原图是一棵树,同解法1.</p>
-<p>​    (比赛时我用的就是这种做法,但是写T了=-=个人觉得这是最难想也最难写的做法,鬼知道我当时在干什么)</p>
-<h5 id="解法3"><a href="#解法3" class="headerlink" title="解法3"></a>解法3</h5><p>​    (来自Um_nik的代码)<a href="https://codeforces.com/contest/1364/submission/83636767" target="_blank" rel="noopener">https://codeforces.com/contest/1364/submission/83636767</a></p>
-<p>​    %%%%%</p>
-<p>​    根据原题,无论我们求点独立集还是简单环,都需要最多$k$个点,那么我们简单粗暴地把所有编号$ &gt; k$的点删掉,再在剩下的图(<strong>注意新图可能不连通</strong>)中寻找环.如果我们找到任意一个环,直接输出即可,因为这个环的大小肯定$\leq k$.如果没有环(新图是一个森林),那也能很容易地找到$\lceil \frac{k}{2} \rceil$大小的点独立集.</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//D</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">4e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = <span class="number">4e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> from,to,next,cnt;</span><br><span class="line">	Edge(<span class="keyword">int</span> from = <span class="number">0</span>,<span class="keyword">int</span> to = <span class="number">0</span>,<span class="keyword">int</span> next = <span class="number">0</span>):from(from),to(to),next(next)&#123;&#125;</span><br><span class="line">&#125;edge[maxn];</span><br><span class="line"><span class="keyword">int</span> head[maxn],cnt,d,dep[maxn],p[maxn];</span><br><span class="line"><span class="keyword">bool</span> vis[maxn],col[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addedge</span><span class="params">(<span class="keyword">int</span> f,<span class="keyword">int</span> t)</span></span>&#123;</span><br><span class="line">	edge[cnt] = Edge(f,t,head[f]);</span><br><span class="line">	head[f] = cnt++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> n,m,k;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(vis[u])<span class="keyword">return</span>;</span><br><span class="line">	vis[u] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = head[u];~i;i = edge[i].next)&#123;</span><br><span class="line">		<span class="keyword">int</span> v = edge[i].to;</span><br><span class="line">		<span class="keyword">if</span>(vis[v] <span class="keyword">and</span> dep[v] &gt; dep[u])&#123;</span><br><span class="line">			<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;cir = &#123;&#125;;</span><br><span class="line">			<span class="keyword">int</span> cur = v;</span><br><span class="line">			<span class="keyword">while</span>(cur != u)&#123;</span><br><span class="line">				cir.push_back(cur);</span><br><span class="line">				cur = p[cur];</span><br><span class="line">			&#125;</span><br><span class="line">			cir.push_back(u);</span><br><span class="line">			<span class="keyword">int</span> s = cir.size();</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="number">2</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> yay:cir)<span class="built_in">cout</span> &lt;&lt; yay &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(!vis[v])&#123;</span><br><span class="line">			p[v] = u;</span><br><span class="line">			dep[v] = dep[u]+<span class="number">1</span>;</span><br><span class="line">			col[v] = !col[u];</span><br><span class="line">			DFS(v);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">memset</span>(head,<span class="number">-1</span>,<span class="keyword">sizeof</span>(head));</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">	d = <span class="built_in">ceil</span>((<span class="keyword">double</span>)k/<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= m;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> f1,t1;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; f1&gt;&gt; t1;</span><br><span class="line">		<span class="keyword">if</span>(f1 &gt; k <span class="keyword">or</span> t1 &gt; k)<span class="keyword">continue</span>;</span><br><span class="line">		addedge(f1,t1);</span><br><span class="line">		addedge(t1,f1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> cnt1 = <span class="number">0</span>; </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)DFS(i);</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;ans = &#123;&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)<span class="keyword">if</span>(col[i])cnt1++;</span><br><span class="line">	<span class="keyword">int</span> qwq = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(cnt1 &gt;= d)qwq = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)<span class="keyword">if</span>(col[i] == qwq)&#123;</span><br><span class="line">		<span class="keyword">if</span>((<span class="keyword">int</span>)ans.size() == d)<span class="keyword">break</span>;</span><br><span class="line">		ans.push_back(i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> x:ans)<span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p><strong>dlstxdy!</strong></p>
+<p>杜教筛用于快速求数论函数的前缀和.当预处理了小于$n^\frac{2}{3}$的前缀和时,杜教筛的时间复杂度为$O(n^\frac{2}{3})$</p>
+<h1 id="形式化定义"><a href="#形式化定义" class="headerlink" title="形式化定义"></a>形式化定义</h1><p>给出数论函数$f$,快速求$S(n) = \sum_{i = 1}^nf(i)$</p>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>引理:</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n f \ast g (i) = \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)</script><p>证明:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+
+&\sum_{i = 1}^n f \ast g (i) \\
+&= \sum_{i = 1}^n \sum_{d|n}f(d)\cdot g(\frac{n}{d})\\
+&= \sum_{d = 1}^ng(d)\sum_{i*d = 1,d|i}^{i*d <= n}f(\frac{i}{d})\\
+&= \sum_{d = 1}^ng(d)\sum_{i = 1}^{\lfloor \frac{n}{d} \rfloor}f(i)\\
+&= \sum_{d = 1}^ng(d)\cdot S(\lfloor \frac{n}{d} \rfloor)
+
+\end{align}</script><p>观察上式,我们能得到:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&g(1) \cdot S(n) \\
+&= \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor) -\sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\
+&= \sum_{i = 1}^n f \ast g(i) - \sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\ 
+\end{align}</script><p>这个式子的后半部分可以用数论分块递归去求,如果我们构造的$g$能快速求出$\sum_{i = 1}^nf\ast g(i)$,我们就能快速求出$g(1)\cdot S(n)$.</p>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="筛-mu"><a href="#筛-mu" class="headerlink" title="筛$\mu$"></a>筛$\mu$</h2><p>我们知道$\mu \ast 1 = \epsilon$</p>
+<p>因而有:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&1\cdot S(n) = S(n)\\
+&= \sum_{i = 1}^n\mu \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
+&= \sum_{i = 1}^n \epsilon - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+&= 1 - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+\end{align}</script><p>简单地把$\mu \ast 1 = \epsilon$带进上面的结论就行了.</p>
+<p>代码:</p>
+<p>(Mu为map,记忆化求过的μ.求之前先线性筛一遍小于maxn的μ.下面求φ同理)</p>
+<p>注意$g = 1$,减的时候别漏了($r-l+1$)=-=</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ll du_mu(int x)&#123;</span><br><span class="line">	if(x &lt; maxn)return mu[x];</span><br><span class="line">	else if(Mu[x])return Mu[x];</span><br><span class="line">	ll tans &#x3D; 1;</span><br><span class="line">	for(int l &#x3D; 2,r &#x3D; 0;l &lt;&#x3D; x;l &#x3D; r+1)&#123;</span><br><span class="line">		r &#x3D; x&#x2F;(x&#x2F;l);</span><br><span class="line">		tans -&#x3D; 1LL*(r - l + 1)*du_mu(x&#x2F;l);</span><br><span class="line">	&#125;</span><br><span class="line">	return Mu[x] &#x3D; tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="筛-varphi"><a href="#筛-varphi" class="headerlink" title="筛$\varphi$"></a>筛$\varphi$</h2><p>和μ大同小异.我们有$\varphi \ast 1 = id$,其中$id(n) = n$</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&1\cdot S(n) = S(n)\\
+&= \sum_{i = 1}^n\varphi \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
+&= \sum_{i = 1}^n id(i) - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+&= \frac{n*(n+1)}{2} - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+\end{align}</script><p>代码:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ll <span class="title">du_phi</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x &lt; maxn)<span class="keyword">return</span> phi[x];</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(Phi[x])<span class="keyword">return</span> Phi[x];</span><br><span class="line">	ll tans = <span class="number">1L</span>L*x*(x+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">2</span>,r = <span class="number">0</span>;l &lt;= x;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		r = x/(x/l);</span><br><span class="line">		tans -= <span class="number">1L</span>L*(r-l+<span class="number">1</span>)*du_phi(x/l);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Phi[x] = tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -427,9 +457,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+            <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
           
-            <a href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag"># 图论</a>
+            <a href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag"># 数论</a>
+          
+            <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/%E6%9D%9C%E6%95%99%E7%AD%9B/" rel="tag"># 杜教筛</a>
           
         </div>
       
@@ -442,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/08/solution-Uva11107/" rel="next" title="[题解]UVA11107 Life Forms">
-                <i class="fa fa-chevron-left"></i> [题解]UVA11107 Life Forms
+              <a href="/2020/06/17/solution-P2257/" rel="next" title="[题解]洛谷P2257-YY的GCD">
+                <i class="fa fa-chevron-left"></i> [题解]洛谷P2257-YY的GCD
               </a>
             
           </div>
@@ -451,10 +485,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/06/17/solution-P2257/" rel="prev" title="[题解]洛谷P2257-YY的GCD">
-                [题解]洛谷P2257-YY的GCD <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -602,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解法1"><span class="nav-number">2.0.0.0.1.</span> <span class="nav-text">解法1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解法2"><span class="nav-number">2.0.0.0.2.</span> <span class="nav-text">解法2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解法3"><span class="nav-number">2.0.0.0.3.</span> <span class="nav-text">解法3</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#形式化定义"><span class="nav-number">1.</span> <span class="nav-text">形式化定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例子"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#筛-mu"><span class="nav-number">3.1.</span> <span class="nav-text">筛$\mu$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#筛-varphi"><span class="nav-number">3.2.</span> <span class="nav-text">筛$\varphi$</span></a></li></ol></li></ol></div>
             
 
           </div>

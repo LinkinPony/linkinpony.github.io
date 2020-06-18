@@ -300,6 +300,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/18/note-du-sieve/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/18/note-du-sieve/" itemprop="url">[笔记]杜教筛</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-18T15:17:31+08:00">
+                2020-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>dlstxdy!</strong></p>
+<p>杜教筛用于快速求数论函数的前缀和.当预处理了小于$n^\frac{2}{3}$的前缀和时,杜教筛的时间复杂度为$O(n^\frac{2}{3})$</p>
+<h1 id="形式化定义"><a href="#形式化定义" class="headerlink" title="形式化定义"></a>形式化定义</h1><p>给出数论函数$f$,快速求$S(n) = \sum_{i = 1}^nf(i)$</p>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>引理:</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n f \ast g (i) = \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)</script><p>证明:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+
+&\sum_{i = 1}^n f \ast g (i) \\
+&= \sum_{i = 1}^n \sum_{d|n}f(d)\cdot g(\frac{n}{d})\\
+&= \sum_{d = 1}^ng(d)\sum_{i*d = 1,d|i}^{i*d <= n}f(\frac{i}{d})\\
+&= \sum_{d = 1}^ng(d)\sum_{i = 1}^{\lfloor \frac{n}{d} \rfloor}f(i)\\
+&= \sum_{d = 1}^ng(d)\cdot S(\lfloor \frac{n}{d} \rfloor)
+
+\end{align}</script><p>观察上式,我们能得到:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&g(1) \cdot S(n) \\
+&= \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor) -\sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\
+&= \sum_{i = 1}^n f \ast g(i) - \sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\ 
+\end{align}</script><p>这个式子的后半部分可以用数论分块递归去求,如果我们构造的$g$能快速求出$\sum_{i = 1}^nf\ast g(i)$,我们就能快速求出$g(1)\cdot S(n)$.</p>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="筛-mu"><a href="#筛-mu" class="headerlink" title="筛$\mu$"></a>筛$\mu$</h2><p>我们知道$\mu \ast 1 = \epsilon$</p>
+<p>因而有:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&1\cdot S(n) = S(n)\\
+&= \sum_{i = 1}^n\mu \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
+&= \sum_{i = 1}^n \epsilon - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+&= 1 - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+\end{align}</script><p>简单地把$\mu \ast 1 = \epsilon$带进上面的结论就行了.</p>
+<p>代码:</p>
+<p>(Mu为map,记忆化求过的μ.求之前先线性筛一遍小于maxn的μ.下面求φ同理)</p>
+<p>注意$g = 1$,减的时候别漏了($r-l+1$)=-=</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ll du_mu(int x)&#123;</span><br><span class="line">	if(x &lt; maxn)return mu[x];</span><br><span class="line">	else if(Mu[x])return Mu[x];</span><br><span class="line">	ll tans &#x3D; 1;</span><br><span class="line">	for(int l &#x3D; 2,r &#x3D; 0;l &lt;&#x3D; x;l &#x3D; r+1)&#123;</span><br><span class="line">		r &#x3D; x&#x2F;(x&#x2F;l);</span><br><span class="line">		tans -&#x3D; 1LL*(r - l + 1)*du_mu(x&#x2F;l);</span><br><span class="line">	&#125;</span><br><span class="line">	return Mu[x] &#x3D; tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="筛-varphi"><a href="#筛-varphi" class="headerlink" title="筛$\varphi$"></a>筛$\varphi$</h2><p>和μ大同小异.我们有$\varphi \ast 1 = id$,其中$id(n) = n$</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&1\cdot S(n) = S(n)\\
+&= \sum_{i = 1}^n\varphi \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
+&= \sum_{i = 1}^n id(i) - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+&= \frac{n*(n+1)}{2} - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+\end{align}</script><p>代码:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ll <span class="title">du_phi</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x &lt; maxn)<span class="keyword">return</span> phi[x];</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(Phi[x])<span class="keyword">return</span> Phi[x];</span><br><span class="line">	ll tans = <span class="number">1L</span>L*x*(x+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">2</span>,r = <span class="number">0</span>;l &lt;= x;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		r = x/(x/l);</span><br><span class="line">		tans -= <span class="number">1L</span>L*(r-l+<span class="number">1</span>)*du_phi(x/l);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Phi[x] = tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/17/solution-P2257/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1803,150 +1988,6 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/11/math-misc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LinkinPony">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I always love dashie">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/11/math-misc/" itemprop="url">math-misc</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-11T20:07:57+08:00">
-                2020-05-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">数学</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>本篇仅记录一些杂乱的知识点留作日后整理,更多是作Markdown和$L_{A}T^{E}X$的练习用</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2003,7 +2044,7 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2025,7 +2066,7 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
