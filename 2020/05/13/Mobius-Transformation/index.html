@@ -85,7 +85,7 @@
 <meta property="og:description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\sum_">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-13T11:06:38.000Z">
-<meta property="article:modified_time" content="2020-06-17T13:25:29.213Z">
+<meta property="article:modified_time" content="2020-06-22T12:43:13.157Z">
 <meta property="article:author" content="LinkinPony">
 <meta property="article:tag" content="数论">
 <meta property="article:tag" content="笔记">
@@ -428,6 +428,17 @@ d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
 &=\sum_{d=1}^nd(2\cdot\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
 \end{align}</script><p>关于最后一步,我们设$f(x) = \sum<em>{i=1}^{n}\sum</em>{j=1}^{n}[gcd(i,j)==1]$</p>
 <p>手画一下,容易看出$f(x) = 2\cdot\sum_{i=1}^n\varphi(i) - 1$</p>
+<p>另一种做法:</p>
+<p>我们知道$\varphi$有这么一个性质,$\sum_{d|n}^{n}\varphi(d) = n$</p>
+<p>也就是$\sum_{d|\gcd(i,j)}^{n}\varphi(d) = \gcd(i,j)$</p>
+<p>那么:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i = 1}^n\sum_{j = 1}^n\gcd(i,j)\\
+&=\sum_{i=1}^n\sum_{j=1}^n\sum_{d|\gcd(i,j)}\varphi(d)\\
+&=\sum_{d = 1}^n\varphi(d)\sum_{i=1}^n[d|i]\sum_{j=1}^n[d|j]\\
+&=\sum_{d = 1}^n\varphi(d)\cdot\lfloor\frac{n}{d}\rfloor\lfloor\frac{m}{d}\rfloor
+\end{align}</script><p>少处理个前缀和=-=而且我感觉这个做法更好理解</p>
 <p>例题:洛谷P2398</p>
 <h2 id="sum-i-1-n-sum-j-i-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^{n}\sum{j=i+1}^{n}\gcd(i,j)$"></a>$\sum<em>{i = 1}^{n}\sum</em>{j=i+1}^{n}\gcd(i,j)$</h2><p>和上面那个基本一样</p>
 <script type="math/tex; mode=display">
