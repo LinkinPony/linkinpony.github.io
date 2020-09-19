@@ -300,6 +300,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/09/19/solution-HDU6703/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/19/solution-HDU6703/" itemprop="url">[题解]CCPC网络赛2019 B - array</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-19T21:01:08+08:00">
+                2020-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/CCPC/" itemprop="url" rel="index">
+                    <span itemprop="name">CCPC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="CCPC网络赛2019-B-array"><a href="#CCPC网络赛2019-B-array" class="headerlink" title="[CCPC网络赛2019] B - array"></a>[CCPC网络赛2019] B - array</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给出一个数列${a_i}$,维护两种操作:</p>
+<ul>
+<li><code>1 pos</code> : 把$a_{pos}$加上$10^7$</li>
+<li><code>2 r k</code>: 找到一个不小于$k$且不等于$a_1,…,a_r$的最小值$x$</li>
+</ul>
+<p>共有$m$组询问,强制在线.</p>
+<p>$1 \leq n,m \leq 10^5$,$1 \leq a_i \leq n$. 保证$1 \leq pos,r,k\leq n$</p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>建一棵权值线段树,每个点存储该数原来的位置.维护$Set$操作和$minv$.</p>
+<p>对于操作1,由限制易得等同于删除$a_{pos}$.</p>
+<p>对于操作2,我们搜索权值线段树里$[k,n]$中大于$r$的第一个最小值,若不存在则答案为$n+1$.</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HDU6703 </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segtree</span>&#123;</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> NO_OPT = INT_MAX;</span><br><span class="line">	<span class="keyword">int</span> size = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;setv,maxv;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(size &lt; n)size *= <span class="number">2</span>;</span><br><span class="line">		setv.assign(size*<span class="number">2</span>,NO_OPT);</span><br><span class="line">		maxv.assign(size*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">ls</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)|<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)<span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>(NO_OPT != setv[x])&#123;</span><br><span class="line">			setv[ls(x)] = setv[rs(x)] = setv[x];</span><br><span class="line">			maxv[ls(x)] = maxv[rs(x)] = setv[x];</span><br><span class="line">			setv[x] = NO_OPT;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		maxv[x] = max(maxv[ls(x)],maxv[rs(x)]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span>;</span><br><span class="line">		pushdown(x,lx,rx);</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)&#123;</span><br><span class="line">			setv[x] = v;</span><br><span class="line">			maxv[x] = v;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		Set(l,r,v,ls(x),lx,m);</span><br><span class="line">		Set(l,r,v,rs(x),m,rx);</span><br><span class="line">		pushup(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		Set(l,r,v,<span class="number">0</span>,<span class="number">0</span>,size);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kth</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		pushdown(x,lx,rx);</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> maxv[x] &lt; v)<span class="keyword">return</span> NO_OPT;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(setv[x] != NO_OPT)&#123;</span><br><span class="line">				maxv[x] = setv[x];</span><br><span class="line">				setv[x] = NO_OPT;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(maxv[x] &gt;= v)<span class="keyword">return</span> lx;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">return</span> NO_OPT;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> idx1 = kth(l,v,ls(x),lx,m),idx2 = NO_OPT;</span><br><span class="line">		<span class="keyword">if</span>(idx1 == NO_OPT)idx2 = kth(l,v,rs(x),m,rx);</span><br><span class="line">		<span class="keyword">return</span> min(idx1,idx2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kth</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> kth(l,v,<span class="number">0</span>,<span class="number">0</span>,size); </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--)&#123;</span><br><span class="line">		<span class="keyword">int</span> lstans = <span class="number">0</span>;</span><br><span class="line">		segtree seg;</span><br><span class="line">		<span class="keyword">int</span> n,m;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;raw(n+<span class="number">10</span>);</span><br><span class="line">		seg.init(<span class="number">1e5</span>+<span class="number">10</span>);</span><br><span class="line">		seg.Set(<span class="number">0</span>,<span class="number">0</span>,INF);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; raw[i];</span><br><span class="line">			seg.Set(raw[i],raw[i],i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(m--)&#123;</span><br><span class="line">			<span class="keyword">int</span> opt,l,r;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; opt &gt;&gt; l;</span><br><span class="line">			l ^= lstans;</span><br><span class="line">			<span class="keyword">if</span>(opt == <span class="number">1</span>)&#123;</span><br><span class="line">				seg.Set(raw[l],raw[l],INF);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; r;</span><br><span class="line">				r ^= lstans;</span><br><span class="line">				lstans = seg.kth(r,l+<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">if</span>(lstans == INT_MAX)lstans = n+<span class="number">1</span>;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; lstans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/09/12/solution-Wall/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1758,162 +1921,6 @@ d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/13/solution-CF906D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LinkinPony">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I always love dashie">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/13/solution-CF906D/" itemprop="url">[题解] CF906D-Power Tower</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-13T09:55:17+08:00">
-                2020-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
-                    <span itemprop="name">题解</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>给定序列$w_1,w_2,…,w_n$和$q$组询问,对于每组询问,求<img src="../images/CF906D_1.png" alt="img1"></p>
-<p>当然,需要对这个值膜$m$ </p>
-<p>(hexo渲染多重幂有问题,只好放原题图片了)</p>
-<p>$1 \leq n \leq 1e5$, $1 \leq m \leq 1e9$, $1 \leq q \leq 1e5$</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>很显然我们可以递归求解这个式子,但是这样每组询问复杂度为$O(n)$,不够优秀  </p>
-<p>考虑扩展欧拉定理:</p>
-<script type="math/tex; mode=display">
-a^b = \left\{
-\begin{array}{lcl}
-a^b && {b < φ(p)} \\
-a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
-\end{array}
-\right.</script><p>由于$p \geq 2$时$φ(p)$为偶数,故$p = φ(p)$的下降速度是log级别的,换句话说经过最多$log(p)$次迭代之后$p$便会变为1.由于$x \bmod 1 == 0$,我们在$l == r$或者$p == 1$时便可跳出递归,单组询问的复杂度降为$O(logp)$,可以接受</p>
-<p>在具体实现时,应预处理出$p,φ(p),φ(φ(p)),…,1$来减少时间开销,同时修改快速幂来适应扩欧定理(upd函数),细节见代码</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CF906D </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line">ll raw[maxn],n,mod;</span><br><span class="line"><span class="built_in">map</span>&lt;ll,ll&gt;vis;</span><br><span class="line"><span class="function">ll <span class="title">phi</span><span class="params">(ll x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = (ll)<span class="built_in">sqrt</span>(x+<span class="number">0.5</span>);</span><br><span class="line">	ll tans = x;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= m;i++)<span class="keyword">if</span>(!(x%i))&#123;</span><br><span class="line">		tans = tans/i*(i<span class="number">-1</span>);</span><br><span class="line">		<span class="keyword">while</span>(!(x%i))x /= i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(x &gt; <span class="number">1</span>)tans = tans / x * (x<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">upd</span><span class="params">(ll x,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;p?x:x%p+p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d,ll p)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	ll a = Pow(x,d/<span class="number">2</span>,p);</span><br><span class="line">	tans = upd(a*a,p);</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = upd(tans*x,p); </span><br><span class="line">	<span class="keyword">return</span> upd(tans,p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(ll l,ll r,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r <span class="keyword">or</span> p == <span class="number">1</span>)<span class="keyword">return</span> upd(raw[l],p);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> Pow(raw[l],cal(l+<span class="number">1</span>,r,vis[p]),p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; mod;</span><br><span class="line">	ll qwq = mod;</span><br><span class="line">	<span class="keyword">while</span>(qwq != <span class="number">1</span>)&#123;</span><br><span class="line">		vis[qwq] = phi(qwq);</span><br><span class="line">		qwq = vis[qwq];</span><br><span class="line">	&#125;</span><br><span class="line">	vis[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)<span class="built_in">cin</span> &gt;&gt; raw[i];</span><br><span class="line">	<span class="keyword">int</span> q;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; q;</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> l,r;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; l &gt;&gt; r;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cal(l,r,mod)%mod &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1970,7 +1977,7 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1981,7 +1988,7 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1992,7 +1999,7 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
