@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="题解,构造,交互," />
 
 
 
@@ -77,12 +77,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="I always love dashie">
-<meta property="og:url" content="http://linkinpony.github.io/archives/page/2/index.html">
+<meta name="description" content="小清新构造题 题意交互题. 有一个长度为$n$的数列${a_i}$, 满足$a_i \in [0,n-1], n \in [4,2^{16}], n &#x3D; 2^k$ 你可以进行最多$n+1$次询问, 询问分三种: AND i j      返回$a_i \&amp; a_j$的值 OR i j        返回$a_i | a_j$的值 XOR i j      返回$a_i \oplus a_j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[题解]CF1451E2-Bitwise Queries (Hard Version)">
+<meta property="og:url" content="http://linkinpony.github.io/2020/11/26/solution-CF1451E2/index.html">
 <meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="小清新构造题 题意交互题. 有一个长度为$n$的数列${a_i}$, 满足$a_i \in [0,n-1], n \in [4,2^{16}], n &#x3D; 2^k$ 你可以进行最多$n+1$次询问, 询问分三种: AND i j      返回$a_i \&amp; a_j$的值 OR i j        返回$a_i | a_j$的值 XOR i j      返回$a_i \oplus a_j">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-26T08:54:48.000Z">
+<meta property="article:modified_time" content="2020-11-26T12:48:22.281Z">
 <meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="构造">
+<meta property="article:tag" content="交互">
 <meta name="twitter:card" content="summary">
 
 
@@ -113,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://linkinpony.github.io/archives/page/2/"/>
+  <link rel="canonical" href="http://linkinpony.github.io/2020/11/26/solution-CF1451E2/"/>
 
 
 
 
 
-  <title>Archive | I always love dashie</title>
+  <title>[题解]CF1451E2-Bitwise Queries (Hard Version) | I always love dashie</title>
   
 
 
@@ -147,7 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -285,411 +292,202 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/11/26/solution-CF1451E2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h2 class="post-title" itemprop="name headline">[题解]CF1451E2-Bitwise Queries (Hard Version)</h2>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-26T16:54:48+08:00">
+                2020-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 23 posts in total. Keep on posting.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2020">2020</h2>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/17/solution-P2257/" itemprop="url">
-              
-                <span itemprop="name">[题解]洛谷P2257-YY的GCD</span>
-              
-            </a>
-        
-      </h3>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-17T21:05:28+08:00"
-              content="2020-06-17" >
-          06-17
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/14/solution-CF1364D/" itemprop="url">
-              
-                <span itemprop="name">[题解]CF1364-D Ehab's Last Corollary</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-14T10:30:06+08:00"
-              content="2020-06-14" >
-          06-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/08/solution-Uva11107/" itemprop="url">
-              
-                <span itemprop="name">[题解]UVA11107 Life Forms</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-08T20:07:49+08:00"
-              content="2020-06-08" >
-          06-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>小清新构造题</p>
+<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>交互题.</p>
+<p>有一个长度为$n$的数列${a_i}$, 满足$a_i \in [0,n-1], n \in [4,2^{16}], n = 2^k$</p>
+<p>你可以进行最多$n+1$次询问, 询问分三种:</p>
+<p><code>AND i j</code>      返回$a_i \&amp; a_j$的值</p>
+<p><code>OR i j</code>        返回$a_i | a_j$的值</p>
+<p><code>XOR i j</code>      返回$a_i \oplus a_j$的值</p>
+<p>均需满足$1 \leq i,j \leq n$且$i \ne j$</p>
+<p>当确定答案后, 你需要输出<code>!</code>然后在同一行内输出这个数组.</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先一个显而易见的结论: 询问$a_1$与$a_2…a_n$的异或(共$n-1$次询问), 再在两次询问内求出$a_1$的值就能还原整个数组. 问题转化为如何求出$a_1$,</p>
+<p>因为数列长度为$n$值域为$[0,n-1]$, 由鸽巢原理可得:</p>
+<ol>
+<li><p>数列中至少有两个数字相同</p>
+<p> 分为两种情况:</p>
+<ol>
+<li><p>$a_1$与其他至少一个数字相同. </p>
+<p> 表现为至少一个异或询问$a_1 \oplus a_i$的答案为$0$. 一次<code>AND 1 i</code>询问即可求出$a_1$的值.</p>
+</li>
+<li><p>$a_i$与$a_j$相同($i,j \ne 1$). </p>
+<p> 此时至少两个异或询问的答案相等($a_1 \oplus a_i = a_1 \oplus a_j$), 即$a_i = a_j$. 通过一次<code>AND i j</code>可求出$a_i$的值, 再由$a_1 \oplus a_i \oplus a_i = a_1$求出$a_1$</p>
+</li>
+</ol>
+</li>
+<li><p>数列中全部数字均不相同.</p>
+<p>由于$n = 2^k$且$n \ge 4$, $k$位二进制的每一种情况均会出现, 故必存在$a_1 \oplus a_i = 1$. 显然$a_1$与$a_i$只有最后一位不同. 这时一次<code>AND 1 i</code>可获得$a_1$除了最后一位外的信息. 同理存在$a_1 \oplus a_j = 2$, <code>AND 1 j</code>可获得$a_1$最后一位的信息. 两者综合起来即可求出$a_1$</p>
+</li>
+</ol>
+<p>以上无论何种情况, 询问次数都不超过$n+1$</p>
+<p>时间复杂度$O(n\log n)$ (因为有一次不必要的排序来去重)</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//E</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="comment">// #define endl '\n'</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">2e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> Xor[maxn],ans[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> w,idx;</span><br><span class="line">	Node(<span class="keyword">int</span> w = <span class="number">0</span>,<span class="keyword">int</span> idx = <span class="number">0</span>):w(w),idx(idx)&#123;&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> Node &amp; x) <span class="keyword">const</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> w &lt; x.w;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;node[maxn];</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"XOR 1 "</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">		Xor[i] = x;</span><br><span class="line">		node[i] = Node(x,i);</span><br><span class="line">	&#125;</span><br><span class="line">	sort(node+<span class="number">2</span>,node+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>;i &lt;= n;i++)<span class="keyword">if</span>(node[i].w == node[i<span class="number">-1</span>].w)idx = i;</span><br><span class="line">	<span class="keyword">if</span>(!node[<span class="number">2</span>].w)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"AND 1 "</span> &lt;&lt; node[<span class="number">2</span>].idx &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">		ans[<span class="number">1</span>] = x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(idx)&#123;</span><br><span class="line">		<span class="keyword">int</span> l = node[idx].idx,r = node[idx<span class="number">-1</span>].idx;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"AND "</span> &lt;&lt; l &lt;&lt; <span class="string">" "</span> &lt;&lt; r &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">		ans[<span class="number">1</span>] = Xor[l]^x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> bit_0 = <span class="number">0</span>,bit_1 = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= n;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(Xor[i] == <span class="number">1</span>)&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"AND 1 "</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">				<span class="keyword">int</span> x;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">				bit_0 = x;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(Xor[i] == <span class="number">2</span>)&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"AND 1 "</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">				<span class="keyword">int</span> x;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">				bit_1 = x;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(bit_0 &amp; <span class="number">1</span>)bit_0--;</span><br><span class="line">		<span class="keyword">if</span>(bit_1 &amp; <span class="number">1</span>)bit_0++;</span><br><span class="line">		ans[<span class="number">1</span>] = bit_0;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= n;i++)ans[i] = Xor[i]^ans[<span class="number">1</span>];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"! "</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)<span class="built_in">cout</span> &lt;&lt; ans[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/16/solution-CF1355C/" itemprop="url">
-              
-                <span itemprop="name">[题解]CF1355C-Count Triangles</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-16T23:10:54+08:00"
-              content="2020-05-16" >
-          05-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/15/solution-CF1325E/" itemprop="url">
-              
-                <span itemprop="name">[题解]CF1325E-Ehab's REAL Number Theory Problem</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-15T15:43:15+08:00"
-              content="2020-05-15" >
-          05-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/13/Mobius-Transformation/" itemprop="url">
-              
-                <span itemprop="name">Mobius-Transformation</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-13T19:06:38+08:00"
-              content="2020-05-13" >
-          05-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/13/solution-CF906D/" itemprop="url">
-              
-                <span itemprop="name">[题解] CF906D-Power Tower</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-13T09:55:17+08:00"
-              content="2020-05-13" >
-          05-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/13/solution-CF1350C/" itemprop="url">
-              
-                <span itemprop="name">[题解]CF1350C-Orac and LCM</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-13T08:54:47+08:00"
-              content="2020-05-13" >
-          05-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/11/math-misc/" itemprop="url">
-              
-                <span itemprop="name">math-misc</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-11T20:07:57+08:00"
-              content="2020-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/09/template-geometry/" itemprop="url">
-              
-                <span itemprop="name">[模板]计算几何</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-09T15:27:10+08:00"
-              content="2020-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+          
+            <a href="/tags/%E6%9E%84%E9%80%A0/" rel="tag"># 构造</a>
+          
+            <a href="/tags/%E4%BA%A4%E4%BA%92/" rel="tag"># 交互</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/25/solution-CF1454E/" rel="next" title="[题解]-CF1454E">
+                <i class="fa fa-chevron-left"></i> [题解]-CF1454E
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -697,6 +495,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -719,8 +521,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -812,6 +623,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -952,6 +779,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
