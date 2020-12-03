@@ -300,6 +300,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/12/03/solution-CF1200E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/12/03/solution-CF1200E/" itemprop="url">[题解]CF1200 E-Compress Words</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-12-03T18:56:59+08:00">
+                2020-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给出$n$个字符串, 将字符串按顺序拼接. 拼接时删除后面字符串的前缀与前面字符串的后缀中的最长相同部分.</p>
+<p>例如<code>sample</code>与<code>please</code>拼接成为<code>samplease</code></p>
+<p>$1 \leq n \leq 10^5$, $\sum|s_i| \leq 10^6$</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>设将$u$和$v$拼接在一起, 用KMP求出$s = v|u$(|是任意分隔符)的失配数组$next[]$.由于失配数组代表前后缀的最长长度, $next[|s|]$即为$v$的前缀与$u$的后缀相同部分的最长长度.</p>
+<p>注意到这个最长长度不会超过$|v|$, 因此我们只需把$u$的最后$|v|$个字符接到分隔符后. 时间复杂度$O(\sum|s_i|)$</p>
+<p>赛时十分傻逼地忘了用分隔符把$u,v$分隔开, 疯狂WA到怀疑人生…顺便吐槽一句这个数据真的弱</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我  是  傻  逼</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">int</span> Next[<span class="number">4000010</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getFail</span><span class="params">(<span class="built_in">string</span> &amp; P)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;= (<span class="keyword">int</span>)P.size();i++)Next[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> p_size = P.size();</span><br><span class="line">	Next[<span class="number">0</span>] = Next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; p_size;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> j = Next[i];</span><br><span class="line">		<span class="keyword">while</span>(j <span class="keyword">and</span> P[i] != P[j])j = Next[j];</span><br><span class="line">		Next[i+<span class="number">1</span>] = (P[j] == P[i]?j+<span class="number">1</span>:<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">process</span><span class="params">(<span class="built_in">string</span> &amp; u,<span class="built_in">string</span> &amp; v)</span></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> x = v;</span><br><span class="line">	x += <span class="string">'|'</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = max(<span class="number">0</span>,(<span class="keyword">int</span>)(u.size() - v.size()));i &lt; (<span class="keyword">int</span>)u.size();i++)x += u[i];</span><br><span class="line">	getFail(x);</span><br><span class="line">	<span class="built_in">string</span> tans = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = Next[x.size()];i &lt; (<span class="keyword">int</span>)v.size();i++)tans += v[i];</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="built_in">string</span> ans = <span class="string">""</span>;</span><br><span class="line">	<span class="built_in">string</span> u,v;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; u;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; u;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; u &gt;&gt; v;</span><br><span class="line">	ans = u + process(u,v);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; v;</span><br><span class="line">		ans += process(ans,v);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/11/26/solution-CF1451E2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1649,191 +1797,6 @@ g(e_i,j,k) = ((cnt_i - num[u][j])*num[u][k] + (cnt_k - num[u][k])*cnt_j)*e_i.w</
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/18/note-du-sieve/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LinkinPony">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I always love dashie">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/18/note-du-sieve/" itemprop="url">[笔记]杜教筛</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-18T15:17:31+08:00">
-                2020-06-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>dlstxdy!</strong></p>
-<p>杜教筛用于快速求数论函数的前缀和.当预处理了小于$n^\frac{2}{3}$的前缀和时,杜教筛的时间复杂度为$O(n^\frac{2}{3})$</p>
-<h1 id="形式化定义"><a href="#形式化定义" class="headerlink" title="形式化定义"></a>形式化定义</h1><p>给出数论函数$f$,快速求$S(n) = \sum_{i = 1}^nf(i)$</p>
-<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>引理:</p>
-<script type="math/tex; mode=display">
-\sum_{i = 1}^n f \ast g (i) = \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)</script><p>证明:</p>
-<script type="math/tex; mode=display">
-\begin{align}
-
-&\sum_{i = 1}^n f \ast g (i) \\
-&= \sum_{i = 1}^n \sum_{d|n}f(d)\cdot g(\frac{n}{d})\\
-&= \sum_{d = 1}^ng(d)\sum_{i*d = 1,d|i}^{i*d <= n}f(\frac{i}{d})\\
-&= \sum_{d = 1}^ng(d)\sum_{i = 1}^{\lfloor \frac{n}{d} \rfloor}f(i)\\
-&= \sum_{d = 1}^ng(d)\cdot S(\lfloor \frac{n}{d} \rfloor)
-
-\end{align}</script><p>观察上式,我们能得到:</p>
-<script type="math/tex; mode=display">
-\begin{align}
-&g(1) \cdot S(n) \\
-&= \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor) -\sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\
-&= \sum_{i = 1}^n f \ast g(i) - \sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\ 
-\end{align}</script><p>这个式子的后半部分可以用数论分块递归去求,如果我们构造的$g$能快速求出$\sum_{i = 1}^nf\ast g(i)$,我们就能快速求出$g(1)\cdot S(n)$.</p>
-<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="筛-mu"><a href="#筛-mu" class="headerlink" title="筛$\mu$"></a>筛$\mu$</h2><p>我们知道$\mu \ast 1 = \epsilon$</p>
-<p>因而有:</p>
-<script type="math/tex; mode=display">
-\begin{align}
-&1\cdot S(n) = S(n)\\
-&= \sum_{i = 1}^n\mu \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
-&= \sum_{i = 1}^n \epsilon - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
-&= 1 - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
-\end{align}</script><p>简单地把$\mu \ast 1 = \epsilon$带进上面的结论就行了.</p>
-<p>代码:</p>
-<p>(Mu为map,记忆化求过的μ.求之前先线性筛一遍小于maxn的μ.下面求φ同理)</p>
-<p>注意$g = 1$,减的时候别漏了($r-l+1$)=-=</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ll du_mu(int x)&#123;</span><br><span class="line">	if(x &lt; maxn)return mu[x];</span><br><span class="line">	else if(Mu[x])return Mu[x];</span><br><span class="line">	ll tans &#x3D; 1;</span><br><span class="line">	for(int l &#x3D; 2,r &#x3D; 0;l &lt;&#x3D; x;l &#x3D; r+1)&#123;</span><br><span class="line">		r &#x3D; x&#x2F;(x&#x2F;l);</span><br><span class="line">		tans -&#x3D; 1LL*(r - l + 1)*du_mu(x&#x2F;l);</span><br><span class="line">	&#125;</span><br><span class="line">	return Mu[x] &#x3D; tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="筛-varphi"><a href="#筛-varphi" class="headerlink" title="筛$\varphi$"></a>筛$\varphi$</h2><p>和μ大同小异.我们有$\varphi \ast 1 = id$,其中$id(n) = n$</p>
-<script type="math/tex; mode=display">
-\begin{align}
-&1\cdot S(n) = S(n)\\
-&= \sum_{i = 1}^n\varphi \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
-&= \sum_{i = 1}^n id(i) - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
-&= \frac{n*(n+1)}{2} - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
-\end{align}</script><p>代码:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ll <span class="title">du_phi</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x &lt; maxn)<span class="keyword">return</span> phi[x];</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(Phi[x])<span class="keyword">return</span> Phi[x];</span><br><span class="line">	ll tans = <span class="number">1L</span>L*x*(x+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">2</span>,r = <span class="number">0</span>;l &lt;= x;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		r = x/(x/l);</span><br><span class="line">		tans -= <span class="number">1L</span>L*(r-l+<span class="number">1</span>)*du_phi(x/l);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Phi[x] = tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1890,7 +1853,7 @@ g(e_i,j,k) = ((cnt_i - num[u][j])*num[u][k] + (cnt_k - num[u][k])*cnt_j)*e_i.w</
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1912,7 +1875,7 @@ g(e_i,j,k) = ((cnt_i - num[u][j])*num[u][k] + (cnt_k - num[u][k])*cnt_j)*e_i.w</
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

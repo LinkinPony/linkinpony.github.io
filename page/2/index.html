@@ -300,6 +300,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/18/note-du-sieve/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/18/note-du-sieve/" itemprop="url">[笔记]杜教筛</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-18T15:17:31+08:00">
+                2020-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>dlstxdy!</strong></p>
+<p>杜教筛用于快速求数论函数的前缀和.当预处理了小于$n^\frac{2}{3}$的前缀和时,杜教筛的时间复杂度为$O(n^\frac{2}{3})$</p>
+<h1 id="形式化定义"><a href="#形式化定义" class="headerlink" title="形式化定义"></a>形式化定义</h1><p>给出数论函数$f$,快速求$S(n) = \sum_{i = 1}^nf(i)$</p>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>引理:</p>
+<script type="math/tex; mode=display">
+\sum_{i = 1}^n f \ast g (i) = \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)</script><p>证明:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+
+&\sum_{i = 1}^n f \ast g (i) \\
+&= \sum_{i = 1}^n \sum_{d|n}f(d)\cdot g(\frac{n}{d})\\
+&= \sum_{d = 1}^ng(d)\sum_{i*d = 1,d|i}^{i*d <= n}f(\frac{i}{d})\\
+&= \sum_{d = 1}^ng(d)\sum_{i = 1}^{\lfloor \frac{n}{d} \rfloor}f(i)\\
+&= \sum_{d = 1}^ng(d)\cdot S(\lfloor \frac{n}{d} \rfloor)
+
+\end{align}</script><p>观察上式,我们能得到:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&g(1) \cdot S(n) \\
+&= \sum_{i = 1}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor) -\sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\
+&= \sum_{i = 1}^n f \ast g(i) - \sum_{i = 2}^ng(i) \cdot S(\lfloor \frac{n}{i} \rfloor)\\ 
+\end{align}</script><p>这个式子的后半部分可以用数论分块递归去求,如果我们构造的$g$能快速求出$\sum_{i = 1}^nf\ast g(i)$,我们就能快速求出$g(1)\cdot S(n)$.</p>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="筛-mu"><a href="#筛-mu" class="headerlink" title="筛$\mu$"></a>筛$\mu$</h2><p>我们知道$\mu \ast 1 = \epsilon$</p>
+<p>因而有:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&1\cdot S(n) = S(n)\\
+&= \sum_{i = 1}^n\mu \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
+&= \sum_{i = 1}^n \epsilon - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+&= 1 - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+\end{align}</script><p>简单地把$\mu \ast 1 = \epsilon$带进上面的结论就行了.</p>
+<p>代码:</p>
+<p>(Mu为map,记忆化求过的μ.求之前先线性筛一遍小于maxn的μ.下面求φ同理)</p>
+<p>注意$g = 1$,减的时候别漏了($r-l+1$)=-=</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ll du_mu(int x)&#123;</span><br><span class="line">	if(x &lt; maxn)return mu[x];</span><br><span class="line">	else if(Mu[x])return Mu[x];</span><br><span class="line">	ll tans &#x3D; 1;</span><br><span class="line">	for(int l &#x3D; 2,r &#x3D; 0;l &lt;&#x3D; x;l &#x3D; r+1)&#123;</span><br><span class="line">		r &#x3D; x&#x2F;(x&#x2F;l);</span><br><span class="line">		tans -&#x3D; 1LL*(r - l + 1)*du_mu(x&#x2F;l);</span><br><span class="line">	&#125;</span><br><span class="line">	return Mu[x] &#x3D; tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="筛-varphi"><a href="#筛-varphi" class="headerlink" title="筛$\varphi$"></a>筛$\varphi$</h2><p>和μ大同小异.我们有$\varphi \ast 1 = id$,其中$id(n) = n$</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&1\cdot S(n) = S(n)\\
+&= \sum_{i = 1}^n\varphi \ast 1(i) - \sum_{i = 2}^n 1 \cdot S(\lfloor \frac{n}{i}\rfloor)\\
+&= \sum_{i = 1}^n id(i) - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+&= \frac{n*(n+1)}{2} - \sum_{i = 2}^n S(\lfloor \frac{n}{i}\rfloor)\\
+\end{align}</script><p>代码:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ll <span class="title">du_phi</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x &lt; maxn)<span class="keyword">return</span> phi[x];</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(Phi[x])<span class="keyword">return</span> Phi[x];</span><br><span class="line">	ll tans = <span class="number">1L</span>L*x*(x+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">2</span>,r = <span class="number">0</span>;l &lt;= x;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		r = x/(x/l);</span><br><span class="line">		tans -= <span class="number">1L</span>L*(r-l+<span class="number">1</span>)*du_phi(x/l);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Phi[x] = tans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/06/17/solution-P2257/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1760,155 +1945,6 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/09/template-geometry/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LinkinPony">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I always love dashie">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/09/template-geometry/" itemprop="url">[模板]计算几何</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-09T15:27:10+08:00">
-                2020-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%A8%A1%E6%9D%BF/" itemprop="url" rel="index">
-                    <span itemprop="name">模板</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><del>不存在的</del></p>
-<h1 id="二维"><a href="#二维" class="headerlink" title="二维"></a>二维</h1><h2 id="起手式-待补充"><a href="#起手式-待补充" class="headerlink" title="起手式(待补充):"></a>起手式(待补充):</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">double</span> ld;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> PI = <span class="number">3.14159265358979</span>; </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	ld x,y;</span><br><span class="line">	Point(ld x = <span class="number">0</span>,ld y = <span class="number">0</span>):x(x),y(y)&#123;&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> + (Point B)&#123;<span class="keyword">return</span> Point(x+B.x,y+B.y);&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> - (Point B)&#123;<span class="keyword">return</span> Point(x-B.x,y-B.y);&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> * (ld w)&#123;<span class="keyword">return</span> Point(x*w,y*w);&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> / (ld w)&#123;<span class="keyword">return</span> Point(x/w,y/w);&#125;</span><br><span class="line">	<span class="function">Point <span class="title">Rotate_90_clock</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> Point(y,-x);&#125;<span class="comment">//顺时针旋转90°</span></span><br><span class="line">	<span class="function">ld <span class="title">len2</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> x*x + y*y;&#125;<span class="comment">//长度的平方</span></span><br><span class="line">	<span class="function">ld <span class="title">len</span><span class="params">()</span></span>&#123;<span class="keyword">return</span>(<span class="built_in">sqrt</span>(x*x + y*y));&#125;</span><br><span class="line">&#125;point[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Circle</span>&#123;</span></span><br><span class="line">	Point O;</span><br><span class="line">	ld R;</span><br><span class="line">	Circle(Point O = Point(<span class="number">0</span>,<span class="number">0</span>),ld R = <span class="number">0</span>):O(O),R(R)&#123;&#125;</span><br><span class="line">	<span class="function">ld <span class="title">R2</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> R*R;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> Point Vector;</span><br><span class="line"><span class="function">ld <span class="title">Dot</span><span class="params">(Vector A,Vector B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> A.x*B.x + A.y*B.y;</span><br><span class="line">&#125;<span class="comment">//点积</span></span><br><span class="line"><span class="function">ld <span class="title">Cross</span><span class="params">(Vector A,Vector B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> A.x*B.y - A.y*B.x;</span><br><span class="line">&#125;<span class="comment">//二维叉积</span></span><br><span class="line"><span class="function">Point <span class="title">Line_inter</span><span class="params">(Point P0,Point V0,Point P1,Point V1)</span></span>&#123;</span><br><span class="line">	ld t = Cross(P1 - P0,V1)/Cross(V0,V1);</span><br><span class="line">	<span class="keyword">return</span> P0 + V0 * t;</span><br><span class="line">&#125;<span class="comment">//返回两向量交点.P和V分别为向量起点终点*</span></span><br><span class="line"><span class="function">Circle <span class="title">p2circle</span><span class="params">(Point A,Point B)</span></span>&#123;</span><br><span class="line">	Circle tans = Circle((A+B)/<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	tans.R = (tans.O - A).len();</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;<span class="comment">//两点的外接圆</span></span><br><span class="line"><span class="function">Circle <span class="title">p2circle</span><span class="params">(Point A,Point B,Point C)</span></span>&#123;</span><br><span class="line">	Circle tans = Circle(Line_inter((A+B)/<span class="number">2</span>,(B - A).Rotate_90_clock(),(A+C)/<span class="number">2</span>,(C - A).Rotate_90_clock()),<span class="number">0</span>);</span><br><span class="line">	tans.R = (tans.O - A).len();</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;<span class="comment">//三点共圆</span></span><br><span class="line"><span class="keyword">typedef</span> Point Vector;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">double</span> <span class="title">to_rad</span><span class="params">(<span class="keyword">double</span> deg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> deg*(PI/<span class="number">180</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Vector <span class="title">Rotate</span><span class="params">(Vector A,<span class="keyword">double</span> rad)</span></span>&#123;<span class="comment">//逆时针 </span></span><br><span class="line">	<span class="keyword">return</span> Vector(A.x*<span class="built_in">cos</span>(rad) - A.y*<span class="built_in">sin</span>(rad),A.x*<span class="built_in">sin</span>(rad) + A.y*<span class="built_in">cos</span>(rad));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="凸包"><a href="#凸包" class="headerlink" title="凸包:"></a>凸包:</h2><p>输入顶点个数,返回凸包上点的个数.raw为原顶点数组,hull为凸包顶点数组</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ConvexHull</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	sort(raw+<span class="number">1</span>,raw+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> idx = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">while</span>(idx &gt; <span class="number">2</span> <span class="keyword">and</span> Cross(hull[idx<span class="number">-1</span>] - hull[idx<span class="number">-2</span>],raw[i] - hull[idx<span class="number">-2</span>]) &lt;= <span class="number">0</span>)idx--;</span><br><span class="line">		hull[idx++] = raw[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> k = idx;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>;i &gt;= <span class="number">1</span>;i--)&#123;</span><br><span class="line">		<span class="keyword">while</span>(idx &gt; k <span class="keyword">and</span> Cross(hull[idx<span class="number">-1</span>] - hull[idx<span class="number">-2</span>],raw[i] - hull[idx<span class="number">-2</span>]) &lt;= <span class="number">0</span>)idx--;</span><br><span class="line">		hull[idx++] = raw[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> idx<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="多边形面积"><a href="#多边形面积" class="headerlink" title="多边形面积:"></a>多边形面积:</h2><p>_Point为多边形点集,n为顶点数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">PolyArea</span><span class="params">(Point * _Point,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> area = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; n;i++)&#123;</span><br><span class="line">		area += Cross(_Point[i] - _Point[<span class="number">1</span>],_Point[i+<span class="number">1</span>] - _Point[<span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> area/<span class="number">2</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="最小圆覆盖"><a href="#最小圆覆盖" class="headerlink" title="最小圆覆盖"></a>最小圆覆盖</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">double</span> ld;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	ld x,y;</span><br><span class="line">	Point(ld x = <span class="number">0</span>,ld y = <span class="number">0</span>):x(x),y(y)&#123;&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> + (Point B)&#123;<span class="keyword">return</span> Point(x+B.x,y+B.y);&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> - (Point B)&#123;<span class="keyword">return</span> Point(x-B.x,y-B.y);&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> * (ld w)&#123;<span class="keyword">return</span> Point(x*w,y*w);&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> / (ld w)&#123;<span class="keyword">return</span> Point(x/w,y/w);&#125;</span><br><span class="line">	<span class="function">Point <span class="title">Rotate_90_clock</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> Point(y,-x);&#125;<span class="comment">//顺时针旋转90°</span></span><br><span class="line">	<span class="function">ld <span class="title">len2</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> x*x + y*y;&#125;<span class="comment">//长度的平方</span></span><br><span class="line">	<span class="function">ld <span class="title">len</span><span class="params">()</span></span>&#123;<span class="keyword">return</span>(<span class="built_in">sqrt</span>(x*x + y*y));&#125;</span><br><span class="line">&#125;point[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Circle</span>&#123;</span></span><br><span class="line">	Point O;</span><br><span class="line">	ld R;</span><br><span class="line">	Circle(Point O = Point(<span class="number">0</span>,<span class="number">0</span>),ld R = <span class="number">0</span>):O(O),R(R)&#123;&#125;</span><br><span class="line">	<span class="function">ld <span class="title">R2</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> R*R;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> Point Vector;</span><br><span class="line"><span class="function">ld <span class="title">Dot</span><span class="params">(Vector A,Vector B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> A.x*B.x + A.y*B.y;</span><br><span class="line">&#125;<span class="comment">//点积</span></span><br><span class="line"><span class="function">ld <span class="title">Cross</span><span class="params">(Vector A,Vector B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> A.x*B.y - A.y*B.x;</span><br><span class="line">&#125;<span class="comment">//二维叉积</span></span><br><span class="line"><span class="function">Point <span class="title">Line_inter</span><span class="params">(Point P0,Point V0,Point P1,Point V1)</span></span>&#123;</span><br><span class="line">	ld t = Cross(P1 - P0,V1)/Cross(V0,V1);</span><br><span class="line">	<span class="keyword">return</span> P0 + V0 * t;</span><br><span class="line">&#125;<span class="comment">//返回两向量交点.P和V分别为向量起点终点*</span></span><br><span class="line"><span class="function">Circle <span class="title">p2circle</span><span class="params">(Point A,Point B)</span></span>&#123;</span><br><span class="line">	Circle tans = Circle((A+B)/<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	tans.R = (tans.O - A).len();</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;<span class="comment">//两点的外接圆</span></span><br><span class="line"><span class="function">Circle <span class="title">p2circle</span><span class="params">(Point A,Point B,Point C)</span></span>&#123;</span><br><span class="line">	Circle tans = Circle(Line_inter((A+B)/<span class="number">2</span>,(B - A).Rotate_90_clock(),(A+C)/<span class="number">2</span>,(C - A).Rotate_90_clock()),<span class="number">0</span>);</span><br><span class="line">	tans.R = (tans.O - A).len();</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;<span class="comment">//三点共圆</span></span><br><span class="line"><span class="function">Circle <span class="title">Min_Cir_Cover</span><span class="params">(Point * point,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	random_shuffle(point+<span class="number">1</span>,point+n+<span class="number">1</span>);</span><br><span class="line">	Circle res;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>((point[i] - res.O).len2() &gt; res.R2())&#123;</span><br><span class="line">			res = Circle(point[i],<span class="number">0</span>);</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j &lt; i;j++)&#123;</span><br><span class="line">				<span class="keyword">if</span>((point[j] - res.O).len2() &gt; res.R2())&#123;</span><br><span class="line">					res = p2circle(point[i],point[j]);</span><br><span class="line">					<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">1</span>;k &lt; j;k++)&#123;</span><br><span class="line">						<span class="keyword">if</span>((point[k] - res.O).len2() &gt; res.R2())&#123;</span><br><span class="line">							res = p2circle(point[i],point[j],point[k]);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;<span class="comment">//最小圆覆盖,输入点集数组和点的数量,返回一个圆</span></span><br></pre></td></tr></table></figure>
-<h1 id="三维"><a href="#三维" class="headerlink" title="三维"></a>三维</h1><h2 id="起手式"><a href="#起手式" class="headerlink" title="起手式:"></a>起手式:</h2><p>鸽子biss</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1965,7 +2001,7 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1987,7 +2023,7 @@ i^{d[i][1]} && {d[i].size()  \geq n-1 }\\
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="题解,数论," />
+  <meta name="keywords" content="题解,字符串,KMP," />
 
 
 
@@ -77,21 +77,20 @@
 
 
 
-<meta name="description" content="题意给定序列$w_1,w_2,…,w_n$和$q$组询问,对于每组询问,求 当然,需要对这个值膜$m$  (hexo渲染多重幂有问题,只好放原题图片了) $1 \leq n \leq 1e5$, $1 \leq m \leq 1e9$, $1 \leq q \leq 1e5$ 思路很显然我们可以递归求解这个式子,但是这样每组询问复杂度为$O(n)$,不够优秀   考虑扩展欧拉定理:  a^b &#x3D;">
+<meta name="description" content="题意给出$n$个字符串, 将字符串按顺序拼接. 拼接时删除后面字符串的前缀与前面字符串的后缀中的最长相同部分. 例如sample与please拼接成为samplease $1 \leq n \leq 10^5$, $\sum|s_i| \leq 10^6$ 题解设将$u$和$v$拼接在一起, 用KMP求出$s &#x3D; v|u$(|是任意分隔符)的失配数组$next[]$.由于失配数组代表前后缀的最长长">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[题解] CF906D-Power Tower">
-<meta property="og:url" content="http://linkinpony.github.io/2020/05/13/solution-CF906D/index.html">
+<meta property="og:title" content="[题解]CF1200 E-Compress Words">
+<meta property="og:url" content="http://linkinpony.github.io/2020/12/03/solution-CF1200E/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="题意给定序列$w_1,w_2,…,w_n$和$q$组询问,对于每组询问,求 当然,需要对这个值膜$m$  (hexo渲染多重幂有问题,只好放原题图片了) $1 \leq n \leq 1e5$, $1 \leq m \leq 1e9$, $1 \leq q \leq 1e5$ 思路很显然我们可以递归求解这个式子,但是这样每组询问复杂度为$O(n)$,不够优秀   考虑扩展欧拉定理:  a^b &#x3D;">
+<meta property="og:description" content="题意给出$n$个字符串, 将字符串按顺序拼接. 拼接时删除后面字符串的前缀与前面字符串的后缀中的最长相同部分. 例如sample与please拼接成为samplease $1 \leq n \leq 10^5$, $\sum|s_i| \leq 10^6$ 题解设将$u$和$v$拼接在一起, 用KMP求出$s &#x3D; v|u$(|是任意分隔符)的失配数组$next[]$.由于失配数组代表前后缀的最长长">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://linkinpony.github.io/2020/05/13/images/CF906D_1.png">
-<meta property="article:published_time" content="2020-05-13T01:55:17.000Z">
-<meta property="article:modified_time" content="2020-05-13T02:30:35.401Z">
+<meta property="article:published_time" content="2020-12-03T10:56:59.000Z">
+<meta property="article:modified_time" content="2020-12-03T11:10:21.329Z">
 <meta property="article:author" content="LinkinPony">
 <meta property="article:tag" content="题解">
-<meta property="article:tag" content="数论">
+<meta property="article:tag" content="字符串">
+<meta property="article:tag" content="KMP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://linkinpony.github.io/2020/05/13/images/CF906D_1.png">
 
 
 
@@ -121,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://linkinpony.github.io/2020/05/13/solution-CF906D/"/>
+  <link rel="canonical" href="http://linkinpony.github.io/2020/12/03/solution-CF1200E/"/>
 
 
 
 
 
-  <title>[题解] CF906D-Power Tower | I always love dashie</title>
+  <title>[题解]CF1200 E-Compress Words | I always love dashie</title>
   
 
 
@@ -307,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/13/solution-CF906D/">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/12/03/solution-CF1200E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LinkinPony">
@@ -324,7 +323,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">[题解] CF906D-Power Tower</h2>
+          <h2 class="post-title" itemprop="name headline">[题解]CF1200 E-Compress Words</h2>
         
 
         <div class="post-meta">
@@ -336,8 +335,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-13T09:55:17+08:00">
-                2020-05-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-12-03T18:56:59+08:00">
+                2020-12-03
               </time>
             
 
@@ -396,21 +395,13 @@
       
 
       
-        <h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>给定序列$w_1,w_2,…,w_n$和$q$组询问,对于每组询问,求<img src="../images/CF906D_1.png" alt="img1"></p>
-<p>当然,需要对这个值膜$m$ </p>
-<p>(hexo渲染多重幂有问题,只好放原题图片了)</p>
-<p>$1 \leq n \leq 1e5$, $1 \leq m \leq 1e9$, $1 \leq q \leq 1e5$</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>很显然我们可以递归求解这个式子,但是这样每组询问复杂度为$O(n)$,不够优秀  </p>
-<p>考虑扩展欧拉定理:</p>
-<script type="math/tex; mode=display">
-a^b = \left\{
-\begin{array}{lcl}
-a^b && {b < φ(p)} \\
-a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
-\end{array}
-\right.</script><p>由于$p \geq 2$时$φ(p)$为偶数,故$p = φ(p)$的下降速度是log级别的,换句话说经过最多$log(p)$次迭代之后$p$便会变为1.由于$x \bmod 1 == 0$,我们在$l == r$或者$p == 1$时便可跳出递归,单组询问的复杂度降为$O(logp)$,可以接受</p>
-<p>在具体实现时,应预处理出$p,φ(p),φ(φ(p)),…,1$来减少时间开销,同时修改快速幂来适应扩欧定理(upd函数),细节见代码</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CF906D </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line">ll raw[maxn],n,mod;</span><br><span class="line"><span class="built_in">map</span>&lt;ll,ll&gt;vis;</span><br><span class="line"><span class="function">ll <span class="title">phi</span><span class="params">(ll x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = (ll)<span class="built_in">sqrt</span>(x+<span class="number">0.5</span>);</span><br><span class="line">	ll tans = x;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= m;i++)<span class="keyword">if</span>(!(x%i))&#123;</span><br><span class="line">		tans = tans/i*(i<span class="number">-1</span>);</span><br><span class="line">		<span class="keyword">while</span>(!(x%i))x /= i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(x &gt; <span class="number">1</span>)tans = tans / x * (x<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">upd</span><span class="params">(ll x,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;p?x:x%p+p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d,ll p)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	ll a = Pow(x,d/<span class="number">2</span>,p);</span><br><span class="line">	tans = upd(a*a,p);</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = upd(tans*x,p); </span><br><span class="line">	<span class="keyword">return</span> upd(tans,p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(ll l,ll r,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r <span class="keyword">or</span> p == <span class="number">1</span>)<span class="keyword">return</span> upd(raw[l],p);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> Pow(raw[l],cal(l+<span class="number">1</span>,r,vis[p]),p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; mod;</span><br><span class="line">	ll qwq = mod;</span><br><span class="line">	<span class="keyword">while</span>(qwq != <span class="number">1</span>)&#123;</span><br><span class="line">		vis[qwq] = phi(qwq);</span><br><span class="line">		qwq = vis[qwq];</span><br><span class="line">	&#125;</span><br><span class="line">	vis[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)<span class="built_in">cin</span> &gt;&gt; raw[i];</span><br><span class="line">	<span class="keyword">int</span> q;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; q;</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> l,r;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; l &gt;&gt; r;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cal(l,r,mod)%mod &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给出$n$个字符串, 将字符串按顺序拼接. 拼接时删除后面字符串的前缀与前面字符串的后缀中的最长相同部分.</p>
+<p>例如<code>sample</code>与<code>please</code>拼接成为<code>samplease</code></p>
+<p>$1 \leq n \leq 10^5$, $\sum|s_i| \leq 10^6$</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>设将$u$和$v$拼接在一起, 用KMP求出$s = v|u$(|是任意分隔符)的失配数组$next[]$.由于失配数组代表前后缀的最长长度, $next[|s|]$即为$v$的前缀与$u$的后缀相同部分的最长长度.</p>
+<p>注意到这个最长长度不会超过$|v|$, 因此我们只需把$u$的最后$|v|$个字符接到分隔符后. 时间复杂度$O(\sum|s_i|)$</p>
+<p>赛时十分傻逼地忘了用分隔符把$u,v$分隔开, 疯狂WA到怀疑人生…顺便吐槽一句这个数据真的弱</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我  是  傻  逼</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">int</span> Next[<span class="number">4000010</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getFail</span><span class="params">(<span class="built_in">string</span> &amp; P)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;= (<span class="keyword">int</span>)P.size();i++)Next[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> p_size = P.size();</span><br><span class="line">	Next[<span class="number">0</span>] = Next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; p_size;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> j = Next[i];</span><br><span class="line">		<span class="keyword">while</span>(j <span class="keyword">and</span> P[i] != P[j])j = Next[j];</span><br><span class="line">		Next[i+<span class="number">1</span>] = (P[j] == P[i]?j+<span class="number">1</span>:<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">process</span><span class="params">(<span class="built_in">string</span> &amp; u,<span class="built_in">string</span> &amp; v)</span></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> x = v;</span><br><span class="line">	x += <span class="string">'|'</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = max(<span class="number">0</span>,(<span class="keyword">int</span>)(u.size() - v.size()));i &lt; (<span class="keyword">int</span>)u.size();i++)x += u[i];</span><br><span class="line">	getFail(x);</span><br><span class="line">	<span class="built_in">string</span> tans = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = Next[x.size()];i &lt; (<span class="keyword">int</span>)v.size();i++)tans += v[i];</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="built_in">string</span> ans = <span class="string">""</span>;</span><br><span class="line">	<span class="built_in">string</span> u,v;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; u;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; u;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; u &gt;&gt; v;</span><br><span class="line">	ans = u + process(u,v);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; v;</span><br><span class="line">		ans += process(ans,v);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -430,7 +421,9 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
           
             <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
           
-            <a href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag"># 数论</a>
+            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+          
+            <a href="/tags/KMP/" rel="tag"># KMP</a>
           
         </div>
       
@@ -443,8 +436,8 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/13/solution-CF1350C/" rel="next" title="[题解]CF1350C-Orac and LCM">
-                <i class="fa fa-chevron-left"></i> [题解]CF1350C-Orac and LCM
+              <a href="/2020/11/26/solution-CF1451E2/" rel="next" title="[题解]CF1451E2-Bitwise Queries (Hard Version)">
+                <i class="fa fa-chevron-left"></i> [题解]CF1451E2-Bitwise Queries (Hard Version)
               </a>
             
           </div>
@@ -452,10 +445,6 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/13/Mobius-Transformation/" rel="prev" title="Mobius-Transformation">
-                Mobius-Transformation <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -621,7 +610,7 @@ a^{b \bmod φ(p) + φ(p) } && {b \geq φ(p)}\\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
             
 
           </div>

@@ -184,7 +184,10 @@ A =  \left\{ \begin{matrix}   1 & 1  \\   0 & 0   \end{matrix}  \right\}</script
 C_k^k +C_{k+1}^k +...+C_{n}^k（n > k)</script><h2 id="某些数列"><a href="#某些数列" class="headerlink" title="某些数列"></a>某些数列</h2><p>对于数列${1,2,2,3,3,3,4,4,4,4,…}$(数$i$出现了$i$)次, 有通项公式</p>
 <script type="math/tex; mode=display">
 a_n = \frac{1+2\sqrt{2n}}{2}</script><script type="math/tex; mode=display">
-\sum_{i = 1}^\infin i \cdot \frac{1}{a^i}</script>]]></content>
+\sum_{i = 1}^\infin i \cdot \frac{1}{a^i}</script><p>海伦公式</p>
+<p>$a,b,c$为三角形边长, $s = \frac{a+b+c}{2}$</p>
+<p>三角形面积为$S = \sqrt{s(s-a)(s-b)(s-c)}$</p>
+]]></content>
       <categories>
         <category>模板</category>
       </categories>
@@ -1022,6 +1025,26 @@ g(e_i,j,k) = ((cnt_i - num[u][j])*num[u][k] + (cnt_k - num[u][k])*cnt_j)*e_i.w</
         <tag>题解</tag>
         <tag>图论</tag>
         <tag>基环树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[题解]CF1200 E-Compress Words</title>
+    <url>/2020/12/03/solution-CF1200E/</url>
+    <content><![CDATA[<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给出$n$个字符串, 将字符串按顺序拼接. 拼接时删除后面字符串的前缀与前面字符串的后缀中的最长相同部分.</p>
+<p>例如<code>sample</code>与<code>please</code>拼接成为<code>samplease</code></p>
+<p>$1 \leq n \leq 10^5$, $\sum|s_i| \leq 10^6$</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>设将$u$和$v$拼接在一起, 用KMP求出$s = v|u$(|是任意分隔符)的失配数组$next[]$.由于失配数组代表前后缀的最长长度, $next[|s|]$即为$v$的前缀与$u$的后缀相同部分的最长长度.</p>
+<p>注意到这个最长长度不会超过$|v|$, 因此我们只需把$u$的最后$|v|$个字符接到分隔符后. 时间复杂度$O(\sum|s_i|)$</p>
+<p>赛时十分傻逼地忘了用分隔符把$u,v$分隔开, 疯狂WA到怀疑人生…顺便吐槽一句这个数据真的弱</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我  是  傻  逼</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">int</span> Next[<span class="number">4000010</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getFail</span><span class="params">(<span class="built_in">string</span> &amp; P)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;= (<span class="keyword">int</span>)P.size();i++)Next[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> p_size = P.size();</span><br><span class="line">	Next[<span class="number">0</span>] = Next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; p_size;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> j = Next[i];</span><br><span class="line">		<span class="keyword">while</span>(j <span class="keyword">and</span> P[i] != P[j])j = Next[j];</span><br><span class="line">		Next[i+<span class="number">1</span>] = (P[j] == P[i]?j+<span class="number">1</span>:<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">process</span><span class="params">(<span class="built_in">string</span> &amp; u,<span class="built_in">string</span> &amp; v)</span></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> x = v;</span><br><span class="line">	x += <span class="string">'|'</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = max(<span class="number">0</span>,(<span class="keyword">int</span>)(u.size() - v.size()));i &lt; (<span class="keyword">int</span>)u.size();i++)x += u[i];</span><br><span class="line">	getFail(x);</span><br><span class="line">	<span class="built_in">string</span> tans = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = Next[x.size()];i &lt; (<span class="keyword">int</span>)v.size();i++)tans += v[i];</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="built_in">string</span> ans = <span class="string">""</span>;</span><br><span class="line">	<span class="built_in">string</span> u,v;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; u;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; u;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; u &gt;&gt; v;</span><br><span class="line">	ans = u + process(u,v);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; v;</span><br><span class="line">		ans += process(ans,v);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>题解</tag>
+        <tag>字符串</tag>
+        <tag>KMP</tag>
       </tags>
   </entry>
 </search>
