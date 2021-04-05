@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="题解,FFT,生成函数," />
 
 
 
@@ -77,12 +77,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="I always love dashie">
-<meta property="og:url" content="http://linkinpony.github.io/tags/%E4%BA%8C%E5%88%86/index.html">
+<meta name="description" content="题意给出$m$个集合, 第$i$个集合有$ci$种颜色为$i$的小球, 保证$\sum{i &#x3D; 1}^m c_i &#x3D; n$. 现从这些集合中取出$k$个小球, 问这些小球构成的集合有多少种. 答案模$1009$. $1 \leq m,k \leq n \leq 2\cdot 10^5$ 题解普通型生成函数裸题. 设$G(x) &#x3D; \prod{i &#x3D; 1}^m(\sum{j &#x3D; 0}^{c_i}x^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[题解]CF958F3 Lightsabers (hard)">
+<meta property="og:url" content="http://linkinpony.github.io/2021/04/04/solution-CF958F3/index.html">
 <meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="题意给出$m$个集合, 第$i$个集合有$ci$种颜色为$i$的小球, 保证$\sum{i &#x3D; 1}^m c_i &#x3D; n$. 现从这些集合中取出$k$个小球, 问这些小球构成的集合有多少种. 答案模$1009$. $1 \leq m,k \leq n \leq 2\cdot 10^5$ 题解普通型生成函数裸题. 设$G(x) &#x3D; \prod{i &#x3D; 1}^m(\sum{j &#x3D; 0}^{c_i}x^">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-04T07:49:17.000Z">
+<meta property="article:modified_time" content="2021-04-05T04:30:47.508Z">
 <meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="FFT">
+<meta property="article:tag" content="生成函数">
 <meta name="twitter:card" content="summary">
 
 
@@ -113,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://linkinpony.github.io/tags/二分/"/>
+  <link rel="canonical" href="http://linkinpony.github.io/2021/04/04/solution-CF958F3/"/>
 
 
 
 
 
-  <title>Tag: 二分 | I always love dashie</title>
+  <title>[题解]CF958F3 Lightsabers (hard) | I always love dashie</title>
   
 
 
@@ -147,7 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -285,54 +292,178 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>二分<small>Tag</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2021/04/04/solution-CF958F3/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/06/08/solution-Uva11107/" itemprop="url">
-              
-                <span itemprop="name">[题解]UVA11107 Life Forms</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">[题解]CF958F3 Lightsabers (hard)</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-08T20:07:49+08:00"
-              content="2020-06-08" >
-          06-08
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-04T15:49:17+08:00">
+                2021-04-04
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给出$m$个集合, 第$i$个集合有$c<em>i$种颜色为$i$的小球, 保证$\sum</em>{i = 1}^m c_i = n$. 现从这些集合中取出$k$个小球, 问这些小球构成的集合有多少种. 答案模$1009$.</p>
+<p>$1 \leq m,k \leq n \leq 2\cdot 10^5$</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>普通型生成函数裸题.</p>
+<p>设$G(x) = \prod<em>{i = 1}^m(\sum</em>{j = 0}^{c_i}x^j)$</p>
+<p>那么$G(x)[k]$即为答案. 问题转换为$m$个多项式相乘. 使用分治法可在$O(n\log^2n)$时间内用FFT求解.</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">4e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">1009</span>;</span><br><span class="line"><span class="keyword">int</span> raw[maxn],cnt[maxn];</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ld;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Poly;</span><br><span class="line"><span class="keyword">const</span> ld PI = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="keyword">int</span> rev[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Comp</span>&#123;</span></span><br><span class="line">    <span class="keyword">double</span> x, y;</span><br><span class="line">    Comp (<span class="keyword">double</span> x = <span class="number">0</span>, <span class="keyword">double</span> y = <span class="number">0</span>):x(x),y(y)&#123;&#125;</span><br><span class="line">    Comp <span class="keyword">operator</span> * (Comp B)&#123;</span><br><span class="line">   		<span class="keyword">return</span> Comp(x*B.x - y*B.y,x*B.y + y*B.x);</span><br><span class="line">	&#125;</span><br><span class="line">	Comp <span class="keyword">operator</span> + (Comp B)&#123;</span><br><span class="line">	    <span class="keyword">return</span> Comp(x + B.x,y + B.y);</span><br><span class="line">	&#125;</span><br><span class="line">	Comp <span class="keyword">operator</span> - (Comp B)&#123;</span><br><span class="line">	    <span class="keyword">return</span> Comp(x - B.x,y - B.y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Comp F1[maxn],F2[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FFT</span><span class="params">(Comp * A,<span class="keyword">int</span> siz,<span class="keyword">int</span> type)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = siz;</span><br><span class="line">	<span class="keyword">int</span> S = log2(n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)rev[i] = (rev[i&gt;&gt;<span class="number">1</span>] &gt;&gt; <span class="number">1</span>) | ((i &amp; <span class="number">1</span>) &lt;&lt; (S - <span class="number">1</span>));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)<span class="keyword">if</span>(i &lt; rev[i])swap(A[i],A[rev[i]]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; n;i *= <span class="number">2</span>)&#123;</span><br><span class="line">		<span class="function">Comp <span class="title">Wn</span><span class="params">(<span class="built_in">cos</span>(PI/i),type*<span class="built_in">sin</span>(PI/i))</span></span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; n;j += i*<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="function">Comp <span class="title">W</span><span class="params">(<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>;k &lt; i;k++)&#123;</span><br><span class="line">				Comp facx = A[j+k],facy = W*A[j+k+i];</span><br><span class="line">				A[j+k] = facx + facy;</span><br><span class="line">				A[j+k+i] = facx - facy;</span><br><span class="line">				W = W*Wn;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="number">-1</span>)<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)A[i].x = ((A[i].x/n + <span class="number">0.5</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Poly <span class="title">mul</span><span class="params">(Poly A,Poly B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = A.size(),m = B.size();</span><br><span class="line">	<span class="keyword">int</span> siz = n + m - <span class="number">1</span>;</span><br><span class="line">	<span class="function">Poly <span class="title">C</span><span class="params">(siz)</span></span>;</span><br><span class="line">	<span class="keyword">if</span>(siz &lt; <span class="number">64</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; m;j++)C[i+j] = (C[i+j] + <span class="number">1L</span>L*A[i]*B[j])%p;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> C;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> fsiz = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(fsiz &lt;= siz)fsiz *= <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; fsiz;i++)F1[i] = F2[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)F1[i] = A[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)F2[i] = B[i];</span><br><span class="line">	FFT(F1,fsiz,<span class="number">1</span>);</span><br><span class="line">	FFT(F2,fsiz,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; fsiz;i++)F1[i] = F1[i]*F2[i];</span><br><span class="line">	FFT(F1,fsiz,<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; siz;i++)&#123;</span><br><span class="line">		C[i] = ((ll)F1[i].x)%p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> C;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Poly <span class="title">solve</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r)&#123;</span><br><span class="line">		<span class="keyword">return</span> Poly(cnt[l]+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> m = (l+r)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> mul(solve(l,m),solve(m+<span class="number">1</span>,r));</span><br><span class="line">&#125;</span><br><span class="line">Poly ans;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n,m,k;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">		cnt[x]++;</span><br><span class="line">	&#125;</span><br><span class="line">	Poly ans = solve(<span class="number">1</span>,m);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans[k] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+          
+            <a href="/tags/FFT/" rel="tag"># FFT</a>
+          
+            <a href="/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag"># 生成函数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/04/03/history-qwq/" rel="next" title="历史遗迹">
+                <i class="fa fa-chevron-left"></i> 历史遗迹
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -340,6 +471,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -362,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -455,6 +599,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -595,6 +755,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
