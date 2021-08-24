@@ -17,15 +17,15 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="题意设$p$为从$\sum$到$\sum$的双射($\sum &#x3D; {a,b,…,z})$. 给出两个字符串$s,t$(由于个人习惯,此处s,t的含义和原题相反)且满足$(1 \leq |t| \leq |s| \leq 2 \cdot10^5)$. 求对于$s$的每个长度为$|t|$的子串$s’$, $s’$与$t$是否匹配. 输出一个长为$|s| - |t| + 1$的01串, 其中第$i$位为">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="题意 设\(p\)为从\(\sum\)到\(\sum\)的双射(\(\sum &#x3D; \{a,b,...,z\})\). 给出两个字符串\(s,t\)(由于个人习惯,此处s,t的含义和原题相反)且满足\((1 \leq |t| \leq |s| \leq 2 \cdot10^5)\). 求对于\(s\)的每个长度为\(|t|\)的子串\(s&#39;\), \(s&#39;\)与\(t\)是否匹配.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[题解]CF1334G-Substring Search">
 <meta property="og:url" content="http://linkinpony.github.io/2021/04/02/solution-CF1334G/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="题意设$p$为从$\sum$到$\sum$的双射($\sum &#x3D; {a,b,…,z})$. 给出两个字符串$s,t$(由于个人习惯,此处s,t的含义和原题相反)且满足$(1 \leq |t| \leq |s| \leq 2 \cdot10^5)$. 求对于$s$的每个长度为$|t|$的子串$s’$, $s’$与$t$是否匹配. 输出一个长为$|s| - |t| + 1$的01串, 其中第$i$位为">
+<meta property="og:description" content="题意 设\(p\)为从\(\sum\)到\(\sum\)的双射(\(\sum &#x3D; \{a,b,...,z\})\). 给出两个字符串\(s,t\)(由于个人习惯,此处s,t的含义和原题相反)且满足\((1 \leq |t| \leq |s| \leq 2 \cdot10^5)\). 求对于\(s\)的每个长度为\(|t|\)的子串\(s&#39;\), \(s&#39;\)与\(t\)是否匹配.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-02T12:00:33.000Z">
 <meta property="article:modified_time" content="2021-04-02T12:27:44.707Z">
@@ -53,9 +53,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -63,9 +65,6 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -76,56 +75,19 @@
       <h1 class="site-title">I always love dashie</h1>
       <i class="logo-line"></i>
     </a>
-      <img class="custom-logo-image" src="/%5Bobject%20Object%5D" alt="I always love dashie">
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>Home</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="th-list fa-fw"></i>Categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">Archives</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="tags fa-fw"></i>Tags</a></li>
-        <li class="menu-item menu-item-about"><a href="/about" rel="section"><i class="mars fa-fw"></i>About</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
-  </ul>
-</nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
         
@@ -164,24 +126,27 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">34</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-          <a href="/categories">
+          <a href="/categories/">
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-          <a href="/tags">
-        <span class="site-state-item-count">36</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
       <span class="links-of-author-item">
         <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
       </span>
@@ -257,8 +222,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-04-02 20:00:33" itemprop="dateCreated datePublished" datetime="2021-04-02T20:00:33+08:00">2021-04-02</time>
+      <time title="Created: 2021-04-02 20:00:33 / Modified: 20:27:44" itemprop="dateCreated datePublished" datetime="2021-04-02T20:00:33+08:00">2021-04-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -280,19 +246,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>设$p$为从$\sum$到$\sum$的双射($\sum = {a,b,…,z})$. 给出两个字符串$s,t$(<strong>由于个人习惯,此处s,t的含义和原题相反</strong>)且满足$(1 \leq |t| \leq |s| \leq 2 \cdot10^5)$. 求对于$s$的每个长度为$|t|$的子串$s’$, $s’$与$t$是否匹配. 输出一个长为$|s| - |t| + 1$的01串, 其中第$i$位为1表示$s[i…i+|t| - 1]$与$t$匹配.</p>
-<p>匹配在此题定义为: 设两个长度相等的串$s’,t$, 对全部$i = 0…|t|-1$, 有$s’[i] == t[i]$ 或$s’[i] == p(t[i])$</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先我们设匹配函数</p>
-<script type="math/tex; mode=display">
-F(x) = \sum_{i = x,j = i - x}^{|t| + x - 1}(s[i] - t[j])^2(s[i] - f(t[j]))^2</script><p>容易看出, 当且仅当$F(x) == 0$时, $s[x…x+|t| - 1]$与$t$匹配. 将和式内部展开后化简, 可以发现展开后每一项都可化为 $\sum_{i,j = 1}^na_ib_j$的形式. 我们用经典套路把$t$反转后, 便可化为卷积形式用FFT求解.</p>
-<p>但是这个式子好像要做七次DFT和IDFT, 太麻烦. 我们尝试乱搞一下:</p>
-<script type="math/tex; mode=display">
-G(x) = \sum_{i = x,j = i-x}^{|t| + x - 1}(s[i] - t[j])(s[i] - f(t[j]))</script><p>展开后有:</p>
-<script type="math/tex; mode=display">
-G(x) = \sum_{i = x}^{|t| + x - 1}s[i]^2 - \sum_{i = x,j = i-x}^{|t| + x - 1}s[i]\cdot f(t[j]) - \sum_{i = x,j = i-x}^{|t| + x - 1}s[i]\cdot t[j] + \sum_{j = 0}^{|t| - 1} t[j] \cdot f(t[j])</script><p>首项和末项用前缀和处理, 剩下两项可以分别进行一次卷积求出.</p>
-<p>把平方去掉后由于存在负数项, 因而某些不能被匹配的位置也可能有$G(x) = 0$. 我们将<code>a-z</code>随机赋上一个权值后再进行计算, 便能大大减少冲突的概率. (我不知道这种做法实际上是否正确, <strong>更不能保证不会被卡</strong>, 但这种做法足够通过此题). 由于FFT在计算时会损失精度, 我们使用NTT进行求解.</p>
-<p>时间复杂度$|s|\log |s|$</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">6e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">998244353</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> d)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;</span><br><span class="line">	<span class="keyword">int</span> a = Pow(x,d/<span class="number">2</span>);</span><br><span class="line">	tans = <span class="number">1l</span>l*a*a%p;</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = <span class="number">1l</span>l*tans*x%p; </span><br><span class="line">	<span class="keyword">return</span> tans%p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> rev[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp; x,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> size = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(size &lt;= n)size *= <span class="number">2</span>;</span><br><span class="line">	x.assign(size*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NTT_init</span><span class="params">(<span class="keyword">int</span> lim)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lim; ++i) rev[i] = (i &amp; <span class="number">1</span>) * (lim &gt;&gt; <span class="number">1</span>) + (rev[i &gt;&gt; <span class="number">1</span>] &gt;&gt; <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NTT</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp; A, <span class="keyword">int</span> opt)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> lim = A.size();</span><br><span class="line"> 	<span class="keyword">int</span> i, j, k, m, gn, g, tmp;</span><br><span class="line"> 	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim; ++i)<span class="keyword">if</span> (rev[i] &lt; i) swap(A[i], A[rev[i]]);</span><br><span class="line"> 	<span class="keyword">for</span>(m = <span class="number">2</span>; m &lt;= lim; m &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">	    k = m &gt;&gt; <span class="number">1</span>;</span><br><span class="line">	    gn = Pow(<span class="number">3</span>,(p - <span class="number">1</span>) / m);</span><br><span class="line">	    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim; i += m) &#123;</span><br><span class="line">	    	g = <span class="number">1</span>;</span><br><span class="line">	    	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; k; ++j, g = <span class="number">1l</span>l * g * gn % p) &#123;</span><br><span class="line">	    	    tmp = <span class="number">1l</span>l * A[i + j + k] * g % p;</span><br><span class="line">	    	    A[i + j + k] = (A[i + j] - tmp + p) % p;</span><br><span class="line">	     	 	A[i + j] = (A[i + j] + tmp) % p;</span><br><span class="line">	    	&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(opt == <span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="keyword">auto</span> it = A.begin();it++;</span><br><span class="line">    	reverse(it,A.end());</span><br><span class="line">    	<span class="keyword">int</span> inv = Pow(lim,p<span class="number">-2</span>);</span><br><span class="line">    	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim; ++i) A[i] = <span class="number">1l</span>l * A[i] * inv % p;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Poly;</span><br><span class="line">Poly A,B;</span><br><span class="line"><span class="keyword">int</span> per[<span class="number">30</span>];</span><br><span class="line"><span class="keyword">int</span> w[maxn][<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> rnd[<span class="number">30</span>];</span><br><span class="line"><span class="keyword">int</span> ans[maxn];</span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(<span class="number">19260817</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">string</span> s,t;</span><br><span class="line">	srand(time(<span class="literal">NULL</span>));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">26</span>;i++)<span class="built_in">cin</span> &gt;&gt; per[i],per[i]--,rnd[i] = Rand()%p;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t &gt;&gt; s;</span><br><span class="line">	<span class="keyword">int</span> n = s.size(),m = t.size();</span><br><span class="line">	Poly A,B;</span><br><span class="line">	init(A,s.size());</span><br><span class="line">	init(B,s.size());</span><br><span class="line">	NTT_init(A.size());</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)w[i][<span class="number">0</span>] = (<span class="number">1l</span>l*rnd[s[i] - <span class="string">'a'</span>]*rnd[s[i] - <span class="string">'a'</span>]%p + (i?w[i<span class="number">-1</span>][<span class="number">0</span>]:<span class="number">0</span>))%p;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)w[i][<span class="number">3</span>] = (<span class="number">1l</span>l*rnd[t[i] - <span class="string">'a'</span>]*rnd[per[t[i] - <span class="string">'a'</span>]]%p + (i?w[i<span class="number">-1</span>][<span class="number">3</span>]:<span class="number">0</span>))%p;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)A[i] = rnd[s[i] - <span class="string">'a'</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)B[m - i - <span class="number">1</span>] = rnd[t[i] - <span class="string">'a'</span>];</span><br><span class="line">	NTT(A,<span class="number">1</span>);</span><br><span class="line">	NTT(B,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.size();i++)A[i] = (<span class="number">1l</span>l*A[i]*B[i])%p;</span><br><span class="line">	NTT(A,<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.size();i++)w[i][<span class="number">1</span>] = A[i];</span><br><span class="line">	init(A,s.size());</span><br><span class="line">	init(B,s.size());</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)A[i] = rnd[s[i] - <span class="string">'a'</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)B[m - i - <span class="number">1</span>] = rnd[per[t[i] - <span class="string">'a'</span>]];</span><br><span class="line">	NTT(A,<span class="number">1</span>);</span><br><span class="line">	NTT(B,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.size();i++)A[i] = (<span class="number">1l</span>l*A[i]*B[i])%p;</span><br><span class="line">	NTT(A,<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.size();i++)w[i][<span class="number">2</span>] = A[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = m<span class="number">-1</span>;i &lt; n;i++)&#123;</span><br><span class="line">		ll A = (w[i][<span class="number">0</span>] - (i - m &gt;= <span class="number">0</span>?w[i-m][<span class="number">0</span>]:<span class="number">0</span>) + p)%p,D = w[m<span class="number">-1</span>][<span class="number">3</span>]%p;</span><br><span class="line">		ll B = w[i][<span class="number">1</span>],C = w[i][<span class="number">2</span>];</span><br><span class="line">		<span class="keyword">if</span>((((A -  B + p)%p - C + p) % p + D)%p == <span class="number">0</span>)<span class="built_in">cout</span> &lt;&lt; <span class="string">"1"</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">cout</span> &lt;&lt; <span class="string">"0"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="题意">题意</h2>
+<p>设<span class="math inline">\(p\)</span>为从<span class="math inline">\(\sum\)</span>到<span class="math inline">\(\sum\)</span>的双射(<span class="math inline">\(\sum = \{a,b,...,z\})\)</span>. 给出两个字符串<span class="math inline">\(s,t\)</span>(<strong>由于个人习惯,此处s,t的含义和原题相反</strong>)且满足<span class="math inline">\((1 \leq |t| \leq |s| \leq 2 \cdot10^5)\)</span>. 求对于<span class="math inline">\(s\)</span>的每个长度为<span class="math inline">\(|t|\)</span>的子串<span class="math inline">\(s&#39;\)</span>, <span class="math inline">\(s&#39;\)</span>与<span class="math inline">\(t\)</span>是否匹配. 输出一个长为<span class="math inline">\(|s| - |t| + 1\)</span>的01串, 其中第<span class="math inline">\(i\)</span>位为1表示<span class="math inline">\(s[i...i+|t| - 1]\)</span>与<span class="math inline">\(t\)</span>匹配.</p>
+<p>匹配在此题定义为: 设两个长度相等的串<span class="math inline">\(s&#39;,t\)</span>, 对全部<span class="math inline">\(i = 0...|t|-1\)</span>, 有<span class="math inline">\(s&#39;[i] == t[i]\)</span> 或<span class="math inline">\(s&#39;[i] == p(t[i])\)</span></p>
+<h2 id="题解">题解</h2>
+<p>首先我们设匹配函数 <span class="math display">\[
+F(x) = \sum_{i = x,j = i - x}^{|t| + x - 1}(s[i] - t[j])^2(s[i] - f(t[j]))^2
+\]</span> 容易看出, 当且仅当<span class="math inline">\(F(x) == 0\)</span>时, <span class="math inline">\(s[x...x+|t| - 1]\)</span>与<span class="math inline">\(t\)</span>匹配. 将和式内部展开后化简, 可以发现展开后每一项都可化为 <span class="math inline">\(\sum_{i,j = 1}^na_ib_j\)</span>的形式. 我们用经典套路把<span class="math inline">\(t\)</span>反转后, 便可化为卷积形式用FFT求解.</p>
+<p>但是这个式子好像要做七次DFT和IDFT, 太麻烦. 我们尝试乱搞一下: <span class="math display">\[
+G(x) = \sum_{i = x,j = i-x}^{|t| + x - 1}(s[i] - t[j])(s[i] - f(t[j]))
+\]</span> 展开后有: <span class="math display">\[
+G(x) = \sum_{i = x}^{|t| + x - 1}s[i]^2 - \sum_{i = x,j = i-x}^{|t| + x - 1}s[i]\cdot f(t[j]) - \sum_{i = x,j = i-x}^{|t| + x - 1}s[i]\cdot t[j] + \sum_{j = 0}^{|t| - 1} t[j] \cdot f(t[j])
+\]</span></p>
+<p>首项和末项用前缀和处理, 剩下两项可以分别进行一次卷积求出.</p>
+<p>把平方去掉后由于存在负数项, 因而某些不能被匹配的位置也可能有<span class="math inline">\(G(x) = 0\)</span>. 我们将<code>a-z</code>随机赋上一个权值后再进行计算, 便能大大减少冲突的概率. (我不知道这种做法实际上是否正确, <strong>更不能保证不会被卡</strong>, 但这种做法足够通过此题). 由于FFT在计算时会损失精度, 我们使用NTT进行求解.</p>
+<p>时间复杂度<span class="math inline">\(|s|\log |s|\)</span></p>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">6e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">998244353</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> d)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="built_in">Pow</span>(x,d/<span class="number">2</span>);</span><br><span class="line">	tans = <span class="number">1ll</span>*a*a%p;</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = <span class="number">1ll</span>*tans*x%p; </span><br><span class="line">	<span class="keyword">return</span> tans%p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> rev[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; x,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> size = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(size &lt;= n)size *= <span class="number">2</span>;</span><br><span class="line">	x.<span class="built_in">assign</span>(size*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NTT_init</span><span class="params">(<span class="keyword">int</span> lim)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lim; ++i) rev[i] = (i &amp; <span class="number">1</span>) * (lim &gt;&gt; <span class="number">1</span>) + (rev[i &gt;&gt; <span class="number">1</span>] &gt;&gt; <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NTT</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; A, <span class="keyword">int</span> opt)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> lim = A.<span class="built_in">size</span>();</span><br><span class="line"> 	<span class="keyword">int</span> i, j, k, m, gn, g, tmp;</span><br><span class="line"> 	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim; ++i)<span class="keyword">if</span> (rev[i] &lt; i) <span class="built_in">swap</span>(A[i], A[rev[i]]);</span><br><span class="line"> 	<span class="keyword">for</span>(m = <span class="number">2</span>; m &lt;= lim; m &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">	    k = m &gt;&gt; <span class="number">1</span>;</span><br><span class="line">	    gn = <span class="built_in">Pow</span>(<span class="number">3</span>,(p - <span class="number">1</span>) / m);</span><br><span class="line">	    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim; i += m) &#123;</span><br><span class="line">	    	g = <span class="number">1</span>;</span><br><span class="line">	    	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; k; ++j, g = <span class="number">1ll</span> * g * gn % p) &#123;</span><br><span class="line">	    	    tmp = <span class="number">1ll</span> * A[i + j + k] * g % p;</span><br><span class="line">	    	    A[i + j + k] = (A[i + j] - tmp + p) % p;</span><br><span class="line">	     	 	A[i + j] = (A[i + j] + tmp) % p;</span><br><span class="line">	    	&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(opt == <span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="keyword">auto</span> it = A.<span class="built_in">begin</span>();it++;</span><br><span class="line">    	<span class="built_in">reverse</span>(it,A.<span class="built_in">end</span>());</span><br><span class="line">    	<span class="keyword">int</span> inv = <span class="built_in">Pow</span>(lim,p<span class="number">-2</span>);</span><br><span class="line">    	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim; ++i) A[i] = <span class="number">1ll</span> * A[i] * inv % p;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">typedef</span> vector&lt;<span class="keyword">int</span>&gt; Poly;</span><br><span class="line">Poly A,B;</span><br><span class="line"><span class="keyword">int</span> per[<span class="number">30</span>];</span><br><span class="line"><span class="keyword">int</span> w[maxn][<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> rnd[<span class="number">30</span>];</span><br><span class="line"><span class="keyword">int</span> ans[maxn];</span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(<span class="number">19260817</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	string s,t;</span><br><span class="line">	<span class="built_in">srand</span>(<span class="built_in">time</span>(<span class="literal">NULL</span>));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">26</span>;i++)cin &gt;&gt; per[i],per[i]--,rnd[i] = <span class="built_in">Rand</span>()%p;</span><br><span class="line">	cin &gt;&gt; t &gt;&gt; s;</span><br><span class="line">	<span class="keyword">int</span> n = s.<span class="built_in">size</span>(),m = t.<span class="built_in">size</span>();</span><br><span class="line">	Poly A,B;</span><br><span class="line">	<span class="built_in">init</span>(A,s.<span class="built_in">size</span>());</span><br><span class="line">	<span class="built_in">init</span>(B,s.<span class="built_in">size</span>());</span><br><span class="line">	<span class="built_in">NTT_init</span>(A.<span class="built_in">size</span>());</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)w[i][<span class="number">0</span>] = (<span class="number">1ll</span>*rnd[s[i] - <span class="string">&#x27;a&#x27;</span>]*rnd[s[i] - <span class="string">&#x27;a&#x27;</span>]%p + (i?w[i<span class="number">-1</span>][<span class="number">0</span>]:<span class="number">0</span>))%p;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)w[i][<span class="number">3</span>] = (<span class="number">1ll</span>*rnd[t[i] - <span class="string">&#x27;a&#x27;</span>]*rnd[per[t[i] - <span class="string">&#x27;a&#x27;</span>]]%p + (i?w[i<span class="number">-1</span>][<span class="number">3</span>]:<span class="number">0</span>))%p;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)A[i] = rnd[s[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)B[m - i - <span class="number">1</span>] = rnd[t[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">	<span class="built_in">NTT</span>(A,<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">NTT</span>(B,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.<span class="built_in">size</span>();i++)A[i] = (<span class="number">1ll</span>*A[i]*B[i])%p;</span><br><span class="line">	<span class="built_in">NTT</span>(A,<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.<span class="built_in">size</span>();i++)w[i][<span class="number">1</span>] = A[i];</span><br><span class="line">	<span class="built_in">init</span>(A,s.<span class="built_in">size</span>());</span><br><span class="line">	<span class="built_in">init</span>(B,s.<span class="built_in">size</span>());</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)A[i] = rnd[s[i] - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)B[m - i - <span class="number">1</span>] = rnd[per[t[i] - <span class="string">&#x27;a&#x27;</span>]];</span><br><span class="line">	<span class="built_in">NTT</span>(A,<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">NTT</span>(B,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.<span class="built_in">size</span>();i++)A[i] = (<span class="number">1ll</span>*A[i]*B[i])%p;</span><br><span class="line">	<span class="built_in">NTT</span>(A,<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.<span class="built_in">size</span>();i++)w[i][<span class="number">2</span>] = A[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = m<span class="number">-1</span>;i &lt; n;i++)&#123;</span><br><span class="line">		ll A = (w[i][<span class="number">0</span>] - (i - m &gt;= <span class="number">0</span>?w[i-m][<span class="number">0</span>]:<span class="number">0</span>) + p)%p,D = w[m<span class="number">-1</span>][<span class="number">3</span>]%p;</span><br><span class="line">		ll B = w[i][<span class="number">1</span>],C = w[i][<span class="number">2</span>];</span><br><span class="line">		<span class="keyword">if</span>((((A -  B + p)%p - C + p) % p + D)%p == <span class="number">0</span>)cout &lt;&lt; <span class="string">&quot;1&quot;</span>;</span><br><span class="line">		<span class="keyword">else</span> cout &lt;&lt; <span class="string">&quot;0&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -338,14 +309,14 @@ G(x) = \sum_{i = x}^{|t| + x - 1}s[i]^2 - \sum_{i = x,j = i-x}^{|t| + x - 1}s[i]
 
 
 <div class="copyright">
-  &copy; 2020 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class=""></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">LinkinPony</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
     </div>
@@ -353,12 +324,9 @@ G(x) = \sum_{i = x}^{|t| + x - 1}s[i]^2 - \sum_{i = x,j = i-x}^{|t| + x - 1}s[i]
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
-<script src="/js/third-party/search/local-search.js"></script>
 
 
 
@@ -366,6 +334,12 @@ G(x) = \sum_{i = x}^{|t| + x - 1}s[i]^2 - \sum_{i = x,j = i-x}^{|t| + x - 1}s[i]
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

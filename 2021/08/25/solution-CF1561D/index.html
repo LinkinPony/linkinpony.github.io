@@ -20,28 +20,30 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="本篇仅记录一些杂乱的知识点留作日后整理,更多是作Markdown和\(L_{A}T^{E}X\)的练习用">
+<meta name="description" content="题解 设\(f[i]\)为从\(n\)走到\(i\)的方案数. 分减法和整除两种情况分别讨论: \[ \begin{align} 减法:&amp;\\ f[i] &amp;&#x3D; \sum_{j &#x3D; i}^nf[j]\\ 整除:&amp;\\ f[i] &amp;&#x3D; \sum_{j &#x3D; i}^{i*j&lt;&#x3D; n}\sum_{\lfloor \frac{k}{j} \rfloor &#x3D; i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="math-misc">
-<meta property="og:url" content="http://linkinpony.github.io/2020/05/11/math-misc/index.html">
+<meta property="og:title" content="[题解]CF1561D&#x2F;CF1560B-Up the Strip">
+<meta property="og:url" content="http://linkinpony.github.io/2021/08/25/solution-CF1561D/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="本篇仅记录一些杂乱的知识点留作日后整理,更多是作Markdown和\(L_{A}T^{E}X\)的练习用">
+<meta property="og:description" content="题解 设\(f[i]\)为从\(n\)走到\(i\)的方案数. 分减法和整除两种情况分别讨论: \[ \begin{align} 减法:&amp;\\ f[i] &amp;&#x3D; \sum_{j &#x3D; i}^nf[j]\\ 整除:&amp;\\ f[i] &amp;&#x3D; \sum_{j &#x3D; i}^{i*j&lt;&#x3D; n}\sum_{\lfloor \frac{k}{j} \rfloor &#x3D; i">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-11T12:07:57.000Z">
-<meta property="article:modified_time" content="2020-05-12T02:14:07.101Z">
+<meta property="article:published_time" content="2021-08-24T17:24:50.000Z">
+<meta property="article:modified_time" content="2021-08-24T18:06:41.672Z">
 <meta property="article:author" content="LinkinPony">
 <meta property="article:tag" content="数学">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="dp">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://linkinpony.github.io/2020/05/11/math-misc/">
+<link rel="canonical" href="http://linkinpony.github.io/2021/08/25/solution-CF1561D/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2020/05/11/math-misc/","path":"2020/05/11/math-misc/","title":"math-misc"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2021/08/25/solution-CF1561D/","path":"2021/08/25/solution-CF1561D/","title":"[题解]CF1561D/CF1560B-Up the Strip"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>math-misc | I always love dashie</title>
+<title>[题解]CF1561D/CF1560B-Up the Strip | I always love dashie</title>
   
 
 
@@ -97,7 +99,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -110,6 +112,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -195,7 +198,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/11/math-misc/">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2021/08/25/solution-CF1561D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -208,7 +211,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          math-misc
+          [题解]CF1561D/CF1560B-Up the Strip
         </h1>
 
         <div class="post-meta-container">
@@ -218,23 +221,17 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2020-05-11 20:07:57" itemprop="dateCreated datePublished" datetime="2020-05-11T20:07:57+08:00">2020-05-11</time>
+      <time title="Created: 2021-08-25 01:24:50 / Modified: 02:06:41" itemprop="dateCreated datePublished" datetime="2021-08-25T01:24:50+08:00">2021-08-25</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-05-12 10:14:07" itemprop="dateModified" datetime="2020-05-12T10:14:07+08:00">2020-05-12</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
+          <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a>
         </span>
     </span>
 
@@ -248,9 +245,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <ul>
-<li>本篇仅记录一些杂乱的知识点留作日后整理,更多是作Markdown和<span class="math inline">\(L_{A}T^{E}X\)</span>的练习用</li>
-</ul>
+        <h2 id="题解">题解</h2>
+<p>设<span class="math inline">\(f[i]\)</span>为从<span class="math inline">\(n\)</span>走到<span class="math inline">\(i\)</span>的方案数. 分减法和整除两种情况分别讨论: <span class="math display">\[
+\begin{align}
+减法:&amp;\\
+f[i] &amp;= \sum_{j = i}^nf[j]\\
+整除:&amp;\\
+f[i] &amp;= \sum_{j = i}^{i*j&lt;= n}\sum_{\lfloor \frac{k}{j} \rfloor = i}f[k]\\
+&amp;= \sum_{j = i}^{i*j&lt;= n}\sum_{k = i*j}^{(i+1)*j - 1}f[k]\\
+&amp;= \sum_{j = i}^{i*j&lt;= n}suf[j] - suf[(i+1)*j]\\
+其中&amp;suf[i] = \sum_{j = i}^n f[i]\\
+\end{align}
+\]</span></p>
+<p>综上, 递推式为 <span class="math display">\[
+\begin{align}
+f[n] &amp;= suf[n] = 1\\
+suf[i] &amp;=suf[i+1] + f[i]\\
+f[i] &amp;= suf[i+1]+\sum_{j = 1}^{i*j &lt;= n}suf[j] - suf[(i+1)*j]
+\end{align}
+\]</span> 注意处理<span class="math inline">\((i+1)*j\)</span>越界的问题. 复杂度<span class="math inline">\(O(n\ln n)\)</span></p>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(chrono::steady_clock::now().time_since_epoch().count())</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">4e6</span>+<span class="number">10</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">int</span> p;</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d)</span></span>&#123;ll ta=<span class="number">1</span>;<span class="keyword">if</span>(d==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;ll a=<span class="built_in">Pow</span>(x,d/<span class="number">2</span>);ta=a*a%p;<span class="keyword">if</span>(d%<span class="number">2</span>)ta=ta*x%p;<span class="keyword">return</span> ta%p;&#125;</span><br><span class="line">ll f[maxn],pre[maxn];</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	cout.<span class="built_in">setf</span>(ios::fixed,ios::floatfield);</span><br><span class="line">	cout.<span class="built_in">precision</span>(<span class="number">12</span>);	 </span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; p;</span><br><span class="line">	f[n] = pre[n] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>;i &gt;= <span class="number">1</span>;i--)&#123;</span><br><span class="line">		f[i] = pre[i+<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">2</span>;i*j &lt;= n;j++)&#123;</span><br><span class="line">			f[i] = (f[i] + (pre[i*j] - ((i+<span class="number">1</span>)*(j) &gt; maxn?<span class="number">0</span>:pre[(i+<span class="number">1</span>)*(j)])))%p;</span><br><span class="line">		&#125;</span><br><span class="line">		pre[i] = (f[i] + pre[i+<span class="number">1</span>])%p;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; f[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -261,20 +276,19 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+              <a href="/tags/dp/" rel="tag"># dp</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/05/09/template-geometry/" rel="prev" title="[模板]计算几何">
-                  <i class="fa fa-chevron-left"></i> [模板]计算几何
+                <a href="/2021/08/11/solution-HDU7047/" rel="prev" title="[题解]HDU7047-Link with Balls">
+                  <i class="fa fa-chevron-left"></i> [题解]HDU7047-Link with Balls
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/05/13/solution-CF1350C/" rel="next" title="[题解]CF1350C-Orac and LCM">
-                  [题解]CF1350C-Orac and LCM <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

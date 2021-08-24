@@ -17,15 +17,15 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="题意给出$m$个集合, 第$i$个集合有$ci$种颜色为$i$的小球, 保证$\sum{i &#x3D; 1}^m c_i &#x3D; n$. 现从这些集合中取出$k$个小球, 问这些小球构成的集合有多少种. 答案模$1009$. $1 \leq m,k \leq n \leq 2\cdot 10^5$ 题解普通型生成函数裸题. 设$G(x) &#x3D; \prod{i &#x3D; 1}^m(\sum{j &#x3D; 0}^{c_i}x^">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="题意 给出\(m\)个集合, 第\(i\)个集合有\(c_i\)种颜色为\(i\)的小球, 保证\(\sum_{i &#x3D; 1}^m c_i &#x3D; n\). 现从这些集合中取出\(k\)个小球, 问这些小球构成的集合有多少种. 答案模\(1009\). \(1 \leq m,k \leq n \leq 2\cdot 10^5\) 题解 普通型生成函数裸题. 设\(G(x) &#x3D; \prod_{i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[题解]CF958F3 Lightsabers (hard)">
 <meta property="og:url" content="http://linkinpony.github.io/2021/04/04/solution-CF958F3/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="题意给出$m$个集合, 第$i$个集合有$ci$种颜色为$i$的小球, 保证$\sum{i &#x3D; 1}^m c_i &#x3D; n$. 现从这些集合中取出$k$个小球, 问这些小球构成的集合有多少种. 答案模$1009$. $1 \leq m,k \leq n \leq 2\cdot 10^5$ 题解普通型生成函数裸题. 设$G(x) &#x3D; \prod{i &#x3D; 1}^m(\sum{j &#x3D; 0}^{c_i}x^">
+<meta property="og:description" content="题意 给出\(m\)个集合, 第\(i\)个集合有\(c_i\)种颜色为\(i\)的小球, 保证\(\sum_{i &#x3D; 1}^m c_i &#x3D; n\). 现从这些集合中取出\(k\)个小球, 问这些小球构成的集合有多少种. 答案模\(1009\). \(1 \leq m,k \leq n \leq 2\cdot 10^5\) 题解 普通型生成函数裸题. 设\(G(x) &#x3D; \prod_{i">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-04T07:49:17.000Z">
 <meta property="article:modified_time" content="2021-04-05T04:30:47.508Z">
@@ -52,9 +52,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -62,9 +64,6 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -75,56 +74,19 @@
       <h1 class="site-title">I always love dashie</h1>
       <i class="logo-line"></i>
     </a>
-      <img class="custom-logo-image" src="/%5Bobject%20Object%5D" alt="I always love dashie">
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>Home</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="th-list fa-fw"></i>Categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">Archives</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="tags fa-fw"></i>Tags</a></li>
-        <li class="menu-item menu-item-about"><a href="/about" rel="section"><i class="mars fa-fw"></i>About</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
-  </ul>
-</nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
         
@@ -163,24 +125,27 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">34</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-          <a href="/categories">
+          <a href="/categories/">
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-          <a href="/tags">
-        <span class="site-state-item-count">36</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
       <span class="links-of-author-item">
         <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
       </span>
@@ -259,6 +224,13 @@
 
       <time title="Created: 2021-04-04 15:49:17" itemprop="dateCreated datePublished" datetime="2021-04-04T15:49:17+08:00">2021-04-04</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-05 12:30:47" itemprop="dateModified" datetime="2021-04-05T12:30:47+08:00">2021-04-05</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -279,12 +251,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给出$m$个集合, 第$i$个集合有$c<em>i$种颜色为$i$的小球, 保证$\sum</em>{i = 1}^m c_i = n$. 现从这些集合中取出$k$个小球, 问这些小球构成的集合有多少种. 答案模$1009$.</p>
-<p>$1 \leq m,k \leq n \leq 2\cdot 10^5$</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>普通型生成函数裸题.</p>
-<p>设$G(x) = \prod<em>{i = 1}^m(\sum</em>{j = 0}^{c_i}x^j)$</p>
-<p>那么$G(x)[k]$即为答案. 问题转换为$m$个多项式相乘. 使用分治法可在$O(n\log^2n)$时间内用FFT求解.</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">4e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">1009</span>;</span><br><span class="line"><span class="keyword">int</span> raw[maxn],cnt[maxn];</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ld;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; Poly;</span><br><span class="line"><span class="keyword">const</span> ld PI = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="keyword">int</span> rev[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Comp</span>&#123;</span></span><br><span class="line">    <span class="keyword">double</span> x, y;</span><br><span class="line">    Comp (<span class="keyword">double</span> x = <span class="number">0</span>, <span class="keyword">double</span> y = <span class="number">0</span>):x(x),y(y)&#123;&#125;</span><br><span class="line">    Comp <span class="keyword">operator</span> * (Comp B)&#123;</span><br><span class="line">   		<span class="keyword">return</span> Comp(x*B.x - y*B.y,x*B.y + y*B.x);</span><br><span class="line">	&#125;</span><br><span class="line">	Comp <span class="keyword">operator</span> + (Comp B)&#123;</span><br><span class="line">	    <span class="keyword">return</span> Comp(x + B.x,y + B.y);</span><br><span class="line">	&#125;</span><br><span class="line">	Comp <span class="keyword">operator</span> - (Comp B)&#123;</span><br><span class="line">	    <span class="keyword">return</span> Comp(x - B.x,y - B.y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Comp F1[maxn],F2[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FFT</span><span class="params">(Comp * A,<span class="keyword">int</span> siz,<span class="keyword">int</span> type)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = siz;</span><br><span class="line">	<span class="keyword">int</span> S = log2(n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)rev[i] = (rev[i&gt;&gt;<span class="number">1</span>] &gt;&gt; <span class="number">1</span>) | ((i &amp; <span class="number">1</span>) &lt;&lt; (S - <span class="number">1</span>));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)<span class="keyword">if</span>(i &lt; rev[i])swap(A[i],A[rev[i]]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; n;i *= <span class="number">2</span>)&#123;</span><br><span class="line">		<span class="function">Comp <span class="title">Wn</span><span class="params">(<span class="built_in">cos</span>(PI/i),type*<span class="built_in">sin</span>(PI/i))</span></span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; n;j += i*<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="function">Comp <span class="title">W</span><span class="params">(<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>;k &lt; i;k++)&#123;</span><br><span class="line">				Comp facx = A[j+k],facy = W*A[j+k+i];</span><br><span class="line">				A[j+k] = facx + facy;</span><br><span class="line">				A[j+k+i] = facx - facy;</span><br><span class="line">				W = W*Wn;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="number">-1</span>)<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)A[i].x = ((A[i].x/n + <span class="number">0.5</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Poly <span class="title">mul</span><span class="params">(Poly A,Poly B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = A.size(),m = B.size();</span><br><span class="line">	<span class="keyword">int</span> siz = n + m - <span class="number">1</span>;</span><br><span class="line">	<span class="function">Poly <span class="title">C</span><span class="params">(siz)</span></span>;</span><br><span class="line">	<span class="keyword">if</span>(siz &lt; <span class="number">64</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; m;j++)C[i+j] = (C[i+j] + <span class="number">1L</span>L*A[i]*B[j])%p;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> C;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> fsiz = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(fsiz &lt;= siz)fsiz *= <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; fsiz;i++)F1[i] = F2[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)F1[i] = A[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)F2[i] = B[i];</span><br><span class="line">	FFT(F1,fsiz,<span class="number">1</span>);</span><br><span class="line">	FFT(F2,fsiz,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; fsiz;i++)F1[i] = F1[i]*F2[i];</span><br><span class="line">	FFT(F1,fsiz,<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; siz;i++)&#123;</span><br><span class="line">		C[i] = ((ll)F1[i].x)%p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> C;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Poly <span class="title">solve</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r)&#123;</span><br><span class="line">		<span class="keyword">return</span> Poly(cnt[l]+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> m = (l+r)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> mul(solve(l,m),solve(m+<span class="number">1</span>,r));</span><br><span class="line">&#125;</span><br><span class="line">Poly ans;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n,m,k;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">		cnt[x]++;</span><br><span class="line">	&#125;</span><br><span class="line">	Poly ans = solve(<span class="number">1</span>,m);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans[k] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="题意">题意</h2>
+<p>给出<span class="math inline">\(m\)</span>个集合, 第<span class="math inline">\(i\)</span>个集合有<span class="math inline">\(c_i\)</span>种颜色为<span class="math inline">\(i\)</span>的小球, 保证<span class="math inline">\(\sum_{i = 1}^m c_i = n\)</span>. 现从这些集合中取出<span class="math inline">\(k\)</span>个小球, 问这些小球构成的集合有多少种. 答案模<span class="math inline">\(1009\)</span>.</p>
+<p><span class="math inline">\(1 \leq m,k \leq n \leq 2\cdot 10^5\)</span></p>
+<h2 id="题解">题解</h2>
+<p>普通型生成函数裸题.</p>
+<p>设<span class="math inline">\(G(x) = \prod_{i = 1}^m(\sum_{j = 0}^{c_i}x^j)\)</span></p>
+<p>那么<span class="math inline">\(G(x)[k]\)</span>即为答案. 问题转换为<span class="math inline">\(m\)</span>个多项式相乘. 使用分治法可在<span class="math inline">\(O(n\log^2n)\)</span>时间内用FFT求解.</p>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">4e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">1009</span>;</span><br><span class="line"><span class="keyword">int</span> raw[maxn],cnt[maxn];</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ld;</span><br><span class="line"><span class="keyword">typedef</span> vector&lt;<span class="keyword">int</span>&gt; Poly;</span><br><span class="line"><span class="keyword">const</span> ld PI = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="keyword">int</span> rev[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Comp</span>&#123;</span></span><br><span class="line">    <span class="keyword">double</span> x, y;</span><br><span class="line">    <span class="built_in">Comp</span> (<span class="keyword">double</span> x = <span class="number">0</span>, <span class="keyword">double</span> y = <span class="number">0</span>):<span class="built_in">x</span>(x),<span class="built_in">y</span>(y)&#123;&#125;</span><br><span class="line">    Comp <span class="keyword">operator</span> * (Comp B)&#123;</span><br><span class="line">   		<span class="keyword">return</span> <span class="built_in">Comp</span>(x*B.x - y*B.y,x*B.y + y*B.x);</span><br><span class="line">	&#125;</span><br><span class="line">	Comp <span class="keyword">operator</span> + (Comp B)&#123;</span><br><span class="line">	    <span class="keyword">return</span> <span class="built_in">Comp</span>(x + B.x,y + B.y);</span><br><span class="line">	&#125;</span><br><span class="line">	Comp <span class="keyword">operator</span> - (Comp B)&#123;</span><br><span class="line">	    <span class="keyword">return</span> <span class="built_in">Comp</span>(x - B.x,y - B.y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Comp F1[maxn],F2[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FFT</span><span class="params">(Comp * A,<span class="keyword">int</span> siz,<span class="keyword">int</span> type)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = siz;</span><br><span class="line">	<span class="keyword">int</span> S = <span class="built_in">log2</span>(n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)rev[i] = (rev[i&gt;&gt;<span class="number">1</span>] &gt;&gt; <span class="number">1</span>) | ((i &amp; <span class="number">1</span>) &lt;&lt; (S - <span class="number">1</span>));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)<span class="keyword">if</span>(i &lt; rev[i])<span class="built_in">swap</span>(A[i],A[rev[i]]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; n;i *= <span class="number">2</span>)&#123;</span><br><span class="line">		<span class="function">Comp <span class="title">Wn</span><span class="params">(cos(PI/i),type*sin(PI/i))</span></span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; n;j += i*<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="function">Comp <span class="title">W</span><span class="params">(<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>;k &lt; i;k++)&#123;</span><br><span class="line">				Comp facx = A[j+k],facy = W*A[j+k+i];</span><br><span class="line">				A[j+k] = facx + facy;</span><br><span class="line">				A[j+k+i] = facx - facy;</span><br><span class="line">				W = W*Wn;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="number">-1</span>)<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)A[i].x = ((A[i].x/n + <span class="number">0.5</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Poly <span class="title">mul</span><span class="params">(Poly A,Poly B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = A.<span class="built_in">size</span>(),m = B.<span class="built_in">size</span>();</span><br><span class="line">	<span class="keyword">int</span> siz = n + m - <span class="number">1</span>;</span><br><span class="line">	<span class="function">Poly <span class="title">C</span><span class="params">(siz)</span></span>;</span><br><span class="line">	<span class="keyword">if</span>(siz &lt; <span class="number">64</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; m;j++)C[i+j] = (C[i+j] + <span class="number">1LL</span>*A[i]*B[j])%p;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> C;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> fsiz = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(fsiz &lt;= siz)fsiz *= <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; fsiz;i++)F1[i] = F2[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)F1[i] = A[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)F2[i] = B[i];</span><br><span class="line">	<span class="built_in">FFT</span>(F1,fsiz,<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">FFT</span>(F2,fsiz,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; fsiz;i++)F1[i] = F1[i]*F2[i];</span><br><span class="line">	<span class="built_in">FFT</span>(F1,fsiz,<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; siz;i++)&#123;</span><br><span class="line">		C[i] = ((ll)F1[i].x)%p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> C;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Poly <span class="title">solve</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">Poly</span>(cnt[l]+<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> m = (l+r)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">mul</span>(<span class="built_in">solve</span>(l,m),<span class="built_in">solve</span>(m+<span class="number">1</span>,r));</span><br><span class="line">&#125;</span><br><span class="line">Poly ans;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n,m,k;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		cin &gt;&gt; x;</span><br><span class="line">		cnt[x]++;</span><br><span class="line">	&#125;</span><br><span class="line">	Poly ans = <span class="built_in">solve</span>(<span class="number">1</span>,m);</span><br><span class="line">	cout &lt;&lt; ans[k] &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -330,14 +305,14 @@
 
 
 <div class="copyright">
-  &copy; 2020 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class=""></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">LinkinPony</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
     </div>
@@ -345,12 +320,9 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
-<script src="/js/third-party/search/local-search.js"></script>
 
 
 
@@ -358,6 +330,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

@@ -17,15 +17,15 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="[CCPC网络赛2019] B - array题意给出一个数列${a_i}$,维护两种操作:  1 pos : 把$a_{pos}$加上$10^7$ 2 r k: 找到一个不小于$k$且不等于$a_1,…,a_r$的最小值$x$  共有$m$组询问,强制在线. $1 \leq n,m \leq 10^5$,$1 \leq a_i \leq n$. 保证$1 \leq pos,r,k\leq n$">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="[CCPC网络赛2019] B - array 题意 给出一个数列\(\{a_i\}\),维护两种操作:  1 pos : 把\(a_{pos}\)加上\(10^7\) 2 r k: 找到一个不小于\(k\)且不等于\(a_1,...,a_r\)的最小值\(x\)  共有\(m\)组询问,强制在线. \(1 \leq n,m \leq 10^5\),\(1 \leq a_i \le">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[题解]CCPC网络赛2019 B - array">
 <meta property="og:url" content="http://linkinpony.github.io/2020/09/19/solution-HDU6703/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="[CCPC网络赛2019] B - array题意给出一个数列${a_i}$,维护两种操作:  1 pos : 把$a_{pos}$加上$10^7$ 2 r k: 找到一个不小于$k$且不等于$a_1,…,a_r$的最小值$x$  共有$m$组询问,强制在线. $1 \leq n,m \leq 10^5$,$1 \leq a_i \leq n$. 保证$1 \leq pos,r,k\leq n$">
+<meta property="og:description" content="[CCPC网络赛2019] B - array 题意 给出一个数列\(\{a_i\}\),维护两种操作:  1 pos : 把\(a_{pos}\)加上\(10^7\) 2 r k: 找到一个不小于\(k\)且不等于\(a_1,...,a_r\)的最小值\(x\)  共有\(m\)组询问,强制在线. \(1 \leq n,m \leq 10^5\),\(1 \leq a_i \le">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-19T13:01:08.000Z">
 <meta property="article:modified_time" content="2020-09-19T13:12:51.422Z">
@@ -53,9 +53,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -63,9 +65,6 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -76,56 +75,19 @@
       <h1 class="site-title">I always love dashie</h1>
       <i class="logo-line"></i>
     </a>
-      <img class="custom-logo-image" src="/%5Bobject%20Object%5D" alt="I always love dashie">
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>Home</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="th-list fa-fw"></i>Categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">Archives</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="tags fa-fw"></i>Tags</a></li>
-        <li class="menu-item menu-item-about"><a href="/about" rel="section"><i class="mars fa-fw"></i>About</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
-  </ul>
-</nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
         
@@ -151,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CCPC%E7%BD%91%E7%BB%9C%E8%B5%9B2019-B-array"><span class="nav-number">1.</span> <span class="nav-text">[CCPC网络赛2019] B - array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">1.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ccpc%E7%BD%91%E7%BB%9C%E8%B5%9B2019-b---array"><span class="nav-number">1.</span> <span class="nav-text">[CCPC网络赛2019] B - array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">1.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -164,24 +126,27 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">34</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-          <a href="/categories">
+          <a href="/categories/">
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-          <a href="/tags">
-        <span class="site-state-item-count">36</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
       <span class="links-of-author-item">
         <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
       </span>
@@ -257,8 +222,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2020-09-19 21:01:08" itemprop="dateCreated datePublished" datetime="2020-09-19T21:01:08+08:00">2020-09-19</time>
+      <time title="Created: 2020-09-19 21:01:08 / Modified: 21:12:51" itemprop="dateCreated datePublished" datetime="2020-09-19T21:01:08+08:00">2020-09-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -284,17 +250,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="CCPC网络赛2019-B-array"><a href="#CCPC网络赛2019-B-array" class="headerlink" title="[CCPC网络赛2019] B - array"></a>[CCPC网络赛2019] B - array</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给出一个数列${a_i}$,维护两种操作:</p>
+        <h1 id="ccpc网络赛2019-b---array">[CCPC网络赛2019] B - array</h1>
+<h2 id="题意">题意</h2>
+<p>给出一个数列<span class="math inline">\(\{a_i\}\)</span>,维护两种操作:</p>
 <ul>
-<li><code>1 pos</code> : 把$a_{pos}$加上$10^7$</li>
-<li><code>2 r k</code>: 找到一个不小于$k$且不等于$a_1,…,a_r$的最小值$x$</li>
+<li><code>1 pos</code> : 把<span class="math inline">\(a_{pos}\)</span>加上<span class="math inline">\(10^7\)</span></li>
+<li><code>2 r k</code>: 找到一个不小于<span class="math inline">\(k\)</span>且不等于<span class="math inline">\(a_1,...,a_r\)</span>的最小值<span class="math inline">\(x\)</span></li>
 </ul>
-<p>共有$m$组询问,强制在线.</p>
-<p>$1 \leq n,m \leq 10^5$,$1 \leq a_i \leq n$. 保证$1 \leq pos,r,k\leq n$</p>
-<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>建一棵权值线段树,每个点存储该数原来的位置.维护$Set$操作和$minv$.</p>
-<p>对于操作1,由限制易得等同于删除$a_{pos}$.</p>
-<p>对于操作2,我们搜索权值线段树里$[k,n]$中大于$r$的第一个最小值,若不存在则答案为$n+1$.</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HDU6703 </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segtree</span>&#123;</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> NO_OPT = INT_MAX;</span><br><span class="line">	<span class="keyword">int</span> size = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;setv,maxv;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(size &lt; n)size *= <span class="number">2</span>;</span><br><span class="line">		setv.assign(size*<span class="number">2</span>,NO_OPT);</span><br><span class="line">		maxv.assign(size*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">ls</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)|<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)<span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>(NO_OPT != setv[x])&#123;</span><br><span class="line">			setv[ls(x)] = setv[rs(x)] = setv[x];</span><br><span class="line">			maxv[ls(x)] = maxv[rs(x)] = setv[x];</span><br><span class="line">			setv[x] = NO_OPT;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		maxv[x] = max(maxv[ls(x)],maxv[rs(x)]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span>;</span><br><span class="line">		pushdown(x,lx,rx);</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)&#123;</span><br><span class="line">			setv[x] = v;</span><br><span class="line">			maxv[x] = v;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		Set(l,r,v,ls(x),lx,m);</span><br><span class="line">		Set(l,r,v,rs(x),m,rx);</span><br><span class="line">		pushup(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		Set(l,r,v,<span class="number">0</span>,<span class="number">0</span>,size);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kth</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		pushdown(x,lx,rx);</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> maxv[x] &lt; v)<span class="keyword">return</span> NO_OPT;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(setv[x] != NO_OPT)&#123;</span><br><span class="line">				maxv[x] = setv[x];</span><br><span class="line">				setv[x] = NO_OPT;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(maxv[x] &gt;= v)<span class="keyword">return</span> lx;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">return</span> NO_OPT;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> idx1 = kth(l,v,ls(x),lx,m),idx2 = NO_OPT;</span><br><span class="line">		<span class="keyword">if</span>(idx1 == NO_OPT)idx2 = kth(l,v,rs(x),m,rx);</span><br><span class="line">		<span class="keyword">return</span> min(idx1,idx2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kth</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> kth(l,v,<span class="number">0</span>,<span class="number">0</span>,size); </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--)&#123;</span><br><span class="line">		<span class="keyword">int</span> lstans = <span class="number">0</span>;</span><br><span class="line">		segtree seg;</span><br><span class="line">		<span class="keyword">int</span> n,m;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;raw(n+<span class="number">10</span>);</span><br><span class="line">		seg.init(<span class="number">1e5</span>+<span class="number">10</span>);</span><br><span class="line">		seg.Set(<span class="number">0</span>,<span class="number">0</span>,INF);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; raw[i];</span><br><span class="line">			seg.Set(raw[i],raw[i],i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(m--)&#123;</span><br><span class="line">			<span class="keyword">int</span> opt,l,r;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; opt &gt;&gt; l;</span><br><span class="line">			l ^= lstans;</span><br><span class="line">			<span class="keyword">if</span>(opt == <span class="number">1</span>)&#123;</span><br><span class="line">				seg.Set(raw[l],raw[l],INF);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; r;</span><br><span class="line">				r ^= lstans;</span><br><span class="line">				lstans = seg.kth(r,l+<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">if</span>(lstans == INT_MAX)lstans = n+<span class="number">1</span>;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; lstans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>共有<span class="math inline">\(m\)</span>组询问,强制在线.</p>
+<p><span class="math inline">\(1 \leq n,m \leq 10^5\)</span>,<span class="math inline">\(1 \leq a_i \leq n\)</span>. 保证<span class="math inline">\(1 \leq pos,r,k\leq n\)</span></p>
+<h2 id="解法">解法</h2>
+<p>建一棵权值线段树,每个点存储该数原来的位置.维护<span class="math inline">\(Set\)</span>操作和<span class="math inline">\(minv\)</span>.</p>
+<p>对于操作1,由限制易得等同于删除<span class="math inline">\(a_{pos}\)</span>.</p>
+<p>对于操作2,我们搜索权值线段树里<span class="math inline">\([k,n]\)</span>中大于<span class="math inline">\(r\)</span>的第一个最小值,若不存在则答案为<span class="math inline">\(n+1\)</span>.</p>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HDU6703 </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segtree</span>&#123;</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> NO_OPT = INT_MAX;</span><br><span class="line">	<span class="keyword">int</span> size = <span class="number">1</span>;</span><br><span class="line">	vector&lt;<span class="keyword">int</span>&gt;setv,maxv;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(size &lt; n)size *= <span class="number">2</span>;</span><br><span class="line">		setv.<span class="built_in">assign</span>(size*<span class="number">2</span>,NO_OPT);</span><br><span class="line">		maxv.<span class="built_in">assign</span>(size*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">ls</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)|<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)<span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>(NO_OPT != setv[x])&#123;</span><br><span class="line">			setv[<span class="built_in">ls</span>(x)] = setv[<span class="built_in">rs</span>(x)] = setv[x];</span><br><span class="line">			maxv[<span class="built_in">ls</span>(x)] = maxv[<span class="built_in">rs</span>(x)] = setv[x];</span><br><span class="line">			setv[x] = NO_OPT;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		maxv[x] = <span class="built_in">max</span>(maxv[<span class="built_in">ls</span>(x)],maxv[<span class="built_in">rs</span>(x)]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span>;</span><br><span class="line">		<span class="built_in">pushdown</span>(x,lx,rx);</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)&#123;</span><br><span class="line">			setv[x] = v;</span><br><span class="line">			maxv[x] = v;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="built_in">Set</span>(l,r,v,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		<span class="built_in">Set</span>(l,r,v,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="built_in">pushup</span>(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		<span class="built_in">Set</span>(l,r,v,<span class="number">0</span>,<span class="number">0</span>,size);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kth</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="built_in">pushdown</span>(x,lx,rx);</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> maxv[x] &lt; v)<span class="keyword">return</span> NO_OPT;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(setv[x] != NO_OPT)&#123;</span><br><span class="line">				maxv[x] = setv[x];</span><br><span class="line">				setv[x] = NO_OPT;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(maxv[x] &gt;= v)<span class="keyword">return</span> lx;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">return</span> NO_OPT;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> idx1 = <span class="built_in">kth</span>(l,v,<span class="built_in">ls</span>(x),lx,m),idx2 = NO_OPT;</span><br><span class="line">		<span class="keyword">if</span>(idx1 == NO_OPT)idx2 = <span class="built_in">kth</span>(l,v,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">min</span>(idx1,idx2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kth</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">kth</span>(l,v,<span class="number">0</span>,<span class="number">0</span>,size); </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	cin &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--)&#123;</span><br><span class="line">		<span class="keyword">int</span> lstans = <span class="number">0</span>;</span><br><span class="line">		segtree seg;</span><br><span class="line">		<span class="keyword">int</span> n,m;</span><br><span class="line">		cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">		vector&lt;<span class="keyword">int</span>&gt;<span class="built_in">raw</span>(n+<span class="number">10</span>);</span><br><span class="line">		seg.<span class="built_in">init</span>(<span class="number">1e5</span>+<span class="number">10</span>);</span><br><span class="line">		seg.<span class="built_in">Set</span>(<span class="number">0</span>,<span class="number">0</span>,INF);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">			cin &gt;&gt; raw[i];</span><br><span class="line">			seg.<span class="built_in">Set</span>(raw[i],raw[i],i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(m--)&#123;</span><br><span class="line">			<span class="keyword">int</span> opt,l,r;</span><br><span class="line">			cin &gt;&gt; opt &gt;&gt; l;</span><br><span class="line">			l ^= lstans;</span><br><span class="line">			<span class="keyword">if</span>(opt == <span class="number">1</span>)&#123;</span><br><span class="line">				seg.<span class="built_in">Set</span>(raw[l],raw[l],INF);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				cin &gt;&gt; r;</span><br><span class="line">				r ^= lstans;</span><br><span class="line">				lstans = seg.<span class="built_in">kth</span>(r,l+<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">if</span>(lstans == INT_MAX)lstans = n+<span class="number">1</span>;</span><br><span class="line">				cout &lt;&lt; lstans &lt;&lt; endl;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -341,14 +311,14 @@
 
 
 <div class="copyright">
-  &copy; 2020 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class=""></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">LinkinPony</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
     </div>
@@ -356,12 +326,9 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
-<script src="/js/third-party/search/local-search.js"></script>
 
 
 
@@ -369,6 +336,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

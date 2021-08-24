@@ -17,15 +17,15 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\sum_">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识 整除分块 设\(f(x) &#x3D; \lfloor \frac{k}{x} \rfloor\) \(f(x)\)分布呈块状,对于任意一个\(i\),有最大的\(j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor\),使得\(f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; ... &#x3D;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mobius-Transformation">
 <meta property="og:url" content="http://linkinpony.github.io/2020/05/13/Mobius-Transformation/index.html">
 <meta property="og:site_name" content="I always love dashie">
-<meta property="og:description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识整除分块设$f(x) &#x3D; \lfloor \frac{k}{x} \rfloor$ $f(x)$分布呈块状,对于任意一个$i$,有最大的$j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; … &#x3D; f(j)$ 对于类似$\sum_">
+<meta property="og:description" content="这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧 前置知识 整除分块 设\(f(x) &#x3D; \lfloor \frac{k}{x} \rfloor\) \(f(x)\)分布呈块状,对于任意一个\(i\),有最大的\(j &#x3D; \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor\),使得\(f(i) &#x3D;&#x3D; f(i+1) &#x3D;&#x3D; ... &#x3D;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-13T11:06:38.000Z">
 <meta property="article:modified_time" content="2021-05-03T06:39:47.632Z">
@@ -52,9 +52,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
@@ -62,9 +64,6 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -75,56 +74,19 @@
       <h1 class="site-title">I always love dashie</h1>
       <i class="logo-line"></i>
     </a>
-      <img class="custom-logo-image" src="/%5Bobject%20Object%5D" alt="I always love dashie">
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>Home</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="th-list fa-fw"></i>Categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">Archives</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="tags fa-fw"></i>Tags</a></li>
-        <li class="menu-item menu-item-about"><a href="/about" rel="section"><i class="mars fa-fw"></i>About</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
-  </ul>
-</nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
         
@@ -150,7 +112,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E9%99%A4%E5%88%86%E5%9D%97"><span class="nav-number">1.1.</span> <span class="nav-text">整除分块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7-Dirichlet-%E5%8D%B7%E7%A7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">狄利克雷(Dirichlet)卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BC%8F%E5%AD%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">常用式子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%BB%93%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">常用结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E8%B7%AF%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">套路题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-ngcd-i-n"><span class="nav-number">2.1.</span> <span class="nav-text">$\sum_{i&#x3D;1}^ngcd(i,n)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-1-n-gcd-i-j"><span class="nav-number">2.2.</span> <span class="nav-text">$\sum{i &#x3D; 1}^n\sum{j&#x3D;1}^n\gcd(i,j)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j"><span class="nav-number">2.3.</span> <span class="nav-text">$\sum{i &#x3D; 1}^{n}\sum{j&#x3D;i+1}^{n}\gcd(i,j)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-i-1-n-sum-i-1-m-gcd-i-j-1"><span class="nav-number">2.4.</span> <span class="nav-text">$\sum{i&#x3D;1}^{n}\sum{i&#x3D;1}^{m}[\gcd(i,j) &#x3D;&#x3D; 1]$</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E9%99%A4%E5%88%86%E5%9D%97"><span class="nav-number">1.1.</span> <span class="nav-text">整除分块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7dirichlet%E5%8D%B7%E7%A7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">狄利克雷(Dirichlet)卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BC%8F%E5%AD%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">常用式子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%BB%93%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">常用结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E8%B7%AF%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">套路题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sum_i1ngcdin"><span class="nav-number">2.1.</span> <span class="nav-text">\(\sum_{i&#x3D;1}^ngcd(i,n)\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum_i-1nsum_j1ngcdij"><span class="nav-number">2.2.</span> <span class="nav-text">\(\sum_{i &#x3D; 1}^n\sum_{j&#x3D;1}^n\gcd(i,j)\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum_i-1nsum_ji1ngcdij"><span class="nav-number">2.3.</span> <span class="nav-text">\(\sum_{i &#x3D; 1}^{n}\sum_{j&#x3D;i+1}^{n}\gcd(i,j)\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum_i1nsum_i1mgcdij-1"><span class="nav-number">2.4.</span> <span class="nav-text">\(\sum_{i&#x3D;1}^{n}\sum_{i&#x3D;1}^{m}[\gcd(i,j) &#x3D;&#x3D; 1]\)</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -163,24 +125,27 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">34</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-          <a href="/categories">
+          <a href="/categories/">
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-          <a href="/tags">
-        <span class="site-state-item-count">36</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
       <span class="links-of-author-item">
         <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
       </span>
@@ -259,6 +224,13 @@
 
       <time title="Created: 2020-05-13 19:06:38" itemprop="dateCreated datePublished" datetime="2020-05-13T19:06:38+08:00">2020-05-13</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-03 14:39:47" itemprop="dateModified" datetime="2021-05-03T14:39:47+08:00">2021-05-03</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -280,73 +252,97 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>这个菜鸡现在还什么都不会&gt;_&gt;慢慢更新吧</p>
-<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="整除分块"><a href="#整除分块" class="headerlink" title="整除分块"></a>整除分块</h2><p>设$f(x) = \lfloor \frac{k}{x} \rfloor$</p>
-<p>$f(x)$分布呈块状,对于任意一个$i$,有最大的$j = \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor$,使得$f(i) == f(i+1) == … = f(j)$</p>
-<p>对于类似$\sum_{i = 1}^{n}\lfloor \frac{k}{i} \rfloor$的式子,可分块在$O(\sqrt{n})$时间内计算完毕</p>
+<h1 id="前置知识">前置知识</h1>
+<h2 id="整除分块">整除分块</h2>
+<p>设<span class="math inline">\(f(x) = \lfloor \frac{k}{x} \rfloor\)</span></p>
+<p><span class="math inline">\(f(x)\)</span>分布呈块状,对于任意一个<span class="math inline">\(i\)</span>,有最大的<span class="math inline">\(j = \lfloor \frac{k}{\lfloor \frac{k}{i} \rfloor} \rfloor\)</span>,使得<span class="math inline">\(f(i) == f(i+1) == ... = f(j)\)</span></p>
+<p>对于类似<span class="math inline">\(\sum_{i = 1}^{n}\lfloor \frac{k}{i} \rfloor\)</span>的式子,可分块在<span class="math inline">\(O(\sqrt{n})\)</span>时间内计算完毕</p>
 <p>代码:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">1</span>;l &lt;= n;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k/l)r = min(n,k/(k/l));</span><br><span class="line">		<span class="keyword">else</span> r = n;</span><br><span class="line">		ans += (r-l+<span class="number">1</span>)*(k/l);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="狄利克雷-Dirichlet-卷积"><a href="#狄利克雷-Dirichlet-卷积" class="headerlink" title="狄利克雷(Dirichlet)卷积"></a>狄利克雷(Dirichlet)卷积</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>设$f,g$为两个数论函数,其狄利克雷卷积$f*g$为:</p>
-<script type="math/tex; mode=display">
-f \ast g(n) = \sum_{d|n}f(d)g(\frac{n}{d})</script><h3 id="常用式子"><a href="#常用式子" class="headerlink" title="常用式子"></a>常用式子</h3><script type="math/tex; mode=display">
-\begin{aligned}
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">1</span>;l &lt;= n;l = r+<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k/l)r = <span class="built_in">min</span>(n,k/(k/l));</span><br><span class="line">		<span class="keyword">else</span> r = n;</span><br><span class="line">		ans += (r-l+<span class="number">1</span>)*(k/l);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="狄利克雷dirichlet卷积">狄利克雷(Dirichlet)卷积</h2>
+<h3 id="定义">定义</h3>
+<p>设<span class="math inline">\(f,g\)</span>为两个数论函数,其狄利克雷卷积<span class="math inline">\(f*g\)</span>为: <span class="math display">\[
+f \ast g(n) = \sum_{d|n}f(d)g(\frac{n}{d})
+\]</span></p>
+<h3 id="常用式子">常用式子</h3>
+$$
+<span class="math display">\[\begin{aligned}
 
-\varepsilon=\mu \ast 1&\iff\varepsilon(n)=\sum_{d\mid n}\mu(d)\\
-d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
-\sigma=\text{id} \ast 1&\iff\sigma(n)=\sum_{d\mid n}d\\
-\varphi=\mu \ast \text{id}&\iff\varphi(n)=\sum_{d\mid n}d\cdot\mu(\frac{n}{d}) \\
+\varepsilon=\mu \ast 1&amp;\iff\varepsilon(n)=\sum_{d\mid n}\mu(d)\\
+d=1 \ast 1&amp;\iff d(n)=\sum_{d\mid n}1\\
+\sigma=\text{id} \ast 1&amp;\iff\sigma(n)=\sum_{d\mid n}d\\
+\varphi=\mu \ast \text{id}&amp;\iff\varphi(n)=\sum_{d\mid n}d\cdot\mu(\frac{n}{d}) \\
 
 
-\end{aligned}</script><h2 id="常用结论"><a href="#常用结论" class="headerlink" title="常用结论"></a>常用结论</h2><script type="math/tex; mode=display">
-\sum_{d|n}^n\varphi(d) = n</script><script type="math/tex; mode=display">
-[\gcd(i,j) == 1] = \epsilon(\gcd(i,j) = \sum_{d|\gcd(i,j)}\mu(d)</script><h1 id="套路题"><a href="#套路题" class="headerlink" title="套路题"></a>套路题</h1><h2 id="sum-i-1-ngcd-i-n"><a href="#sum-i-1-ngcd-i-n" class="headerlink" title="$\sum_{i=1}^ngcd(i,n)$"></a>$\sum_{i=1}^ngcd(i,n)$</h2><script type="math/tex; mode=display">
+\end{aligned}\]</span>
+<p>$$</p>
+<h2 id="常用结论">常用结论</h2>
+<p><span class="math display">\[
+\sum_{d|n}^n\varphi(d) = n
+\]</span></p>
+<p><span class="math display">\[
+[\gcd(i,j) == 1] = \epsilon(\gcd(i,j) = \sum_{d|\gcd(i,j)}\mu(d)
+\]</span></p>
+<h1 id="套路题">套路题</h1>
+<h2 id="sum_i1ngcdin"><span class="math inline">\(\sum_{i=1}^ngcd(i,n)\)</span></h2>
+<p><span class="math display">\[
 \begin{align}
-&\sum_{i=1}^n\gcd(i,n)\\
-&=\sum_{d|n}d\sum_{i=1}^n[\gcd(i,n)==d]\\
-&=\sum_{d|n}d\sum_{i=1}^{\frac{n}{d}}[\gcd(i,n)==1]\\
-&=\sum_{d|n}d\cdotφ(\frac{n}{d})
-\end{align}</script><h2 id="sum-i-1-n-sum-j-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^n\sum{j=1}^n\gcd(i,j)$"></a>$\sum<em>{i = 1}^n\sum</em>{j=1}^n\gcd(i,j)$</h2><script type="math/tex; mode=display">
+&amp;\sum_{i=1}^n\gcd(i,n)\\
+&amp;=\sum_{d|n}d\sum_{i=1}^n[\gcd(i,n)==d]\\
+&amp;=\sum_{d|n}d\sum_{i=1}^{\frac{n}{d}}[\gcd(i,n)==1]\\
+&amp;=\sum_{d|n}d\cdotφ(\frac{n}{d})
+\end{align}
+\]</span></p>
+<h2 id="sum_i-1nsum_j1ngcdij"><span class="math inline">\(\sum_{i = 1}^n\sum_{j=1}^n\gcd(i,j)\)</span></h2>
+<p><span class="math display">\[
 \begin{align}
-&\sum_{i = 1}^n\sum_{j=1}^n\gcd(i,j)\\
-&= \sum_{d=1}^nd\sum_{i=1}^n\sum_{j=1}^n[gcd(i,j) == d]\\
-&=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=1}^{\frac{n}{d}}[gcd(i,j)==1]\\
-&=\sum_{d=1}^nd(2\cdot\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
-\end{align}</script><p>关于最后一步,我们设$f(x) = \sum<em>{i=1}^{n}\sum</em>{j=1}^{n}[gcd(i,j)==1]$</p>
-<p>手画一下,容易看出$f(x) = 2\cdot\sum_{i=1}^n\varphi(i) - 1$</p>
+&amp;\sum_{i = 1}^n\sum_{j=1}^n\gcd(i,j)\\
+&amp;= \sum_{d=1}^nd\sum_{i=1}^n\sum_{j=1}^n[gcd(i,j) == d]\\
+&amp;=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=1}^{\frac{n}{d}}[gcd(i,j)==1]\\
+&amp;=\sum_{d=1}^nd(2\cdot\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
+\end{align}
+\]</span></p>
+<p>关于最后一步,我们设<span class="math inline">\(f(x) = \sum_{i=1}^{n}\sum_{j=1}^{n}[gcd(i,j)==1]\)</span></p>
+<p>手画一下,容易看出<span class="math inline">\(f(x) = 2\cdot\sum_{i=1}^n\varphi(i) - 1\)</span></p>
 <p>另一种做法:</p>
-<p>我们知道$\varphi$有这么一个性质,$\sum_{d|n}^{n}\varphi(d) = n$</p>
-<p>也就是$\sum_{d|\gcd(i,j)}^{n}\varphi(d) = \gcd(i,j)$</p>
-<p>那么:</p>
-<script type="math/tex; mode=display">
+<p>我们知道<span class="math inline">\(\varphi\)</span>有这么一个性质,<span class="math inline">\(\sum_{d|n}^{n}\varphi(d) = n\)</span></p>
+<p>也就是<span class="math inline">\(\sum_{d|\gcd(i,j)}^{n}\varphi(d) = \gcd(i,j)\)</span></p>
+<p>那么: <span class="math display">\[
 \begin{align}
-&\sum_{i = 1}^n\sum_{j = 1}^n\gcd(i,j)\\
-&=\sum_{i=1}^n\sum_{j=1}^n\sum_{d|\gcd(i,j)}\varphi(d)\\
-&=\sum_{d = 1}^n\varphi(d)\sum_{i=1}^n[d|i]\sum_{j=1}^n[d|j]\\
-&=\sum_{d = 1}^n\varphi(d)\cdot\lfloor\frac{n}{d}\rfloor\lfloor\frac{m}{d}\rfloor
-\end{align}</script><p>少处理个前缀和=-=而且我感觉这个做法更好理解</p>
+&amp;\sum_{i = 1}^n\sum_{j = 1}^n\gcd(i,j)\\
+&amp;=\sum_{i=1}^n\sum_{j=1}^n\sum_{d|\gcd(i,j)}\varphi(d)\\
+&amp;=\sum_{d = 1}^n\varphi(d)\sum_{i=1}^n[d|i]\sum_{j=1}^n[d|j]\\
+&amp;=\sum_{d = 1}^n\varphi(d)\cdot\lfloor\frac{n}{d}\rfloor\lfloor\frac{m}{d}\rfloor
+\end{align}
+\]</span> 少处理个前缀和=-=而且我感觉这个做法更好理解</p>
 <p>例题:洛谷P2398</p>
-<h2 id="sum-i-1-n-sum-j-i-1-n-gcd-i-j"><a href="#sum-i-1-n-sum-j-i-1-n-gcd-i-j" class="headerlink" title="$\sum{i = 1}^{n}\sum{j=i+1}^{n}\gcd(i,j)$"></a>$\sum<em>{i = 1}^{n}\sum</em>{j=i+1}^{n}\gcd(i,j)$</h2><p>和上面那个基本一样</p>
-<script type="math/tex; mode=display">
+<h2 id="sum_i-1nsum_ji1ngcdij"><span class="math inline">\(\sum_{i = 1}^{n}\sum_{j=i+1}^{n}\gcd(i,j)\)</span></h2>
+<p>和上面那个基本一样 <span class="math display">\[
 \begin{align}
-&\sum_{i = 1}^n\sum_{j=i+1}^n\gcd(i,j)\\
-&= \sum_{d=1}^nd\sum_{i=1}^n\sum_{j=i+1}^n[gcd(i,j) == d]\\
-&=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=i+1}^{\frac{n}{d}}[gcd(i,j)==1]\\
-&=\sum_{d=1}^nd(\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
-\end{align}</script><p>(最后一步的化简和上一题大同小异,手画一下就有了)</p>
-<h2 id="sum-i-1-n-sum-i-1-m-gcd-i-j-1"><a href="#sum-i-1-n-sum-i-1-m-gcd-i-j-1" class="headerlink" title="$\sum{i=1}^{n}\sum{i=1}^{m}[\gcd(i,j) == 1]$"></a>$\sum<em>{i=1}^{n}\sum</em>{i=1}^{m}[\gcd(i,j) == 1]$</h2><p>前置知识:</p>
-<script type="math/tex; mode=display">
-\epsilon(n)=\sum_{d|n}\mu(d)= \begin{cases} 1&n=1\\ 
-0&otherwise 
-\end{cases}</script><p>开始愉快地推式子:</p>
-<script type="math/tex; mode=display">
+&amp;\sum_{i = 1}^n\sum_{j=i+1}^n\gcd(i,j)\\
+&amp;= \sum_{d=1}^nd\sum_{i=1}^n\sum_{j=i+1}^n[gcd(i,j) == d]\\
+&amp;=\sum_{d=1}^nd\sum_{i=1}^{\frac{n}{d}}\sum_{j=i+1}^{\frac{n}{d}}[gcd(i,j)==1]\\
+&amp;=\sum_{d=1}^nd(\sum_{i=1}^{\frac{n}{d}}\varphi(i) - 1)
+\end{align}
+\]</span> (最后一步的化简和上一题大同小异,手画一下就有了)</p>
+<h2 id="sum_i1nsum_i1mgcdij-1"><span class="math inline">\(\sum_{i=1}^{n}\sum_{i=1}^{m}[\gcd(i,j) == 1]\)</span></h2>
+<p>前置知识: <span class="math display">\[
+\epsilon(n)=\sum_{d|n}\mu(d)= \begin{cases} 1&amp;n=1\\ 
+0&amp;otherwise 
+\end{cases}
+\]</span></p>
+<p>开始愉快地推式子: <span class="math display">\[
 \begin{align}
-&\sum_{i=1}^{n}\sum_{i=1}^{m}[\gcd(i,j) == 1] \\
-&=\sum_{i=1}^{n}\sum_{i=1}^{m}\epsilon(\gcd(i,j))\\
-&=\sum_{i=1}^{n}\sum_{i=1}^{m}\sum_{d|gcd(i,j)}\mu(d)\\
-&=\sum_{d = 1}^{\min(n,m)}\mu(d)\sum_{i = 1}^n[d|i]\sum_{j = 1}^{m}[d|j]\\
-&=\sum_{d=1}^{\min(n,m)}\mu(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor
-\end{align}</script><p>同理,我们有:</p>
-<script type="math/tex; mode=display">
-\sum_{i = 1}^n\sum_{j = 1}^n\sum_{k = 1}^n [\gcd(i,j,k) == 1] = \sum_{d = 1}^n \mu(d)(\lfloor \frac{n}{d}\rfloor)^3</script>
+&amp;\sum_{i=1}^{n}\sum_{i=1}^{m}[\gcd(i,j) == 1] \\
+&amp;=\sum_{i=1}^{n}\sum_{i=1}^{m}\epsilon(\gcd(i,j))\\
+&amp;=\sum_{i=1}^{n}\sum_{i=1}^{m}\sum_{d|gcd(i,j)}\mu(d)\\
+&amp;=\sum_{d = 1}^{\min(n,m)}\mu(d)\sum_{i = 1}^n[d|i]\sum_{j = 1}^{m}[d|j]\\
+&amp;=\sum_{d=1}^{\min(n,m)}\mu(d)\lfloor \frac{n}{d}\rfloor \lfloor \frac{m}{d} \rfloor
+\end{align}
+\]</span> 同理,我们有: <span class="math display">\[
+\sum_{i = 1}^n\sum_{j = 1}^n\sum_{k = 1}^n [\gcd(i,j,k) == 1] = \sum_{d = 1}^n \mu(d)(\lfloor \frac{n}{d}\rfloor)^3
+\]</span></p>
+
     </div>
 
     
@@ -391,14 +387,14 @@ d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
 
 
 <div class="copyright">
-  &copy; 2020 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class=""></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">LinkinPony</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
     </div>
@@ -406,12 +402,9 @@ d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
-<script src="/js/third-party/search/local-search.js"></script>
 
 
 
@@ -419,6 +412,12 @@ d=1 \ast 1&\iff d(n)=\sum_{d\mid n}1\\
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 
