@@ -118,13 +118,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -180,6 +180,207 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/13/solution-CF906D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/13/solution-CF906D/" class="post-title-link" itemprop="url">[题解] CF906D-Power Tower</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-13 09:55:17" itemprop="dateCreated datePublished" datetime="2020-05-13T09:55:17+08:00">2020-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-03-09 21:27:34" itemprop="dateModified" datetime="2021-03-09T21:27:34+08:00">2021-03-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题意">题意</h1>
+<p>给定序列<span class="math inline">\(w_1,w_2,...,w_n\)</span>和<span class="math inline">\(q\)</span>组询问,对于每组询问,求<img src="../images/CF906D_1.png" alt="img1" /></p>
+<p>当然,需要对这个值膜<span class="math inline">\(m\)</span></p>
+<p>(hexo渲染多重幂有问题,只好放原题图片了)</p>
+<p><span class="math inline">\(1 \leq n \leq 1e5\)</span>, <span class="math inline">\(1 \leq m \leq 1e9\)</span>, <span class="math inline">\(1 \leq q \leq 1e5\)</span></p>
+<h1 id="思路">思路</h1>
+<p>考虑扩展欧拉定理:</p>
+<p><span class="math display">\[
+a^b = \left\{
+\begin{array}{lcl}
+a^b &amp;&amp; {b &lt; φ(p)} \\
+a^{b \bmod φ(p) + φ(p) } &amp;&amp; {b \geq φ(p)}\\
+\end{array}
+\right.
+\]</span></p>
+<p>由于<span class="math inline">\(p \geq 2\)</span>时<span class="math inline">\(φ(p)\)</span>为偶数,故<span class="math inline">\(p = φ(p)\)</span>的下降速度是log级别的,换句话说经过最多<span class="math inline">\(log(p)\)</span>次迭代之后<span class="math inline">\(p\)</span>便会变为1.由于<span class="math inline">\(x \bmod 1 == 0\)</span>,我们在<span class="math inline">\(l == r\)</span>或者<span class="math inline">\(p == 1\)</span>时便可跳出递归,单组询问的复杂度为<span class="math inline">\(O(logp)\)</span>,可以接受</p>
+<p>在具体实现时,应预处理出<span class="math inline">\(p,φ(p),φ(φ(p)),...,1\)</span>来减少时间开销,同时修改快速幂来适应扩欧定理(upd函数),细节见代码</p>
+<h1 id="代码">代码</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CF906D </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line">ll raw[maxn],n,mod;</span><br><span class="line">map&lt;ll,ll&gt;vis;</span><br><span class="line"><span class="function">ll <span class="title">phi</span><span class="params">(ll x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = (ll)<span class="built_in">sqrt</span>(x+<span class="number">0.5</span>);</span><br><span class="line">	ll tans = x;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= m;i++)<span class="keyword">if</span>(!(x%i))&#123;</span><br><span class="line">		tans = tans/i*(i<span class="number">-1</span>);</span><br><span class="line">		<span class="keyword">while</span>(!(x%i))x /= i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(x &gt; <span class="number">1</span>)tans = tans / x * (x<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">upd</span><span class="params">(ll x,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;p?x:x%p+p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d,ll p)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	ll a = <span class="built_in">Pow</span>(x,d/<span class="number">2</span>,p);</span><br><span class="line">	tans = <span class="built_in">upd</span>(a*a,p);</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = <span class="built_in">upd</span>(tans*x,p); </span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">upd</span>(tans,p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">cal</span><span class="params">(ll l,ll r,ll p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r <span class="keyword">or</span> p == <span class="number">1</span>)<span class="keyword">return</span> <span class="built_in">upd</span>(raw[l],p);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">Pow</span>(raw[l],<span class="built_in">cal</span>(l+<span class="number">1</span>,r,vis[p]),p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; mod;</span><br><span class="line">	ll qwq = mod;</span><br><span class="line">	<span class="keyword">while</span>(qwq != <span class="number">1</span>)&#123;</span><br><span class="line">		vis[qwq] = <span class="built_in">phi</span>(qwq);</span><br><span class="line">		qwq = vis[qwq];</span><br><span class="line">	&#125;</span><br><span class="line">	vis[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)cin &gt;&gt; raw[i];</span><br><span class="line">	<span class="keyword">int</span> q;</span><br><span class="line">	cin &gt;&gt; q;</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> l,r;</span><br><span class="line">		cin &gt;&gt; l &gt;&gt; r;</span><br><span class="line">		cout &lt;&lt; <span class="built_in">cal</span>(l,r,mod)%mod &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><span class="math display">\[
+f(n) = O(g(n)) 
+\\ \Rightarrow f(n) \leq c_f \cdot g(n) \\ 
+\Rightarrow \frac{1}{f(n)} \geq \frac{1}{c_f\cdot g(n)}\\
+\Rightarrow \frac{1}{g(n)} \leq c_f\cdot \frac{1}{f(n)} 对于n &gt;= n_f\\
+故有 \frac{1}{g(n)} = O(\frac{1}{f(n)})
+\]</span></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2020/05/13/solution-CF1350C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/13/solution-CF1350C/" class="post-title-link" itemprop="url">[题解]CF1350C-Orac and LCM</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2020-05-13 08:54:47 / Modified: 09:50:07" itemprop="dateCreated datePublished" datetime="2020-05-13T08:54:47+08:00">2020-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目大意">题目大意</h1>
+<p>​ 给定集合<span class="math inline">\(\{a_1,a_2,...,a_n\}\)</span>,求<span class="math inline">\(gcd(\{lcm(\{a_i,a_j\})|i&lt;j\})\)</span></p>
+<p>​ $2 n 1e5 $ , <span class="math inline">\(1 \leq a_i \leq 2e5\)</span></p>
+<h1 id="思路">思路</h1>
+<p>​ 考虑唯一分解定理:</p>
+<p>​ <span class="math inline">\(a = \prod^{n}_{1}p_i^{k_i}\)</span></p>
+<p>​ <span class="math inline">\(b = \prod^{n}_{1}p_i^{g_i}\)</span></p>
+<p>​ 对于 <span class="math inline">\(gcd\)</span> 和 <span class="math inline">\(lcm\)</span> ,我们有:</p>
+<p>​ <span class="math inline">\(gcd(a,b) = \prod^{n}_{1}p_i^{min(k_i,g_i)}\)</span></p>
+<p>​ <span class="math inline">\(lcm(a,b) = \prod^{n}_{1}p_i^{max(k_i,g_i)}\)</span></p>
+<p>​ 观察易得,对于答案中的每个质因子<span class="math inline">\(p_i\)</span>,它的指数<span class="math inline">\(k_i\)</span>为<span class="math inline">\(\{a_1,...,a_n\}\)</span>中 <span class="math inline">\(p_i\)</span> <strong>第二小</strong> 的指数<span class="math inline">\(k\)</span></p>
+<p>​ 我们预处理出<span class="math inline">\(i\)</span>的所有质因数<span class="math inline">\(p[i]\)</span>,将<span class="math inline">\(a_i\)</span>分解,用<span class="math inline">\(d[i][j]\)</span>表示<span class="math inline">\(a_j\)</span>的质因子<span class="math inline">\(i\)</span>的指数,排序后扫一遍<span class="math inline">\(d[i]\)</span>即可得到答案</p>
+<p>​ 具体来说 <span class="math display">\[
+ans *= \left\{
+\begin{array}{lcl}
+i^{d[i][0]}&amp;&amp; {d[i].size() == n-1} \\
+i^{d[i][1]} &amp;&amp; {d[i].size()  \geq n-1 }\\
+1 &amp;&amp; otherwise
+\end{array}
+\right.
+\]</span></p>
+<h1 id="代码">代码</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">2e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> raw[maxn];</span><br><span class="line"><span class="keyword">int</span> vis[maxn];</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> d)</span></span>&#123;</span><br><span class="line">	ll tans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(d == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	ll a = <span class="built_in">Pow</span>(x,d/<span class="number">2</span>);</span><br><span class="line">	tans = a*a;</span><br><span class="line">	<span class="keyword">if</span>(d%<span class="number">2</span>)tans = tans*x; </span><br><span class="line">	<span class="keyword">return</span> tans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">bool</span> n_prime[maxn];</span><br><span class="line">vector&lt;<span class="keyword">int</span>&gt;p[maxn],d[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">prime</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;maxn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!n_prime[i])&#123;</span><br><span class="line">			p[i].<span class="built_in">push_back</span>(i); </span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = i*<span class="number">2</span>;j &lt; maxn;j += i)&#123;</span><br><span class="line">				n_prime[j] = <span class="number">1</span>;</span><br><span class="line">				p[j].<span class="built_in">push_back</span>(i);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	n_prime[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">prime</span>();</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)cin &gt;&gt; raw[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> u = raw[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> x:p[u])&#123;</span><br><span class="line">			<span class="keyword">int</span> yay = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(u%x == <span class="number">0</span>)&#123;</span><br><span class="line">				yay++;</span><br><span class="line">				u /= x;</span><br><span class="line">			&#125;</span><br><span class="line">			d[x].<span class="built_in">push_back</span>(yay);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	ll ans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt; maxn;i++)&#123;</span><br><span class="line">		<span class="built_in">sort</span>(d[i].<span class="built_in">begin</span>(),d[i].<span class="built_in">end</span>());</span><br><span class="line">		<span class="keyword">if</span>(d[i].<span class="built_in">size</span>() == n<span class="number">-1</span>)&#123;</span><br><span class="line">			ans *= <span class="built_in">Pow</span>(i,d[i][<span class="number">0</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(d[i].<span class="built_in">size</span>() &gt; n<span class="number">-1</span>)ans *= <span class="built_in">Pow</span>(i,d[i][<span class="number">1</span>]); </span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; ans;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1054,7 +1255,7 @@ LCP(sa[i],sa[j]) = min\{lcp[i+1],...,lcp[j]\}
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-14 10:32:50" itemprop="dateModified" datetime="2021-09-14T10:32:50+08:00">2021-09-14</time>
+        <time title="Modified: 2021-09-15 20:58:33" itemprop="dateModified" datetime="2021-09-15T20:58:33+08:00">2021-09-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1547,7 +1748,7 @@ g(x) = \sum_{i=0}^{\infin}h_x\cdot\frac{x^i}{i!}
   \lfloor \frac{a}{bc} \rfloor = \lfloor \frac{\lfloor \frac{a}{b} \rfloor}{c} \rfloor
   \]</span></p></li>
 <li><p><span class="math display">\[
-  a +b = a\oplus b + 2\cdot a \&amp;b
+  a +b = a\oplus b + 2\cdot a \&amp;b = a|b + a \&amp;b
   \]</span></p></li>
 <li><p>设<span class="math inline">\(c(n)\)</span>为第<span class="math inline">\(n\)</span>个Catalan数, 则有<span class="math inline">\(\sum_{k = 0}^{n-1}c(k)\cdot c(n-1-k) = c(n)\)</span></p></li>
 <li><p>区间加平方和(范围<span class="math inline">\([l,n]\)</span>)可通过差分进行. 设差分数组为<span class="math inline">\(d\)</span>, 每次对<span class="math inline">\([l,n]\)</span>加平方和的操作转换为<code>d[l]++,d[l+1]++</code>, 然后求d的3阶前缀和即可单点查询.</p></li>

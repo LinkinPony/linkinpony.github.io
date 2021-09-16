@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="题意 给出\(raw[]\)和两种操作:  \(x\space v\), 将\(raw[x]\)修改为\(v\) \(l \space r\), 询问\(raw[l],raw[l+1],...,raw[r]\)中有多少合法的数对\((i,j)\)满足\(l \leq i \leq j \leq r\)且\(raw[i]...raw[j]\)单调不降  \(1 \leq n,q \leq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[题解]-CF1567E Non-Decreasing Dilemma">
+<meta property="og:url" content="http://linkinpony.github.io/2021/09/14/solution-CF1567E/index.html">
+<meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="题意 给出\(raw[]\)和两种操作:  \(x\space v\), 将\(raw[x]\)修改为\(v\) \(l \space r\), 询问\(raw[l],raw[l+1],...,raw[r]\)中有多少合法的数对\((i,j)\)满足\(l \leq i \leq j \leq r\)且\(raw[i]...raw[j]\)单调不降  \(1 \leq n,q \leq">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-14T13:40:50.000Z">
+<meta property="article:modified_time" content="2021-09-16T11:51:37.541Z">
+<meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="线段树">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://linkinpony.github.io/2021/09/14/solution-CF1567E/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2021/09/14/solution-CF1567E/","path":"2021/09/14/solution-CF1567E/","title":"[题解]-CF1567E Non-Decreasing Dilemma"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[题解]-CF1567E Non-Decreasing Dilemma | I always love dashie</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">I always love dashie</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LinkinPony</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://acker.fun/" title="https:&#x2F;&#x2F;acker.fun&#x2F;" rel="noopener" target="_blank">Acker</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kmguan-528.github.io/" title="https:&#x2F;&#x2F;kmguan-528.github.io&#x2F;" rel="noopener" target="_blank">KMGuan</a>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2021/09/14/solution-CF1567E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [题解]-CF1567E Non-Decreasing Dilemma
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-14 21:40:50" itemprop="dateCreated datePublished" datetime="2021-09-14T21:40:50+08:00">2021-09-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 19:51:37" itemprop="dateModified" datetime="2021-09-16T19:51:37+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BA%BF%E6%AE%B5%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">线段树</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="题意">题意</h2>
+<p>给出<span class="math inline">\(raw[]\)</span>和两种操作:</p>
+<ol type="1">
+<li><span class="math inline">\(x\space v\)</span>, 将<span class="math inline">\(raw[x]\)</span>修改为<span class="math inline">\(v\)</span></li>
+<li><span class="math inline">\(l \space r\)</span>, 询问<span class="math inline">\(raw[l],raw[l+1],...,raw[r]\)</span>中有多少合法的数对<span class="math inline">\((i,j)\)</span>满足<span class="math inline">\(l \leq i \leq j \leq r\)</span>且<span class="math inline">\(raw[i]...raw[j]\)</span>单调不降</li>
+</ol>
+<p><span class="math inline">\(1 \leq n,q \leq 2\cdot10^5\)</span></p>
+<h2 id="题解">题解</h2>
+<p>线段树维护区间合并. 以下<span class="math inline">\(x\)</span>代表线段树节点标号, <span class="math inline">\(ls(x)\)</span>和<span class="math inline">\(rs(x)\)</span>分别代表左右儿子节点标号</p>
+<p>容易发现对于每段长度为<span class="math inline">\(m\)</span>的单调不降子序列, 其对答案的贡献是<span class="math inline">\(\frac{m\cdot (m+1)}2\)</span></p>
+<p>建一颗线段树, 维护如下信息:</p>
+<p>​ <span class="math inline">\(prev[x]\)</span>: 自节点<span class="math inline">\(x\)</span>的最左端开始的最长单调不降子序列的长度</p>
+<p>​ <span class="math inline">\(sufv[x]\)</span>: 自节点<span class="math inline">\(x\)</span>的最右端结束的最长单调不降子序列的长度</p>
+<p>​ <span class="math inline">\(totv[x]\)</span>: 节点<span class="math inline">\(x\)</span>有多少合法数对<span class="math inline">\((i,j)\)</span>满足题意</p>
+<p>有几点细节需要注意:</p>
+<ol type="1">
+<li><p>对于<span class="math inline">\(prev[x]\)</span>, 只有其左儿子的<span class="math inline">\(prev[ls(x)]\)</span>等于区间长度, 并且左儿子和右儿子的连接处不降(即<span class="math inline">\(raw[m-1] &lt;= raw[m])\)</span>时才有<span class="math inline">\(prev[x] = prev[ls(x)] + prev[rs(x)]\)</span>. <span class="math inline">\(sufv[]\)</span>的维护同理</p></li>
+<li><p>对于<span class="math inline">\(totv[x]\)</span>, 显然有<span class="math inline">\(totv[x] += totv[ls(x)] + totv[rs(x)]\)</span>. 而当其左儿子和右儿子的连接处不降时, 还需加上<span class="math inline">\(sufv[ls(x)] \cdot prev[rs(x)]\)</span>, 即新增合法区间的左端点全部从左儿子中选, 右端点全部从右儿子中选.</p></li>
+<li><p>在统计答案时, 需要处理当前节点区间比询问区间大的情况</p></li>
+</ol>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(chrono::steady_clock::now().time_since_epoch().count())</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">8e5</span>+<span class="number">10</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">1e9</span>+<span class="number">7</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">int</span> raw[maxn];</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d,ll p)</span></span>&#123;ll ta=<span class="number">1</span>;<span class="keyword">if</span>(d==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;x %= p;ll a=<span class="built_in">Pow</span>(x,d/<span class="number">2</span>,p);ta=a*a%p;<span class="keyword">if</span>(d%<span class="number">2</span>)ta=ta*x%p;<span class="keyword">return</span> ta%p;&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Segtree</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> siz = <span class="number">1</span>;</span><br><span class="line">	vector&lt;<span class="keyword">int</span>&gt;prev,sufv,totv;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(siz &lt; n)siz *= <span class="number">2</span>;</span><br><span class="line">		prev.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">		sufv.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">		totv.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">ls</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)|<span class="number">1</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">2</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> x*(x+<span class="number">1</span>)/<span class="number">2</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> len = (rx - lx)/<span class="number">2</span>;</span><br><span class="line">		totv[x] = totv[<span class="built_in">ls</span>(x)] + totv[<span class="built_in">rs</span>(x)];</span><br><span class="line">		totv[x] += (raw[m<span class="number">-1</span>] &lt;= raw[m]?sufv[<span class="built_in">ls</span>(x)]*prev[<span class="built_in">rs</span>(x)]:<span class="number">0</span>);</span><br><span class="line">		prev[x] = <span class="built_in">max</span>(prev[<span class="built_in">ls</span>(x)],(prev[<span class="built_in">ls</span>(x)] == len <span class="keyword">and</span> raw[m<span class="number">-1</span>] &lt;= raw[m])?prev[<span class="built_in">ls</span>(x)] + prev[<span class="built_in">rs</span>(x)]:<span class="number">0</span>);</span><br><span class="line">		sufv[x] = <span class="built_in">max</span>(sufv[<span class="built_in">rs</span>(x)],(sufv[<span class="built_in">rs</span>(x)] == len <span class="keyword">and</span> raw[m<span class="number">-1</span>] &lt;= raw[m])?sufv[<span class="built_in">rs</span>(x)] + sufv[<span class="built_in">ls</span>(x)]:<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> idx,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)&#123;</span><br><span class="line">			raw[idx] = v;</span><br><span class="line">			prev[x] = sufv[x] = totv[x] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(lx &lt;= idx <span class="keyword">and</span> idx &lt; m)<span class="built_in">Set</span>(idx,v,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">Set</span>(idx,v,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="built_in">pushup</span>(x,lx,rx);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> idx,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		<span class="built_in">Set</span>(idx,v,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">cal</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)<span class="keyword">return</span> totv[x];</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		ll s1 = <span class="built_in">cal</span>(l,r,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		ll s2 = <span class="built_in">cal</span>(l,r,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		ll ans = s1+s2;</span><br><span class="line">		<span class="keyword">if</span>(raw[m<span class="number">-1</span>] &lt;= raw[m])&#123;</span><br><span class="line">			ans += <span class="built_in">max</span>(<span class="built_in">min</span>(m - l,sufv[<span class="built_in">ls</span>(x)]),<span class="number">0LL</span>)*<span class="built_in">max</span>(<span class="built_in">min</span>(r - m,prev[<span class="built_in">rs</span>(x)]),<span class="number">0LL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">cal</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">cal</span>(l,r,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	cout.<span class="built_in">setf</span>(ios::fixed,ios::floatfield);</span><br><span class="line">	cout.<span class="built_in">precision</span>(<span class="number">12</span>);	 </span><br><span class="line">	<span class="keyword">int</span> n,q;</span><br><span class="line">	Segtree seg;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)raw[i] = <span class="number">0</span>;</span><br><span class="line">	seg.<span class="built_in">init</span>(n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> v;</span><br><span class="line">		cin &gt;&gt; v;</span><br><span class="line">		seg.<span class="built_in">Set</span>(i,v);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> opt,l,r;</span><br><span class="line">		cin &gt;&gt; opt &gt;&gt; l &gt;&gt; r;</span><br><span class="line">		<span class="keyword">if</span>(opt == <span class="number">1</span>)seg.<span class="built_in">Set</span>(l,r);</span><br><span class="line">		<span class="keyword">else</span> cout &lt;&lt; seg.<span class="built_in">cal</span>(l,r) &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+              <a href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag"># 线段树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/25/solution-CF1561D/" rel="prev" title="[题解]CF1561D/CF1560B-Up the Strip">
+                  <i class="fa fa-chevron-left"></i> [题解]CF1561D/CF1560B-Up the Strip
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/16/solution-HDU7059/" rel="next" title="[题解]HDU7059-Counting Stars">
+                  [题解]HDU7059-Counting Stars <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LinkinPony</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
