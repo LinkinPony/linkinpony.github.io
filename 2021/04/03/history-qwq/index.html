@@ -28,7 +28,7 @@
 <meta property="og:description" content="这里存一些被淘汰掉的板子之类的东西 2021-04-03 FFT 复数类操作: 123complex&lt;double&gt;m;m.real();m.imag();&#x2F;&#x2F;获取实部虚部的值m.real(114);m.imag(514);&#x2F;&#x2F;为实部虚部赋值 需要继续理解迭代算法.现在这就是个板子 被卡常时记得别用long double 调用FFT(A,1)将\(A\)变为\(A\)的\">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-03T11:50:03.000Z">
-<meta property="article:modified_time" content="2021-04-03T12:08:53.961Z">
+<meta property="article:modified_time" content="2021-11-19T12:21:00.825Z">
 <meta property="article:author" content="LinkinPony">
 <meta property="article:tag" content="屎山">
 <meta name="twitter:card" content="summary">
@@ -124,18 +124,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -219,10 +219,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-04-03 19:50:03 / Modified: 20:08:53" itemprop="dateCreated datePublished" datetime="2021-04-03T19:50:03+08:00">2021-04-03</time>
+      <time title="Created: 2021-04-03 19:50:03" itemprop="dateCreated datePublished" datetime="2021-04-03T19:50:03+08:00">2021-04-03</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-19 20:21:00" itemprop="dateModified" datetime="2021-11-19T20:21:00+08:00">2021-11-19</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -255,7 +261,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ld;</span><br><span class="line"><span class="keyword">typedef</span> complex&lt;ld&gt; cld;</span><br><span class="line"><span class="keyword">typedef</span> vector&lt;cld&gt; Poly;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">8E6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> ld PI = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="keyword">int</span> rev[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(Poly &amp; A,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> size = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(size &lt;= n)size *= <span class="number">2</span>;</span><br><span class="line">	A.<span class="built_in">assign</span>(size*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FFT_init</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> S = <span class="built_in">log2</span>(n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)rev[i] = (rev[i&gt;&gt;<span class="number">1</span>] &gt;&gt; <span class="number">1</span>) | ((i &amp; <span class="number">1</span>) &lt;&lt; (S - <span class="number">1</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FFT</span><span class="params">(Poly &amp; A,<span class="keyword">int</span> type)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = A.<span class="built_in">size</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;i++)<span class="keyword">if</span>(i &lt; rev[i])<span class="built_in">swap</span>(A[i],A[rev[i]]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; n;i *= <span class="number">2</span>)&#123;</span><br><span class="line">		<span class="function">cld <span class="title">Wn</span><span class="params">(cos(PI/i),type*sin(PI/i))</span></span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; n;j += i*<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="function">cld <span class="title">W</span><span class="params">(<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>;k &lt; i;k++)&#123;</span><br><span class="line">				cld facx = A[j+k],facy = W*A[j+k+i];</span><br><span class="line">				A[j+k] = facx + facy;</span><br><span class="line">				A[j+k+i] = facx - facy;</span><br><span class="line">				W *= Wn;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="number">-1</span>)<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; (<span class="keyword">int</span>)A.<span class="built_in">size</span>();i++)A[i].<span class="built_in">real</span>((<span class="keyword">int</span>)(A[i].<span class="built_in">real</span>()/A.<span class="built_in">size</span>() + <span class="number">0.5</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="卷积">卷积</h2>
 <p><span class="math display">\[
-C[i] = \sum_{j = 0}^iA[i]B[i-j]
+C[i] = \sum_{j = 0}^iA[j]B[i-j]
 \]</span></p>
 <p>卷积等同于多项式乘积</p>
 <p>输入两个多项式<span class="math inline">\(A,B\)</span>的系数,求出其乘积:</p>
@@ -311,7 +317,7 @@ C[i] = \sum_{j = 0}^iA[i]B[i-j]
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

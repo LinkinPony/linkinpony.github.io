@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="经典我是傻逼环节. 题意 给出长度为\(n\)的数组\(A &#x3D; \{a_i\}\), \(1 \leq n \leq 2 \cdot 10^5,1 \leq a_i \leq 10^9\). 对于\(A\)的任意长度为\(m\)的非空子序列\(B &#x3D; \{b_1,b_2,..,b_m\}\), 定义\(f(b_i,k_i) &#x3D; \sum_{j &#x3D; 0}^{b_i} (j + k_i)\),">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[题解]CF1610D-Not Quite Lee">
+<meta property="og:url" content="http://linkinpony.github.io/2021/11/24/solution-CF1610D/index.html">
+<meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="经典我是傻逼环节. 题意 给出长度为\(n\)的数组\(A &#x3D; \{a_i\}\), \(1 \leq n \leq 2 \cdot 10^5,1 \leq a_i \leq 10^9\). 对于\(A\)的任意长度为\(m\)的非空子序列\(B &#x3D; \{b_1,b_2,..,b_m\}\), 定义\(f(b_i,k_i) &#x3D; \sum_{j &#x3D; 0}^{b_i} (j + k_i)\),">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-23T17:47:29.000Z">
+<meta property="article:modified_time" content="2022-01-13T06:44:30.521Z">
+<meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="-数学 -构造 -题解">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://linkinpony.github.io/2021/11/24/solution-CF1610D/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2021/11/24/solution-CF1610D/","path":"2021/11/24/solution-CF1610D/","title":"[题解]CF1610D-Not Quite Lee"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[题解]CF1610D-Not Quite Lee | I always love dashie</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">I always love dashie</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LinkinPony</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://acker.fun/" title="https:&#x2F;&#x2F;acker.fun&#x2F;" rel="noopener" target="_blank">Acker</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kmguan-528.github.io/" title="https:&#x2F;&#x2F;kmguan-528.github.io&#x2F;" rel="noopener" target="_blank">KMGuan</a>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2021/11/24/solution-CF1610D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [题解]CF1610D-Not Quite Lee
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-24 01:47:29" itemprop="dateCreated datePublished" datetime="2021-11-24T01:47:29+08:00">2021-11-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-01-13 14:44:30" itemprop="dateModified" datetime="2022-01-13T14:44:30+08:00">2022-01-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">-题解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>经典我是傻逼环节.</p>
+<h2 id="题意">题意</h2>
+<p>给出长度为<span class="math inline">\(n\)</span>的数组<span class="math inline">\(A = \{a_i\}\)</span>, <span class="math inline">\(1 \leq n \leq 2 \cdot 10^5,1 \leq a_i \leq 10^9\)</span>.</p>
+<p>对于<span class="math inline">\(A\)</span>的任意长度为<span class="math inline">\(m\)</span>的非空子序列<span class="math inline">\(B = \{b_1,b_2,..,b_m\}\)</span>, 定义<span class="math inline">\(f(b_i,k_i) = \sum_{j = 0}^{b_i} (j + k_i)\)</span>, 其中<span class="math inline">\(k_i\)</span>为任意整数. 一个子序列<span class="math inline">\(B\)</span>合法当且仅当 $ {k_i} |_{i = 1}^mf(b_i,k_i) = 0$.</p>
+<p>求<span class="math inline">\(A\)</span>中全部合法子序列数量模<span class="math inline">\(10^9+7\)</span>.</p>
+<h2 id="题解">题解</h2>
+<p>首先我们考虑如何判断某个序列是否合法. 有<span class="math inline">\(f(b_i,k_i) = \frac{b_i\cdot(b_i + 1)}{2} + k_i\cdot b_i\)</span>, 那么<span class="math inline">\(\sum_{i = 1}^mf(b_i,k_i) = 0\)</span>可以转化为<span class="math inline">\(\sum_{i = 0}^m{\frac{b_i\cdot (b_i + 1)}{2}} = \sum_{i = 0}^m k_i \cdot b_i\)</span>. 这是一个一次不定方程. 设<span class="math inline">\(g = gcd(b_1,b_2,...,b_m)\)</span>, 当且仅当<span class="math inline">\(g | \sum_{i = 0}^m \frac{b_i \cdot (b_i+1)}{2}\)</span>时有整数解.</p>
+<p>手画一下几组样例可以看出, 当序列中存在奇数时必定合法. 当序列中存在至少一个奇数时, 显然<span class="math inline">\(g\)</span>也是奇数. 那么对于每个<span class="math inline">\(\frac{b_i \cdot (b_i + 1)}{2}\)</span>, 如果<span class="math inline">\(b_i\)</span>是偶数有<span class="math inline">\(g | \frac{b_i}{2}\)</span>, 否则有<span class="math inline">\(g|(b_i + 1)\)</span> 且<span class="math inline">\(\frac{b_i}{2}\)</span>为整数. 因而序列中存在奇数时必有<span class="math inline">\(g | \sum_{i = 0}^m \frac{b_i \cdot (b_i+1)}{2}\)</span>.</p>
+<p>设<span class="math inline">\(A\)</span>中奇数个数为<span class="math inline">\(odd\)</span>, 这一部分对答案的贡献为<span class="math inline">\((2^{odd} - 1) \cdot 2^{n-odd}\)</span></p>
+<p>现在考虑序列中全为偶数的情况. 设<span class="math inline">\(h\)</span>是最大的使得<span class="math inline">\(2^h | g\)</span>的非负整数. 我们可以把<span class="math inline">\(g\)</span>拆分为<span class="math inline">\(g&#39; \cdot 2^h\)</span>. 显然<span class="math inline">\(g&#39;\)</span>为奇数. 根据上一段的讨论, 有<span class="math inline">\(g&#39; | \sum_{i = 0}^m \frac{b_i \cdot (b_i + 1)}{2}\)</span>. <strong>因而全为偶数的序列是否合法取决于</strong><span class="math inline">\(2^h\)</span><strong>能否整除</strong><span class="math inline">\(\sum_{i = 0}^m \frac{b_i \cdot (b_i + 1)}{2}\)</span>. 对于每个<span class="math inline">\(b_i\)</span>, 设<span class="math inline">\(l\)</span>是最大的使得<span class="math inline">\(2^l|b_i\)</span>的非负整数. <span class="math inline">\(l\)</span>可以分三种情况来讨论:</p>
+<ul>
+<li><p><span class="math inline">\(l &gt; h\)</span>.</p>
+<p>此时有<span class="math inline">\(2^h | \frac{b_i}{2}\)</span>, 所以<span class="math inline">\(2^h | \frac{b_i \cdot(b_i + 1)}{2}\)</span>.</p></li>
+<li><p><span class="math inline">\(l = h\)</span>.</p>
+<p>此时<span class="math inline">\(2^h \nmid \frac{b_i}{2}\)</span>且<span class="math inline">\(b_i + 1\)</span>是奇数, 因此<span class="math inline">\(2^h \nmid \frac{b_i \cdot(b_i + 1)}{2}\)</span>. 由于<span class="math inline">\(\frac{b_i \cdot(b_i + 1)}{2 \cdot g&#39;} \mod 2^h = 2^{h-1}\)</span>, 如果这种情况下的<span class="math inline">\(b_i\)</span>个数有偶数个, 那它们的和仍然可以被<span class="math inline">\(2^h\)</span>整除.</p></li>
+<li><p><span class="math inline">\(l &lt; h\)</span>. 由于<span class="math inline">\(g \geq 2^h\)</span>, 不可能存在这种情况.</p></li>
+</ul>
+<p>综上可知, 当序列中全为偶数时, 按能被<span class="math inline">\(2^l\)</span>整除的最大<span class="math inline">\(l\)</span>来对<span class="math inline">\(b_i\)</span>分类, 当且仅当<span class="math inline">\(l\)</span>最小那组的个数为偶数时序列合法. 在统计时可以枚举最小的<span class="math inline">\(l\)</span>.</p>
+<p>总时间复杂度<span class="math inline">\(n \log (\max\{a_i\})\)</span></p>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(chrono::steady_clock::now().time_since_epoch().count())</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">2e5</span>+<span class="number">10</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">1e9</span>+<span class="number">7</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line">ll fac[maxn],cnt[maxn];</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d,ll p = p)</span></span>&#123;ll ta=<span class="number">1</span>;<span class="keyword">if</span>(d==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;x %= p;ll a=<span class="built_in">Pow</span>(x,d/<span class="number">2</span>,p);ta=a*a%p;<span class="keyword">if</span>(d%<span class="number">2</span>)ta=ta*x%p;<span class="keyword">return</span> ta%p;&#125;</span><br><span class="line"><span class="function">ll <span class="title">C</span><span class="params">(ll n,ll m)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(m &gt; n)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> (fac[n]*<span class="built_in">Pow</span>(fac[m],p<span class="number">-2</span>)%p*<span class="built_in">Pow</span>(fac[n-m],p<span class="number">-2</span>)%p)%p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	cout.<span class="built_in">setf</span>(ios::fixed,ios::floatfield);</span><br><span class="line">	cout.<span class="built_in">precision</span>(<span class="number">12</span>);	 </span><br><span class="line">	fac[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)fac[i] = fac[i<span class="number">-1</span>]*i%p;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">int</span> odd = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		cin &gt;&gt; x;</span><br><span class="line">		<span class="keyword">if</span>(x&amp;<span class="number">1</span>)odd++;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">int</span> qwq = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span>(x%<span class="number">2</span> == <span class="number">0</span>)qwq++,x /= <span class="number">2</span>;</span><br><span class="line">			cnt[qwq+<span class="number">1</span>]++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	ll ans = (<span class="built_in">Pow</span>(<span class="number">2</span>,odd) - <span class="number">1</span> + p)%p*(<span class="built_in">Pow</span>(<span class="number">2</span>,n - odd)) % p;</span><br><span class="line">	ll res = n - odd;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">1</span>;k &lt;= <span class="number">32</span>;k++)<span class="keyword">if</span>(cnt[k])&#123;</span><br><span class="line">		ll tmp = <span class="number">0</span>;</span><br><span class="line">		res -= cnt[k];</span><br><span class="line">		ans = (ans + (<span class="built_in">Pow</span>(<span class="number">2</span>,cnt[k] - <span class="number">1</span>) - <span class="number">1</span> + p)%p * <span class="built_in">Pow</span>(<span class="number">2</span>,res) % p) % p;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; ans;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6-%E6%9E%84%E9%80%A0-%E9%A2%98%E8%A7%A3/" rel="tag"># -数学 -构造 -题解</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/17/solution-ABC213E/" rel="prev" title="solution-ABC213E">
+                  <i class="fa fa-chevron-left"></i> solution-ABC213E
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/13/solution-CF1625D/" rel="next" title="[题解]CF1625D-Binary Spiders">
+                  [题解]CF1625D-Binary Spiders <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LinkinPony</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
