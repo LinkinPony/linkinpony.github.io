@@ -2894,7 +2894,7 @@ v = G
 <p>可以用如下代码来测试:</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;tgaimage.h&quot;</span></span></span><br><span class="line"><span class="keyword">const</span> TGAColor white = <span class="built_in">TGAColor</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line"><span class="keyword">const</span> TGAColor red   = <span class="built_in">TGAColor</span>(<span class="number">255</span>, <span class="number">0</span>,   <span class="number">0</span>,   <span class="number">255</span>);</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">        <span class="function">TGAImage <span class="title">image</span><span class="params">(<span class="number">100</span>, <span class="number">100</span>, TGAImage::RGB)</span></span>;</span><br><span class="line">        image.<span class="built_in">set</span>(<span class="number">52</span>, <span class="number">41</span>, red);</span><br><span class="line">        image.<span class="built_in">flip_vertically</span>(); <span class="comment">// i want to have the origin at the left bottom corner of the image</span></span><br><span class="line">        image.<span class="built_in">write_tga_file</span>(<span class="string">&quot;output.tga&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>得到一个有红点的TGA文件:</p>
-<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220430115033896.png" alt="image-20220430115033896" style="zoom:25%;" /></p>
+<p><img src="demo-render.assets\image-20220430115033896.png" alt="image-20220430115033896" style="zoom:25%;" /></p>
 <h1 id="step-1画一条直线">Step 1：画一条直线</h1>
 <h2 id="朴素算法">朴素算法</h2>
 <p>我们需要在二维位图上画一条从<span class="math inline">\((x_0,y_0)\)</span>到<span class="math inline">\((x_1,y_1)\)</span>的直线.</p>
@@ -2916,7 +2916,7 @@ y = (x - x_0) \cdot k + y_0
 <h2 id="扫描线法">扫描线法</h2>
 <p>我们先用一种十分古老的方法来画一个三角形: 用水平或者竖直的线一行一行地绘制.</p>
 <p>在绘制前, 先对三角形的三个顶点按横坐标递增进行排序, 然后标号为<span class="math inline">\(P_0,P_1,P_2\)</span>(以下默认左下角为坐标原点). 同时将边<span class="math inline">\(P_0P_1\)</span>标为<span class="math inline">\(L_0\)</span>, <span class="math inline">\(P_1P_2\)</span>标为<span class="math inline">\(L_1\)</span>, <span class="math inline">\(P_2P_3\)</span>标为<span class="math inline">\(L_2\)</span>, 如图:</p>
-<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220501154945120.png" alt="image-20220501154945120" style="zoom:50%;" /></p>
+<p><img src="demo-render.assets\image-20220501154945120.png" alt="image-20220501154945120" style="zoom:50%;" /></p>
 <p>标号后的三角形可按<span class="math inline">\(x = x_1\)</span>​这条直线分割成两部分. 对两部分分别进行绘制即可. 注意处理一下斜率不存在时的细节.</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(Vec2i t0, Vec2i t1, Vec2i t2, TGAColor color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x0,y0,x1,y1,x2,y2;</span><br><span class="line">    std::vector&lt;std::pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; &gt;top = &#123;&#123;t0.u,t0.v&#125;,&#123;t1.u,t1.v&#125;,&#123;t2.u,t2.v&#125;&#125;;</span><br><span class="line">    std::<span class="built_in">sort</span>(top.<span class="built_in">begin</span>(),top.<span class="built_in">end</span>());</span><br><span class="line">    std::<span class="built_in">tie</span>(x0,y0) = top[<span class="number">0</span>];</span><br><span class="line">    std::<span class="built_in">tie</span>(x1,y1) = top[<span class="number">1</span>];</span><br><span class="line">    std::<span class="built_in">tie</span>(x2,y2) = top[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> mx = std::<span class="built_in">max</span>(x1,x2);</span><br><span class="line">    <span class="keyword">double</span> k0 = (<span class="keyword">double</span>)(y1 - y0)/(x1 == x0?<span class="number">1</span>:x1 - x0);</span><br><span class="line">    <span class="keyword">double</span> k1 = (<span class="keyword">double</span>)(y2 - y1)/(x2 == x1?<span class="number">1</span>:x2 - x1);</span><br><span class="line">    <span class="keyword">double</span> k2 = (<span class="keyword">double</span>)(y2 - y0)/(x2 == x0?<span class="number">1</span>:x2 - x0);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = x0;x &lt;= x2;x++)&#123;</span><br><span class="line">        <span class="keyword">int</span> yc2 = (x - x0) * k2 + y0;</span><br><span class="line">        <span class="keyword">if</span>(x &lt;= x1)&#123;</span><br><span class="line">            <span class="keyword">int</span> yc0 = (x - x0) * k0 + y0;</span><br><span class="line">            <span class="built_in">Line</span>(x,yc0,x,yc2,color);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">int</span> yc1 = (x - x1) * k1 + y1;</span><br><span class="line">            <span class="built_in">Line</span>(x,yc1,x,yc2,color);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="重心坐标系">重心坐标系</h2>
@@ -3013,7 +3013,7 @@ y_p - y_a
 \]</span> 从几何意义考虑, 这相当于<span class="math inline">\([\beta ,\gamma,1]\)</span>这个向量和后两个向量分别垂直. 因而我们求出后两个向量的叉积(假设结果为<span class="math inline">\([x,y,z]\)</span>), 则<span class="math inline">\([\frac{x}{z}, \frac{y}{z},1]\)</span>等于<span class="math inline">\([\beta,\gamma,1]\)</span>​.</p>
 <p>需要注意<span class="math inline">\(z = 0\)</span>的特殊情况, 根据叉乘的定义, 此时有<span class="math inline">\(\vec{AB}_x \cdot \vec{AC}_y - \vec{AB}_y \cdot \vec{AC}_x = 0\)</span>, 即<span class="math inline">\(\vec{AB} \cdot \vec{AC} = 0\)</span>, 说明<span class="math inline">\(ABC\)</span>三点共线. 这时返回一个任意的负重心坐标即可.</p>
 <h4 id="求解三角形面积">求解:三角形面积</h4>
-<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502193646986.png" alt="image-20220502193646986" style="zoom:50%;" /></p>
+<p><img src="demo-render.assets\image-20220502193646986.png" alt="image-20220502193646986" style="zoom:50%;" /></p>
 <p>如图, 假设三角形面积分别为<span class="math inline">\(S_A,S_B,S_C\)</span>. 则 <span class="math display">\[
 \alpha = \frac{S_A}{S_A+S_B+S_C}\\
 \beta = \frac{S_B}{S_A+S_B+S_C}\\
@@ -3024,13 +3024,13 @@ y_p - y_a
 <p>在绘图时, 用一个最小的矩形包围住三角形, 再枚举并判断每个点是否在三角形内部即可. 下面的代码采用了向量叉积法:</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">Vec3f <span class="title">Drawer::Barycentric</span><span class="params">(<span class="keyword">const</span> Vec2i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> Vec2i &amp; P)</span></span>&#123;</span><br><span class="line">    Vec3f result =  <span class="comment">//cal cross</span></span><br><span class="line">            <span class="built_in">Vec3f</span>(vertex[<span class="number">1</span>].x - vertex[<span class="number">0</span>].x,vertex[<span class="number">2</span>].x - vertex[<span class="number">0</span>].x,vertex[<span class="number">0</span>].x - P.x) ^</span><br><span class="line">            <span class="built_in">Vec3f</span>(vertex[<span class="number">1</span>].y - vertex[<span class="number">0</span>].y,vertex[<span class="number">2</span>].y - vertex[<span class="number">0</span>].y,vertex[<span class="number">0</span>].y - P.y);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">fabs</span>(result.z) &lt; <span class="number">1</span>)<span class="keyword">return</span> <span class="built_in">Vec3f</span>(<span class="number">-1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    result.x /= result.z,result.y /= result.z;</span><br><span class="line">    <span class="keyword">return</span> &#123;(<span class="keyword">float</span>)<span class="number">1.0</span> - result.x - result.y,result.x,result.y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(<span class="keyword">const</span> Vec2i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> TGAColor &amp; color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lx = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="number">0</span>),rx = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="built_in">get_width</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">int</span> ly = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y&#125;),<span class="number">0</span>),ry = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y,&#125;),<span class="built_in">get_height</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = lx;x &lt;= rx;x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y = ly;y &lt;= ry;y++)&#123;</span><br><span class="line">            Vec3f bary = <span class="built_in">Barycentric</span>(vertex,<span class="built_in">Vec2i</span>(x,y));</span><br><span class="line">            <span class="keyword">bool</span> out = (bary.x &lt; <span class="number">0</span> <span class="keyword">or</span> bary.y &lt; <span class="number">0</span> <span class="keyword">or</span> bary.z &lt; <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span>(!out)<span class="built_in">set</span>(x,y,color);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用<a href="https://github.com/ssloy/tinyrenderer/tree/024ad4619b824f9179c86dc144145e2b8b155f52">tinyrender提供的模型</a>来测试一下我们的三角形绘制程序(先给每个面一个随机颜色):</p>
-<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502215053686.png" alt="image-20220502215053686" style="zoom:25%;" /></p>
+<p><img src="demo-render.assets\image-20220502215053686.png" alt="image-20220502215053686" style="zoom:25%;" /></p>
 <p>加上一点阴影并剔除背面的三角形:</p>
-<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502215757516.png" alt="image-20220502215757516" style="zoom:25%;" /></p>
+<p><img src="demo-render.assets\image-20220502215757516.png" alt="image-20220502215757516" style="zoom:25%;" /></p>
 <h1 id="step-3-z-buffer">Step 3 ：z-buffer</h1>
 <p>现在我们需要考虑剔除掉不能被我们看见的像素(Step 2通过Back-face culling剔除了一些面, 但是仍然不正确, 例如嘴部整个消失了). z-buffer的思想是维护一个像素点在待渲染平面上的一个距离buffer, 每次用离相机更近的点来剔除已经存在的点. z-buffer的实现非常简单, 下面主要讨论如何求每个点距相机的距离.</p>
 <p>首先考虑一维的情形. 假设我们要绘制从<span class="math inline">\(A(x_0,y_0)\)</span>到<span class="math inline">\(B(x_1,y_1)\)</span>的一条线段, 当前绘制到点<span class="math inline">\(P(x,y)\)</span>, 摄像机的视角与<span class="math inline">\(y\)</span>轴的反方向相同:</p>
-<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220503101100866.png" alt="image-20220503101100866" style="zoom:50%;" /></p>
+<p><img src="demo-render.assets\image-20220503101100866.png" alt="image-20220503101100866" style="zoom:50%;" /></p>
 <p>在绘制时我们要通过<span class="math inline">\(x\)</span>坐标计算出<span class="math inline">\(y\)</span>来. 不难得到 <span class="math display">\[
 \frac{y - y_0}{y1 - y_0} = \frac{x - x_0}{x_1 - x_0}
 \]</span> 我们设<span class="math inline">\(\beta = \frac{x - x_0}{x_1 - x_0}\)</span>, 则有 <span class="math display">\[
@@ -3040,9 +3040,9 @@ z = \alpha z_0+ \beta z_1 + \gamma z_2
 \]</span></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(<span class="keyword">const</span> Vec3i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> TGAColor &amp; color,<span class="keyword">double</span> * zbuffer)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">-1e-6</span>;<span class="comment">//防止三角形接合处有未绘制的点</span></span><br><span class="line">    <span class="keyword">int</span> lx = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="number">0</span>),rx = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="built_in">get_width</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">int</span> ly = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y&#125;),<span class="number">0</span>),ry = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y,&#125;),<span class="built_in">get_height</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = lx;x &lt;= rx;x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y = ly;y &lt;= ry;y++)&#123;</span><br><span class="line">            Vec3f bary = <span class="built_in">Barycentric</span>(vertex,<span class="built_in">Vec2i</span>(x,y));</span><br><span class="line">            <span class="keyword">if</span>(bary.x &lt; eps <span class="keyword">or</span> bary.y &lt; eps <span class="keyword">or</span> bary.z &lt; eps)<span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> idx = x + y * <span class="built_in">get_width</span>();</span><br><span class="line">            <span class="keyword">double</span> z = bary.x * vertex[<span class="number">0</span>].z + bary.y * vertex[<span class="number">1</span>].z + bary.z * vertex[<span class="number">2</span>].z;</span><br><span class="line">            <span class="keyword">if</span>(zbuffer[idx] &lt; z)&#123;</span><br><span class="line">                zbuffer[idx] = z;</span><br><span class="line">                <span class="built_in">set</span>(x,y,color);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>效果如下:</p>
-<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220503104500854.png" alt="image-20220503104500854" style="zoom:25%;" /></p>
+<p><img src="demo-render.assets\image-20220503104500854.png" alt="image-20220503104500854" style="zoom:25%;" /></p>
 <h1 id="step-4-透视投影">Step 4: 透视投影</h1>
-<p>这一部分tinyrender讲得很含糊而且不直观, 所以我直接按照GAMES101的内容去实现.</p>
+<p>这一部分tinyrender讲得很含糊而且不直观, 所以我直接按照GAMES101的内容去实现. 本节只讲述实现. obj文件格式可以在https://en.wikipedia.org/wiki/Wavefront_.obj_file找到</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -3504,13 +3504,15 @@ R(\vec n,\alpha) = \cos(\alpha)\vec I + (1 - \cos(\alpha))\vec n \vec n^T + \sin
 \end{array}
 \right)
 \]</span></p>
-<h1 id="视图变换与投影变换">视图变换与投影变换</h1>
+<h1 id="渲染过程中的各种变换">渲染过程中的各种变换</h1>
 <p>假设我们要拍一张照片，需要以下三个步骤:</p>
 <ol type="1">
 <li>安排好要拍的人或物. 对应模型变换(model transformation), 即将物体坐标转换为世界坐标.</li>
 <li>寻找一个放置相机的位置和角度. 对应视图变换(view transformation).</li>
 <li>拍照. 对应投影变换(projection transformation).</li>
 </ol>
+<h2 id="模型变换model-transformation">模型变换(Model Transformation)</h2>
+<p>这一步是将模型坐标转换为世界坐标的过程, 转换矩阵记为<span class="math inline">\(M_{model}\)</span></p>
 <h2 id="视图变换view-transformation">视图变换(View Transformation)</h2>
 <p>要进行视图变换, 我们首先需要定义相机的摆放:</p>
 <ul>
@@ -3688,6 +3690,19 @@ M_{persp \to ortho} = \left(
 \right)
 \]</span> 整个透视投影的过程便是先挤压再正交投影的过程, 即 <span class="math display">\[
 M_{persp} = M_{ortho}M_{persp\to ortho}
+\]</span></p>
+<h2 id="视口变换viewport-transformation">视口变换(Viewport Transformation)</h2>
+<p>视口变换是这一系列变换的最后一步, 它的作用是将上一步正交投影得到的<span class="math inline">\([-1,1] \times [-1,1]\)</span>的画面转换到显示器<span class="math inline">\([0,width] \times [0,height]\)</span>的画面. 易得转移矩阵如下: <span class="math display">\[
+M_{viewport} = \left(
+\begin{array}{cccc} 
+   \frac{width}{2} &amp; 0 &amp; 0 &amp; \frac{width}{2} \\
+   0 &amp; \frac{height}{2} &amp; 0 &amp; \frac{height}{2}\\
+   0 &amp; 0 &amp; 1 &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right)
+\]</span> 综上所述, 一个完整的变换矩阵为: <span class="math display">\[
+M = M_{viewport}M_{persp}M_{view}M_{model}
 \]</span></p>
 ]]></content>
       <categories>

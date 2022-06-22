@@ -602,7 +602,7 @@ f[i] &amp;= suf[i+1]+\sum_{j = 1}^{i*j &lt;= n}suf[j] - suf[(i+1)*j]
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-06-22 08:54:20" itemprop="dateModified" datetime="2022-06-22T08:54:20+08:00">2022-06-22</time>
+        <time title="Modified: 2022-06-22 21:19:13" itemprop="dateModified" datetime="2022-06-22T21:19:13+08:00">2022-06-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1071,13 +1071,15 @@ R(\vec n,\alpha) = \cos(\alpha)\vec I + (1 - \cos(\alpha))\vec n \vec n^T + \sin
 \end{array}
 \right)
 \]</span></p>
-<h1 id="视图变换与投影变换">视图变换与投影变换</h1>
+<h1 id="渲染过程中的各种变换">渲染过程中的各种变换</h1>
 <p>假设我们要拍一张照片，需要以下三个步骤:</p>
 <ol type="1">
 <li>安排好要拍的人或物. 对应模型变换(model transformation), 即将物体坐标转换为世界坐标.</li>
 <li>寻找一个放置相机的位置和角度. 对应视图变换(view transformation).</li>
 <li>拍照. 对应投影变换(projection transformation).</li>
 </ol>
+<h2 id="模型变换model-transformation">模型变换(Model Transformation)</h2>
+<p>这一步是将模型坐标转换为世界坐标的过程, 转换矩阵记为<span class="math inline">\(M_{model}\)</span></p>
 <h2 id="视图变换view-transformation">视图变换(View Transformation)</h2>
 <p>要进行视图变换, 我们首先需要定义相机的摆放:</p>
 <ul>
@@ -1255,6 +1257,19 @@ M_{persp \to ortho} = \left(
 \right)
 \]</span> 整个透视投影的过程便是先挤压再正交投影的过程, 即 <span class="math display">\[
 M_{persp} = M_{ortho}M_{persp\to ortho}
+\]</span></p>
+<h2 id="视口变换viewport-transformation">视口变换(Viewport Transformation)</h2>
+<p>视口变换是这一系列变换的最后一步, 它的作用是将上一步正交投影得到的<span class="math inline">\([-1,1] \times [-1,1]\)</span>的画面转换到显示器<span class="math inline">\([0,width] \times [0,height]\)</span>的画面. 易得转移矩阵如下: <span class="math display">\[
+M_{viewport} = \left(
+\begin{array}{cccc} 
+   \frac{width}{2} &amp; 0 &amp; 0 &amp; \frac{width}{2} \\
+   0 &amp; \frac{height}{2} &amp; 0 &amp; \frac{height}{2}\\
+   0 &amp; 0 &amp; 1 &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right)
+\]</span> 综上所述, 一个完整的变换矩阵为: <span class="math display">\[
+M = M_{viewport}M_{persp}M_{view}M_{model}
 \]</span></p>
 
       
