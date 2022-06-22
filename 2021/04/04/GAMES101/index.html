@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="部分图片来自GAMES101 向量 基础 可以直接跳过这部分. 定义 符号表示: \(\vec{a}\) 或\(\boldsymbol{a}\), 或者写成\(\vec{AB}\), 表示从\(A\)指向\(B\)的向量(\(\vec{AB} &#x3D; B - A\)). 本文中向量均表示列向量, 即\(\vec{a} &#x3D; \begin{pmatrix}x\\y\end{pmatrix}\)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GAMES101笔记">
+<meta property="og:url" content="http://linkinpony.github.io/2021/04/04/GAMES101/index.html">
+<meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="部分图片来自GAMES101 向量 基础 可以直接跳过这部分. 定义 符号表示: \(\vec{a}\) 或\(\boldsymbol{a}\), 或者写成\(\vec{AB}\), 表示从\(A\)指向\(B\)的向量(\(\vec{AB} &#x3D; B - A\)). 本文中向量均表示列向量, 即\(\vec{a} &#x3D; \begin{pmatrix}x\\y\end{pmatrix}\)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220329112926492-16489935946861.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220329115232862-16489935976142.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220329121632672-16489936041923.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220329121938192-16489936060574.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220329122335871-16489936088105.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220331101601190-16489936107926.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220331103128802-16489936123257.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220401171106621-16489936162318.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220401171133617-16489936178929.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220401171501411-164899361945310.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220401171722621-164899362109911.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220401174056239-164899362270712.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220401180755821-164899362481713.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220401185309912-164899362872814.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220621095653583.png">
+<meta property="og:image" content="e:/Github/hexo/source_posts/GAMES101.assets/image-20220621164915132.png">
+<meta property="og:image" content="e:/Github/hexo/source_posts/GAMES101.assets/image-20220622075400700.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220622080539039.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220622080748026.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220622082005810.png">
+<meta property="article:published_time" content="2021-04-04T07:49:17.000Z">
+<meta property="article:modified_time" content="2022-06-22T00:54:20.240Z">
+<meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="图形学">
+<meta property="article:tag" content="GAMES101">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:/Github/hexo/source/_posts/GAMES101.assets/image-20220329112926492-16489935946861.png">
+
+
+<link rel="canonical" href="http://linkinpony.github.io/2021/04/04/GAMES101/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2021/04/04/GAMES101/","path":"2021/04/04/GAMES101/","title":"GAMES101笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GAMES101笔记 | I always love dashie</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">I always love dashie</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">向量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E5%BA%A6"><span class="nav-number">1.1.2.</span> <span class="nav-text">长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BD%8D%E5%90%91%E9%87%8F"><span class="nav-number">1.1.3.</span> <span class="nav-text">单位向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97"><span class="nav-number">1.2.</span> <span class="nav-text">基本运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">加法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E7%A7%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">点积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A4%E5%90%91%E9%87%8F%E5%A4%B9%E8%A7%92"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">两向量夹角</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%95%E5%BD%B1"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">投影</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E4%B8%A4%E5%90%91%E9%87%8F%E6%96%B9%E5%90%91"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">判断两向量方向</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%89%E7%A7%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">叉积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E4%B8%A4%E5%90%91%E9%87%8F%E5%B7%A6%E5%8F%B3%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">判断两向量左右关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E7%82%B9%E6%98%AF%E5%90%A6%E5%9C%A8%E5%87%B8%E5%A4%9A%E8%BE%B9%E5%BD%A2%E5%86%85%E9%83%A8"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">判断点是否在凸多边形内部</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E4%BA%A4%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">1.3.</span> <span class="nav-text">正交坐标系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5"><span class="nav-number">2.</span> <span class="nav-text">矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">矩阵乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">转置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%BD%8D%E7%9F%A9%E9%98%B5"><span class="nav-number">2.3.</span> <span class="nav-text">单位矩阵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">变换基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="nav-number">3.1.</span> <span class="nav-text">线性变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%A9%E6%94%BEscale"><span class="nav-number">3.1.1.</span> <span class="nav-text">缩放(Scale)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84reflection"><span class="nav-number">3.1.2.</span> <span class="nav-text">反射(Reflection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E5%8F%98shear"><span class="nav-number">3.1.3.</span> <span class="nav-text">切变(Shear)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%8B%E8%BD%ACrotate"><span class="nav-number">3.1.4.</span> <span class="nav-text">旋转(Rotate)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E7%A7%BBtranslation"><span class="nav-number">3.2.</span> <span class="nav-text">平移(Translation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87homogeneous-coordinates"><span class="nav-number">3.3.</span> <span class="nav-text">齐次坐标(Homogeneous Coordinates)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2affine-transformation"><span class="nav-number">3.4.</span> <span class="nav-text">仿射变换(Affine Transformation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2inverse-transform"><span class="nav-number">3.5.</span> <span class="nav-text">逆变换(Inverse Transform)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2%E7%9A%84%E7%BB%84%E5%90%88"><span class="nav-number">3.6.</span> <span class="nav-text">变换的组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2%E7%9A%84%E5%88%86%E8%A7%A3"><span class="nav-number">3.7.</span> <span class="nav-text">变换的分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E6%8C%89%E6%9F%90%E7%82%B9%E6%97%8B%E8%BD%AC"><span class="nav-number">3.7.1.</span> <span class="nav-text">例:按某点旋转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%BB%B4%E5%8F%98%E6%8D%A2"><span class="nav-number">3.8.</span> <span class="nav-text">三维变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC"><span class="nav-number">3.8.1.</span> <span class="nav-text">旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E5%9D%90%E6%A0%87%E8%BD%B4%E6%97%8B%E8%BD%AC"><span class="nav-number">3.8.1.1.</span> <span class="nav-text">按坐标轴旋转</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%80%A7%E7%9A%84%E6%97%8B%E8%BD%AC"><span class="nav-number">3.8.1.2.</span> <span class="nav-text">一般性的旋转</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rodrigues%E6%97%8B%E8%BD%AC%E5%85%AC%E5%BC%8F"><span class="nav-number">3.8.1.3.</span> <span class="nav-text">Rodrigues旋转公式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E5%8F%98%E6%8D%A2%E4%B8%8E%E6%8A%95%E5%BD%B1%E5%8F%98%E6%8D%A2"><span class="nav-number">4.</span> <span class="nav-text">视图变换与投影变换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E5%8F%98%E6%8D%A2view-transformation"><span class="nav-number">4.1.</span> <span class="nav-text">视图变换(View Transformation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%95%E5%BD%B1%E5%8F%98%E6%8D%A2projection-transformation"><span class="nav-number">4.2.</span> <span class="nav-text">投影变换(Projection Transformation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E4%BA%A4%E6%8A%95%E5%BD%B1orthographic-projection"><span class="nav-number">4.2.1.</span> <span class="nav-text">正交投影(Orthographic Projection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1perspective-projection"><span class="nav-number">4.2.2.</span> <span class="nav-text">透视投影(Perspective Projection)</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LinkinPony</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://acker.fun/" title="https:&#x2F;&#x2F;acker.fun&#x2F;" rel="noopener" target="_blank">Acker</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kmguan-528.github.io/" title="https:&#x2F;&#x2F;kmguan-528.github.io&#x2F;" rel="noopener" target="_blank">KMGuan</a>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2021/04/04/GAMES101/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GAMES101笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-04 15:49:17" itemprop="dateCreated datePublished" datetime="2021-04-04T15:49:17+08:00">2021-04-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-22 08:54:20" itemprop="dateModified" datetime="2022-06-22T08:54:20+08:00">2022-06-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>部分图片来自<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744">GAMES101</a></p>
+<h1 id="向量">向量</h1>
+<h2 id="基础">基础</h2>
+<p>可以直接跳过这部分.</p>
+<h3 id="定义">定义</h3>
+<p>符号表示: <span class="math inline">\(\vec{a}\)</span> 或<span class="math inline">\(\boldsymbol{a}\)</span>, 或者写成<span class="math inline">\(\vec{AB}\)</span>, 表示从<span class="math inline">\(A\)</span>指向<span class="math inline">\(B\)</span>的向量(<span class="math inline">\(\vec{AB} = B - A\)</span>).</p>
+<p>本文中向量均表示列向量, 即<span class="math inline">\(\vec{a} = \begin{pmatrix}x\\y\end{pmatrix}\)</span>. 行向量则<span class="math inline">\(\vec{a}^T = (x,y)\)</span></p>
+<p>向量有方向和长度, 一般不指定起点.</p>
+<h3 id="长度">长度</h3>
+<p><span class="math inline">\(|\vec{a}|\)</span> 或<span class="math inline">\(\Vert\vec{a}\Vert\)</span>(二范数)表示向量的长度. 对于二维向量<span class="math inline">\(\vec{a} = \begin{pmatrix}x\\y\end{pmatrix}\)</span>, <span class="math inline">\(\vert a\vert = \sqrt{x^2 + y^2}\)</span>.</p>
+<h3 id="单位向量">单位向量</h3>
+<p><span class="math inline">\(\hat{a}\)</span>表示<span class="math inline">\(\vec{a}\)</span>的单位向量, 读作<code>a hat</code>. <span class="math display">\[
+\hat{a} = \frac{\vec{a}}{\vert a \vert}
+\]</span></p>
+<p>一般用单位向量来表示方向</p>
+<h2 id="基本运算">基本运算</h2>
+<h3 id="加法">加法</h3>
+<p><span class="math display">\[
+\vec{a} = \begin{pmatrix}x_1\\y_1\end{pmatrix}, \vec{b} = \begin{pmatrix}x_2\\y_2\end{pmatrix}. \space \vec{a} + \vec{b} = \begin{pmatrix}x_1+x_2\\y_1+y_2\end{pmatrix}
+\]</span></p>
+<p>向量的加法遵循平行四边形法则或三角形法则(如下图)</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220329112926492-16489935946861.png" alt="image-20220329112926492" style="zoom:33%;" /></p>
+<p>对于多个向量相加, 按三角形法则将它们依序首尾拼接即可.</p>
+<h3 id="点积">点积</h3>
+<p><span class="math display">\[
+\vec{a} \cdot \vec{b} = \Vert\vec{a}\Vert\Vert\vec{b}\Vert\cos\theta
+\]</span></p>
+<p><span class="math display">\[
+\vec{a} \cdot \vec{b} = \begin{pmatrix}x_1\\y_1\end{pmatrix} \cdot \begin{pmatrix}x_2\\y_2\end{pmatrix} = x_1\cdot x_2 + y_1 \cdot y_2
+\]</span></p>
+<p>可以写成矩阵形式: <span class="math display">\[
+\vec a \cdot \vec b = \vec{a}^T\vec{b} \\
+= \left(
+\begin{array}{cccc} 
+   x_1 &amp; y_1 &amp; z_1\\
+\end{array}
+\right)  \left(
+\begin{array}{cccc} 
+   x_2\\
+   y_2\\
+   z_2
+\end{array}
+\right)
+\]</span> 点积运算符合交换、结合、分配率: <span class="math display">\[
+\begin{align}
+\vec{a} \cdot \vec{b} &amp;= \vec{b}\cdot\vec{a}\\
+\vec{a} \cdot(\vec{b} + \vec{c}) &amp;= \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}\\
+(k \vec{a}) \cdot \vec{b} &amp;= \vec{a} \cdot(k\vec{b}) = k(\vec{a}\cdot\vec{b})
+\end{align}
+\]</span></p>
+<h4 id="两向量夹角">两向量夹角</h4>
+<p><span class="math display">\[
+\cos\theta = \frac{\vec{a}\cdot\vec{b}}{\Vert\vec{a}\Vert\Vert\vec{b}\Vert} = \hat{a}\cdot\hat{b}
+\]</span></p>
+<h4 id="投影">投影</h4>
+<p><span class="math inline">\(\vec{b}\)</span> 在<span class="math inline">\(\vec a\)</span>上的<strong>投影</strong>记作<span class="math inline">\(\vec{b}_{\perp}\)</span>, 读作<code>b perp</code>:</p>
+<p>(垂直: perpendicular)</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220329115232862-16489935976142.png" alt="image-20220329115232862" style="zoom: 50%;" /> <span class="math display">\[
+\vec{b}_{\perp} = k\hat{a}
+\]</span> 其中<span class="math inline">\(k = \Vert \vec{b}_{\perp}\Vert = \Vert \vec{b}\Vert \cos \theta\)</span></p>
+<p>投影可以将向量<span class="math inline">\(\vec b\)</span>分解成平行于<span class="math inline">\(\vec a\)</span>(<span class="math inline">\(\vec{b}_{\perp}\)</span>)和垂直于<span class="math inline">\(\vec a\)</span>(<span class="math inline">\(\vec{b} - \vec{b}_{\perp}\)</span>)两部分, 如下图:</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220329121632672-16489936041923.png" alt="image-20220329121632672" style="zoom:50%;" /></p>
+<h4 id="判断两向量方向">判断两向量方向</h4>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220329121938192-16489936060574.png" alt="image-20220329121938192" style="zoom:50%;" /></p>
+<p>如图, 两向量的点积大于<span class="math inline">\(0\)</span>则相向, 小于<span class="math inline">\(0\)</span>则反向, 等于<span class="math inline">\(0\)</span>则互相垂直.</p>
+<h3 id="叉积">叉积</h3>
+<p><span class="math display">\[
+\vec{a} = \begin{pmatrix}x_1\\y_1\\z_1\end{pmatrix},\vec{b} = \begin{pmatrix}x_2\\y_2\\z_2\end{pmatrix}
+\]</span></p>
+<p><span class="math inline">\(\vec{a} \times \vec{b}\)</span>可用如下矩阵的行列式来计算: <span class="math display">\[
+\vec{a} \times \vec{b} =  \left|
+\begin{array}{cccc} 
+    \vec{i}  &amp;  \vec{j}   &amp; \vec{k} \\ 
+   x_1  &amp;  y_1   &amp; z_1\\ 
+    x_2  &amp;  y_2   &amp; z_2 
+\end{array}
+\right| \\= (y_1z_2 - y_2z_1) \vec{i} + (x_2z_1 - x_1z_2)\vec{j} + (x_1y_2 - x_2y_1)\vec{k}
+\]</span></p>
+<p>写成矩阵形式: <span class="math display">\[
+\vec a \times \vec b = A^* \vec b =  \left(
+\begin{array}{cccc} 
+   0 &amp; -z_1 &amp; y_1\\
+   z_1 &amp; 0 &amp; -x_1\\
+   -y_1 &amp; x_1 &amp; 0
+\end{array}
+\right) \left(
+\begin{array}{cccc} 
+   x_2\\
+   y_2\\
+   z_2
+\end{array}
+\right)
+\]</span> <span class="math inline">\(A^*\)</span>称为<code>dual martix</code>.</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220329122335871-16489936088105.png" alt="image-20220329122335871" style="zoom:50%;" /></p>
+<p>两向量<span class="math inline">\(\vec a\)</span> <span class="math inline">\(\vec b\)</span> 叉积得到一个垂直于二者的向量.</p>
+<p>该向量的方向可用<strong>右手螺旋定则</strong>判断: 伸出右手, 将四指按从<span class="math inline">\(\vec a\)</span>​扫向<span class="math inline">\(\vec b\)</span>​​​​的方向弯曲, 拇指的指向就是该向量的方向. 遵从该定则的坐标系称为<strong>右手系</strong>.</p>
+<p>叉积的运算不满足交换律, 基本关系如下:</p>
+<p><span class="math display">\[
+\vec a \times \vec b = - \vec b \times \vec a\\
+\vec a \times \vec a =  \vec 0\\
+\vec a \times (\vec b + \vec c) = \vec a \times \vec b + \vec a \times \vec c\\
+\vec a \times (k \vec b) = k (\vec a \times \vec b)
+\]</span></p>
+<h4 id="判断两向量左右关系">判断两向量左右关系</h4>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220331101601190-16489936107926.png" alt="image-20220331101601190" style="zoom:33%;" /></p>
+<p>如图, 计算<span class="math inline">\(\vec{c} = \vec{a} \times \vec{b}\)</span>, 若<span class="math inline">\(\vec{c}\)</span>与<span class="math inline">\(z\)</span>轴同向(<span class="math inline">\(z\)</span>的系数为正)则<span class="math inline">\(\vec{b}\)</span>在<span class="math inline">\(\vec{a}\)</span>的左边, 否则<span class="math inline">\(\vec{b}\)</span>在<span class="math inline">\(\vec{a}\)</span>​的右边.</p>
+<h4 id="判断点是否在凸多边形内部">判断点是否在凸多边形内部</h4>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220331103128802-16489936123257.png" alt="image-20220331103128802" style="zoom:33%;" /></p>
+<p>将凸多边形的点逆时针/顺时针排列, 将待判断的点与每条边进行叉乘, 若点均在边的左侧/右侧则该点在凸多边形内部. (注意这是<span class="math inline">\(O(n)\)</span>的,<span class="math inline">\(O(\log n)\)</span>​的做法右转计算几何板子).</p>
+<h2 id="正交坐标系">正交坐标系</h2>
+<p>假设向量<span class="math inline">\(\vec{x},\vec{y},\vec{z}\)</span>满足 <span class="math display">\[
+\Vert \vec{x} \Vert = \Vert \vec{y} \Vert = \Vert \vec{z} \Vert = 1\\
+\vec{x} \cdot \vec{y} = \vec{x} \cdot \vec{z} = \vec{y} \cdot \vec{z} = 0\\
+\vec{x} \times \vec{y} = \vec{z}
+\]</span> 那么<span class="math inline">\(\vec{x},\vec{y},\vec{z}\)</span>​组成一个正交坐标系, 且是右手系.</p>
+<p>对于任意向量<span class="math inline">\(\vec p\)</span>, 可通过投影将其分解为三个基底的和: <span class="math display">\[
+\vec p = (\vec p \cdot \vec x)\vec x + (\vec p \cdot \vec y )\vec y + (\vec p \cdot \vec z)\vec z
+\]</span></p>
+<h1 id="矩阵">矩阵</h1>
+<h2 id="矩阵乘法">矩阵乘法</h2>
+<p>设<span class="math inline">\(A\)</span>是一个<span class="math inline">\(n \times m\)</span>的矩阵, <span class="math inline">\(B\)</span>是一个<span class="math inline">\(m \times k\)</span>的矩阵, 那么<span class="math inline">\(A \times B\)</span>得到一个<span class="math inline">\(n \times k\)</span>的矩阵<span class="math inline">\(C\)</span>, 其中 <span class="math display">\[
+C_{i,j} = \sum_{k = 1}^m A_{i,k} \cdot B_{k,j}
+\]</span> <strong>矩阵乘法不存在交换律</strong> <span class="math display">\[
+AB(C) = A(BC)\\
+A(B+C) = AB + AC\\
+(A+B)C = AC + BC
+\]</span></p>
+<h2 id="转置">转置</h2>
+<p>将行和列互换. 例如 <span class="math display">\[
+ \left(
+\begin{array}{cccc} 
+   1 &amp; 2 &amp; 3\\
+   4 &amp; 5 &amp; 6
+\end{array}
+\right)^T =  \left(
+\begin{array}{cccc} 
+   1 &amp; 4\\
+   2 &amp; 5\\
+   3 &amp; 6
+\end{array}
+\right)
+\]</span></p>
+<p><span class="math display">\[
+(AB)^T = B^TA^T
+\]</span></p>
+<h2 id="单位矩阵">单位矩阵</h2>
+<p>主对角线为<span class="math inline">\(1\)</span>, 其余元素为<span class="math inline">\(0\)</span>的方阵, 记为<span class="math inline">\(I_n\)</span> 例如 <span class="math display">\[
+I_3 =  \left(
+\begin{array}{cccc} 
+   1 &amp; 0 &amp; 0\\
+   0 &amp; 1 &amp; 0\\
+   0 &amp; 0 &amp; 1
+\end{array}
+\right)
+\]</span></p>
+<p><span class="math display">\[
+AI_m = I_nA = A
+\]</span></p>
+<p>可以用来定义矩阵的逆: <span class="math display">\[
+AA^{-1} = I
+\]</span></p>
+<p><span class="math display">\[
+(AB)^{-1} = B^{-1}A^{-1}
+\]</span></p>
+<h1 id="变换基础知识">变换基础知识</h1>
+<h2 id="线性变换">线性变换</h2>
+<p>可以表示为<span class="math inline">\(\vec{x&#39;} = A\vec{x}\)</span>的变换均为线性变换.</p>
+<h3 id="缩放scale">缩放(Scale)</h3>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220401171106621-16489936162318.png" alt="image-20220401171106621" style="zoom:33%;" /></p>
+<p>将横纵坐标按比例缩放: <span class="math display">\[
+x&#39; = sx\\
+y&#39; = sy
+\]</span> 写为矩阵形式: <span class="math display">\[
+\left[
+\begin{array}{cccc} 
+   x&#39;\\
+   y&#39;
+\end{array}
+\right] = \left[
+\begin{array}{cccc} 
+   s &amp; 0\\
+   0 &amp; s
+\end{array}
+\right]\left[
+\begin{array}{cccc} 
+   x\\
+   y
+\end{array}
+\right]
+\]</span> <img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220401171133617-16489936178929.png" alt="image-20220401171133617" style="zoom:33%;" /></p>
+<p>横纵坐标按不同比例缩放: <span class="math display">\[
+\left[
+\begin{array}{cccc} 
+   x&#39;\\
+   y&#39;
+\end{array}
+\right] = \left[
+\begin{array}{cccc} 
+   s_x &amp; 0\\
+   0 &amp; s_y
+\end{array}
+\right]\left[
+\begin{array}{cccc} 
+   x\\
+   y
+\end{array}
+\right]
+\]</span></p>
+<h3 id="反射reflection">反射(Reflection)</h3>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220401171501411-164899361945310.png" alt="image-20220401171501411" style="zoom:33%;" /> <span class="math display">\[
+\left[
+\begin{array}{cccc} 
+   x&#39;\\
+   y&#39;
+\end{array}
+\right] = \left[
+\begin{array}{cccc} 
+   -1 &amp; 0\\
+   0 &amp; 1
+\end{array}
+\right]\left[
+\begin{array}{cccc} 
+   x\\
+   y
+\end{array}
+\right]
+\]</span></p>
+<h3 id="切变shear">切变(Shear)</h3>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220401171722621-164899362109911.png" alt="image-20220401171722621" style="zoom:33%;" /> <span class="math display">\[
+x&#39; = x + ay\\
+y&#39; = y
+\]</span></p>
+<p><span class="math display">\[
+\left[
+\begin{array}{cccc} 
+   x&#39;\\
+   y&#39;
+\end{array}
+\right] = \left[
+\begin{array}{cccc} 
+   1 &amp; a\\
+   0 &amp; 1
+\end{array}
+\right]\left[
+\begin{array}{cccc} 
+   x\\
+   y
+\end{array}
+\right]
+\]</span></p>
+<h3 id="旋转rotate">旋转(Rotate)</h3>
+<p>默认为以<span class="math inline">\((0,0)\)</span>为中心逆时针旋转.</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220401174056239-164899362270712.png" alt="image-20220401174056239" style="zoom:33%;" /> <span class="math display">\[
+R_\theta  = \left[
+\begin{array}{cccc} 
+   \cos\theta &amp; -\sin\theta\\
+   \sin\theta &amp; \cos\theta
+\end{array}
+\right]
+\]</span></p>
+<p><span class="math display">\[
+R_{-\theta}  = \left[
+\begin{array}{cccc} 
+   \cos\theta &amp; \sin\theta\\
+   -\sin\theta &amp; \cos\theta
+\end{array}
+\right] = R_\theta^T = R_\theta^{-1}
+\]</span></p>
+<p>说明旋转矩阵是一个正交矩阵.</p>
+<p>如果旋转的中心不在原点<span class="math inline">\((0,0)\)</span>, 需要先将中心点平移至原点后旋转, 旋转后再将中心点平移至原位置.</p>
+<h2 id="平移translation">平移(Translation)</h2>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220401180755821-164899362481713.png" alt="image-20220401180755821" style="zoom:33%;" /> <span class="math display">\[
+x&#39; = x + t_x\\
+y&#39; = y + t_y
+\]</span> 我们无法把它写成矩阵相乘的形式, 因此平移不是线性变换.</p>
+<p>使用齐次坐标表示后(见下文), 平移也可表示为矩阵形式: <span class="math display">\[
+\left(
+\begin{array}{cccc} 
+   x&#39;\\
+   y&#39;\\
+   w&#39;
+\end{array}
+\right) = \left(
+\begin{array}{cccc} 
+   1 &amp; 0 &amp; t_x\\
+   0 &amp; 1 &amp; t_y\\
+   0 &amp; 0 &amp; 1
+\end{array}
+\right)\cdot \left(
+\begin{array}{cccc} 
+   x\\
+   y\\
+   1
+\end{array}
+\right) = \left(
+\begin{array}{cccc} 
+   x + t_x\\
+   y + t_y\\
+   1
+\end{array}
+\right)
+\]</span></p>
+<h2 id="齐次坐标homogeneous-coordinates">齐次坐标(Homogeneous Coordinates)</h2>
+<p>我们把二维的点和向量添加一维, 变成齐次坐标<span class="math inline">\((x,y,w)^T\)</span>. <span class="math display">\[
+\tt{point} = \left(
+\begin{array}{cccc} 
+   x\\
+   y\\
+   1
+\end{array}
+\right)\tt{,vector = }\left(
+\begin{array}{cccc} 
+   x\\
+   y\\
+   0
+\end{array}
+\right)
+\]</span> 对于<span class="math inline">\(w \neq 0\)</span>, <span class="math display">\[
+\left(
+\begin{array}{cccc} 
+   x\\
+   y\\
+   w
+\end{array}
+\right) 表示点\left(
+\begin{array}{cccc} 
+   \frac{x}{w} \\
+   \frac{y}{w} \\
+   1
+\end{array}
+\right)
+\]</span> 根据<span class="math inline">\(w\)</span>的值可以轻易地判断两个齐次坐标相加后的结果:</p>
+<ul>
+<li>点 + 向量 = 点</li>
+<li>向量 + 向量 = 向量</li>
+<li>点 - 点 = 向量</li>
+<li>点 + 点在齐次坐标下表示两点的中点</li>
+</ul>
+<h2 id="仿射变换affine-transformation">仿射变换(Affine Transformation)</h2>
+<p>对一个向量空间进行一次线性变换后再进行平移, 称为仿射变换. <span class="math display">\[
+\left(
+\begin{array}{cccc} 
+   x&#39;\\
+   y&#39;\\
+\end{array}
+\right) = \left(
+\begin{array}{cccc} 
+   a &amp; b\\
+   c &amp; d\\
+\end{array}
+\right) \cdot \left(
+\begin{array}{cccc} 
+   x\\
+   y\\
+\end{array}
+\right) + \left(
+\begin{array}{cccc} 
+   t_x\\
+   t_y\\
+\end{array}
+\right)
+\]</span> 写成齐次坐标形式: <span class="math display">\[
+\left(
+\begin{array}{cccc} 
+   x&#39;\\
+   y&#39;\\
+   1
+\end{array}
+\right) = 
+\left(
+\begin{array}{cccc} 
+   a &amp; b &amp; t_x\\
+   c &amp; d &amp; t_y\\
+   0 &amp; 0 &amp; 1
+\end{array}
+\right) \cdot 
+\left(
+\begin{array}{cccc} 
+   x\\
+   y\\
+   1
+\end{array}
+\right)
+\]</span></p>
+<p>其中, 左上的2x2矩阵为原线性变换矩阵, <span class="math inline">\(t_x\)</span>, <span class="math inline">\(t_y\)</span>表示平移. 三维与其类似. 注意: 这个矩阵表示先进行线性变换, 再进行平移.</p>
+<h2 id="逆变换inverse-transform">逆变换(Inverse Transform)</h2>
+<p>求逆即可</p>
+<h2 id="变换的组合">变换的组合</h2>
+<p>假设对<span class="math inline">\(\vec x\)</span>依次应用变换<span class="math inline">\(M_1,M_2,...,M_n\)</span>, 那么有 <span class="math display">\[
+\vec{x&#39;} = M_n \cdot M_{n-1} \cdots M_2 \cdot M_1 \cdot \vec{x}
+\]</span></p>
+<h2 id="变换的分解">变换的分解</h2>
+<h3 id="例按某点旋转">例:按某点旋转</h3>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220401185309912-164899362872814.png" alt="image-20220401185309912" style="zoom: 50%;" /></p>
+<p>假设我们要按点<span class="math inline">\(C\)</span>旋转<span class="math inline">\(\alpha\)</span>度, 可以先将点<span class="math inline">\(C\)</span>平移回原点<span class="math inline">\(T(-c)\)</span>, 进行旋转<span class="math inline">\(R(\alpha)\)</span>, 再将点<span class="math inline">\(C\)</span>移动回原位. <span class="math display">\[
+\vec{x&#39;} = T(c) \cdot R(\alpha) \cdot T(-c) \cdot \vec{x}
+\]</span></p>
+<h2 id="三维变换">三维变换</h2>
+<p>此处仅列出和二维有较大不同的部分.</p>
+<h3 id="旋转">旋转</h3>
+<h4 id="按坐标轴旋转">按坐标轴旋转</h4>
+<ul>
+<li><p>按<span class="math inline">\(x\)</span>轴旋转<span class="math inline">\(\alpha\)</span>度 <span class="math display">\[
+  R_x(\alpha) = \left(
+  \begin{array}{cccc} 
+     1 &amp; 0 &amp; 0 &amp; 0\\
+     0 &amp; \cos \alpha &amp; -\sin\alpha &amp; 0\\
+     0 &amp; \sin\alpha &amp; \cos\alpha &amp; 0\\
+     0 &amp; 0 &amp; 0 &amp; 1
+  \end{array}
+  \right)
+  \]</span></p></li>
+<li><p>按<span class="math inline">\(y\)</span>轴(注意和其它两个的区别, $ x z = -y$) <span class="math display">\[
+  R_y(\alpha) = \left(
+  \begin{array}{cccc} 
+     \cos\alpha &amp; 0 &amp; \sin\alpha &amp; 0\\
+     0 &amp; 1 &amp; 0 &amp; 1\\
+     -\sin\alpha &amp; 0 &amp; \cos\alpha &amp; 0\\
+     0 &amp; 0 &amp; 0 &amp; 1
+  \end{array}
+  \right)
+  \]</span></p></li>
+<li><p>按<span class="math inline">\(z\)</span>轴 <span class="math display">\[
+  R_z(\alpha) = \left(
+  \begin{array}{cccc} 
+     \cos\alpha &amp; -\sin\alpha &amp; 0 &amp; 0 \\
+     \sin\alpha &amp; \cos\alpha &amp; 0 &amp; 0\\
+     0 &amp; 0 &amp; 1 &amp; 0\\
+     0 &amp; 0 &amp; 0 &amp; 1
+  \end{array}
+  \right)
+  \]</span></p></li>
+</ul>
+<h4 id="一般性的旋转">一般性的旋转</h4>
+<p>我们用<span class="math inline">\(R_{xyz}(\alpha, \beta, \gamma)\)</span>表示绕<span class="math inline">\(x\)</span>轴旋转<span class="math inline">\(\alpha\)</span>, 绕<span class="math inline">\(y\)</span>轴旋转<span class="math inline">\(\beta\)</span>, 绕<span class="math inline">\(z\)</span>轴旋转<span class="math inline">\(\gamma\)</span>. <span class="math inline">\(\alpha\beta\gamma\)</span>也被叫做欧拉角. <span class="math display">\[
+R_{xyz}(\alpha, \beta, \gamma) = R_x(\alpha)R_y(\beta)R_z(\gamma)
+\]</span></p>
+<h4 id="rodrigues旋转公式">Rodrigues旋转公式</h4>
+<p><span class="math inline">\(R(\vec n,\alpha)\)</span>表示绕轴<span class="math inline">\(\vec n\)</span>(起点在原点)按右手方 m 向旋转角度为<span class="math inline">\(\alpha\)</span>的变换. <span class="math display">\[
+R(\vec n,\alpha) = \cos(\alpha)\vec I + (1 - \cos(\alpha))\vec n \vec n^T + \sin(\alpha)\left(
+\begin{array}{cccc} 
+   0 &amp; -\vec{n}_{z} &amp; \vec{n}_y\\
+   \vec{n}_z &amp; 0 &amp; -\vec{n}_x\\
+   -\vec{n}_y &amp; \vec{n}_x &amp; 0\\
+\end{array}
+\right)
+\]</span></p>
+<h1 id="视图变换与投影变换">视图变换与投影变换</h1>
+<p>假设我们要拍一张照片，需要以下三个步骤:</p>
+<ol type="1">
+<li>安排好要拍的人或物. 对应模型变换(model transformation), 即将物体坐标转换为世界坐标.</li>
+<li>寻找一个放置相机的位置和角度. 对应视图变换(view transformation).</li>
+<li>拍照. 对应投影变换(projection transformation).</li>
+</ol>
+<h2 id="视图变换view-transformation">视图变换(View Transformation)</h2>
+<p>要进行视图变换, 我们首先需要定义相机的摆放:</p>
+<ul>
+<li>位置(Position)<span class="math inline">\(\vec e\)</span></li>
+<li>视角(Look-at direction/gaze direction)<span class="math inline">\(\hat g\)</span></li>
+<li>向上方向(Up direction)<span class="math inline">\(\hat t\)</span></li>
+</ul>
+<p>因为我们写的是一个渲染引擎而不是在现实世界，所以完全可以搞一个以相机为中心的世界= =</p>
+<p>约定相机永远位于原点，向上方向是<span class="math inline">\(\text Y\)</span>轴, 指向<span class="math inline">\(\text Z\)</span>轴的反方向. 再次提醒坐标系是右手系, 且<span class="math inline">\(\text Y\)</span>是纵坐标轴:</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220621095653583.png" alt="image-20220621095653583" style="zoom:50%;" /></p>
+<p>那么对于一个给定的相机位置，需要进行一系列变换将其变成标准的相机位置. 我们把这个变换矩阵记作<span class="math inline">\(M_{view}\)</span>, 具体需要进行如下变换:</p>
+<ol type="1">
+<li>将<span class="math inline">\(\vec e\)</span>平移到原点</li>
+<li>将<span class="math inline">\(\vec g\)</span>旋转到<span class="math inline">\(-\vec Z\)</span></li>
+<li>将<span class="math inline">\(\hat t\)</span>旋转到<span class="math inline">\(\vec Y\)</span></li>
+<li>将<span class="math inline">\(\hat g \times \hat t\)</span>旋转到<span class="math inline">\(\vec X\)</span></li>
+</ol>
+<p>根据前面的内容, 我们需要先平移(<span class="math inline">\(T_{view}\)</span>)再旋转<span class="math inline">\((R_{view})\)</span>, 即<span class="math inline">\(M_{view} = R_{view}T_{view}\)</span> <span class="math display">\[
+T_{view} = \left(
+\begin{array}{cccc} 
+   1 &amp; 0 &amp; 0 &amp; -x_e\\
+   0 &amp; 1 &amp; 0 &amp; -y_e\\
+   0 &amp; 0 &amp; 1 &amp; -z_e\\
+   0 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right)
+\]</span> 同样根据前面的内容, 我们有<span class="math inline">\(R_{-\theta} = R_\theta^{-1} = R_\theta^T\)</span>. 因此与其正向进行旋转, 不如先把<span class="math inline">\(X\space Y\space-Z\)</span>轴旋转到<span class="math inline">\(etg\)</span>, 再求它的逆矩阵. 因为我们要旋转的向量都很简单(比如<span class="math inline">\((1,0,0)^T\)</span>), 所以这个矩阵可以直接构造出来: <span class="math display">\[
+R_{view}^{-1} = \left(
+\begin{array}{cccc} 
+   x_{\hat g \times \hat t} &amp; x_\hat t &amp; x_{-\hat g} &amp; 0\\
+   y_{\hat g \times \hat t} &amp; y_\hat t &amp; y_{-\hat g} &amp; 0\\
+   z_{\hat g \times \hat t} &amp; z_\hat t &amp; z_{-\hat g} &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right)
+\]</span> 于是有 <span class="math display">\[
+R_{view} = (R_{view}^{-1})^T \left(
+\begin{array}{cccc} 
+   x_{\hat g \times \hat t} &amp; y_{\hat g \times \hat t} &amp; z_{\hat g \times \hat t} &amp; 0\\
+   x_\hat t &amp; y_\hat t &amp; z_\hat t &amp; 0\\
+   x_{-\hat g} &amp; y_{-\hat g} &amp; z_{-\hat g} &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right)
+\]</span></p>
+<h2 id="投影变换projection-transformation">投影变换(Projection Transformation)</h2>
+<p>投影变换将3D的图形转换到2D上，分为正交投影(Orthographic Projection)和透视投影(Perspective Projection)</p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES101.assets\image-20220621164915132.png" alt="image-20220621164915132" /><figcaption aria-hidden="true">image-20220621164915132</figcaption>
+</figure>
+<h3 id="正交投影orthographic-projection">正交投影(Orthographic Projection)</h3>
+<p>其实直接将所有的<span class="math inline">\(z\)</span>值忽略掉就可以获得正交投影. 但一般采用如下方法:</p>
+<p>我们先定义一个<span class="math inline">\([l,r] \times [b,t] \times [f,n]\)</span>的立方体(left,right,bottom,top,far,near). (注意, <span class="math inline">\(z\)</span>值越小离相机越远, 因为相机的视线是-Z) 然后我们将这个立方体先平移再缩放, 得到中心位于原点, <span class="math inline">\([-1,1] \times[-1,1] \times [-1,1]\)</span>的标准立方体(canonical cube).</p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES101.assets\image-20220622075400700.png" alt="image-20220622075400700" /><figcaption aria-hidden="true">image-20220622075400700</figcaption>
+</figure>
+<p>可以很简单地写出变换矩阵: <span class="math display">\[
+M_{ortho} = \left(
+\begin{array}{cccc} 
+   \frac{2}{r - l} &amp; 0 &amp; 0 &amp; 0\\
+   0 &amp; \frac{2}{t - b} &amp; 0 &amp; 0\\
+   0 &amp; 0 &amp; \frac{2}{n - f} &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right)\left(
+\begin{array}{cccc} 
+   1 &amp; 0 &amp; 0 &amp; -\frac{l+r}{2} \\
+   0 &amp; 1 &amp; 0 &amp; -\frac{b+t}{2} \\
+   0 &amp; 0 &amp; 1 &amp; -\frac{f+n}{2} \\
+   0 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right)
+\]</span></p>
+<h3 id="透视投影perspective-projection">透视投影(Perspective Projection)</h3>
+<p>进行透视投影时, 我们假设相机是一个点, 而所有光线都汇聚到这个点上(或者从这个点发出):</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220622080539039.png" alt="image-20220622080539039" style="zoom:50%;" /></p>
+<p>在三维空间上我们的视野便形成了一个四棱锥(因为你的电脑屏幕是长方形而不是圆形). 如果以待渲染的画面所在平面为顶将这个四棱锥的头截去, 便得到了一个<del>巴麻美</del>截头四棱锥(frustum). 将这个四棱锥挤压成一个立方体, 再进行正交投影, 便能得到想要的画面:</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220622080748026.png" alt="image-20220622080748026" style="zoom:50%;" /></p>
+<p>考虑在挤压时Frustum中每个点的<span class="math inline">\(x,y\)</span>会如何变化.</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES101.assets\image-20220622082005810.png" alt="image-20220622082005810" style="zoom:50%;" /></p>
+<p>上图可以看作Frustum的一个侧视图. 一个点的<span class="math inline">\(y\)</span>在挤压后变成了<span class="math inline">\(y&#39;\)</span>. 根据相似三角形很容易得出 <span class="math display">\[
+y&#39; = \frac{n}{z}y
+\]</span> 同样 <span class="math display">\[
+x&#39; = \frac{n}{z}x
+\]</span> 假设挤压过程对应的矩阵是<span class="math inline">\(M_{persp\to ortho}\)</span>. 此时我们还不知道<span class="math inline">\(z\)</span>坐标会如何变化(注意它不是不变).</p>
+<p>根据 <span class="math display">\[
+M_{persp \to ortho} \cdot \left(
+\begin{array}{cccc} 
+   x \\
+   y \\
+   z \\
+   1 
+\end{array}
+\right) =  \left(
+\begin{array}{cccc} 
+   \frac{n}{z}x \\
+   \frac{n}{z}y \\
+   ? \\
+   1 
+\end{array}
+\right) =  \left(
+\begin{array}{cccc} 
+   nx \\
+   ny \\
+   ? \\
+   z 
+\end{array}
+\right)
+\]</span> 可以先填出矩阵的部分内容: <span class="math display">\[
+M_{persp \to ortho} = \left(
+\begin{array}{cccc} 
+   n &amp; 0 &amp; 0 &amp; 0\\
+   0 &amp; n &amp; 0 &amp; 0\\
+   ? &amp; ? &amp; ? &amp; ?\\
+   0 &amp; 0 &amp; 1 &amp; 0
+\end{array}
+\right)
+\]</span> 这个矩阵的第三行需要进行一点推导. 尽管我们不知道每个点的<span class="math inline">\(z\)</span>坐标如何变换, 但我们知道, 在最前面平面(<span class="math inline">\(z = n\)</span>)上的点, 其<span class="math inline">\(z\)</span>坐标永远等于<span class="math inline">\(n\)</span>, 即: <span class="math display">\[
+\left(
+\begin{array}{cccc} 
+   n &amp; 0 &amp; 0 &amp; 0\\
+   0 &amp; n &amp; 0 &amp; 0\\
+   ? &amp; ? &amp; ? &amp; ?\\
+   0 &amp; 0 &amp; 1 &amp; 0
+\end{array}
+\right) \cdot \left(
+\begin{array}{cccc} 
+   x \\
+   y \\
+   n \\
+   1 
+\end{array}
+\right) = \left(
+\begin{array}{cccc} 
+   x \\
+   y \\
+   n \\
+   1 
+\end{array}
+\right)
+= \left(
+\begin{array}{cccc} 
+   nx \\
+   ny \\
+   n^2 \\
+   n 
+\end{array}
+\right)
+\]</span> 可知<span class="math inline">\(M[2][0] = M[2][1] = 0\)</span>. 设<span class="math inline">\(M[2][2]\)</span>为<span class="math inline">\(A\)</span>, <span class="math inline">\(M[2][3]\)</span>为<span class="math inline">\(B\)</span>, 则 <span class="math display">\[
+(0,0,A,B) \cdot \left(
+\begin{array}{cccc} 
+   x \\
+   y \\
+   n \\
+   1 
+\end{array}
+\right) = n^2
+\]</span></p>
+<p><span class="math display">\[
+An + B = n^2
+\]</span></p>
+<p>同理有 <span class="math display">\[
+Af + B = f^2
+\]</span> 解得 <span class="math display">\[
+A = n + f\\
+B = -nf
+\]</span> 于是我们求出了整个矩阵: <span class="math display">\[
+M_{persp \to ortho} = \left(
+\begin{array}{cccc} 
+   n &amp; 0 &amp; 0 &amp; 0\\
+   0 &amp; n &amp; 0 &amp; 0\\
+   0 &amp; 0 &amp; n+f &amp; -nf\\
+   0 &amp; 0 &amp; 1 &amp; 0
+\end{array}
+\right)
+\]</span> 整个透视投影的过程便是先挤压再正交投影的过程, 即 <span class="math display">\[
+M_{persp} = M_{ortho}M_{persp\to ortho}
+\]</span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag"># 图形学</a>
+              <a href="/tags/GAMES101/" rel="tag"># GAMES101</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/03/history-qwq/" rel="prev" title="历史遗迹">
+                  <i class="fa fa-chevron-left"></i> 历史遗迹
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/04/solution-CF958F3/" rel="next" title="[题解]CF958F3 Lightsabers (hard)">
+                  [题解]CF958F3 Lightsabers (hard) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LinkinPony</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

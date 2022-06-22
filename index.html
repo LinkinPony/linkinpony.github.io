@@ -118,18 +118,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -180,6 +180,361 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2022/05/29/GAMES104-homework-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/29/GAMES104-homework-2/" class="post-title-link" itemprop="url">[GAMES104]-作业2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-29 07:50:50 / Modified: 17:05:30" itemprop="dateCreated datePublished" datetime="2022-05-29T07:50:50+08:00">2022-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GAMES104/" itemprop="url" rel="index"><span itemprop="name">GAMES104</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>因为一直要赶一堆莫名其妙的ddl和考试 task3没做 日后再补_(:з」∠)_</p>
+<h2 id="color-grading与lut">Color Grading与LUT</h2>
+<p>调色是增强画面表现力的一种很有效的手段. 本次作业我们处理的颜色在sRGB空间内, 红、绿、蓝三个颜色分别用一个<span class="math inline">\([0,1]\)</span>的实数来表示. 将三原色分别用一个坐标轴来表示, 便构成了如图所示的色彩空间(图片来自<a target="_blank" rel="noopener" href="https://defold.com/tutorials/grading/">defold.com</a>):</p>
+<p><img src="https://defold.com/tutorials/images/grading/color_cube.png" alt="color cube" style="zoom:33%;" /></p>
+<p>在进行调色时, 我们对渲染结果的每个像素进行处理, 根据像素原本的RGB值将其映射到一个新的色彩空间. 这种映射一般采用LUT(look up table)图来进行. LUT有1D和3D之分, Pilot Engine使用的是3D的LUT, 它看上去像这个样子:</p>
+<p><img src="E:\Github\Pilot_Homework2\engine\asset\texture\lut\color_grading_LUT.jpg" /></p>
+<p>这张图片的长为<span class="math inline">\(1024\)</span>个像素, 宽为<span class="math inline">\(32\)</span>个像素, 可以看出它由<span class="math inline">\(32\)</span>个小色块组成. 将这些小方块自上而下拼接在一起, 便组成了一个<span class="math inline">\(32 \times 32 \times 32\)</span>的色彩空间. 我们需要做的便是根据每个像素的RGB分量找到它在这张图上对应的像素. 具体来说, 原像素的<span class="math inline">\(G\)</span>分量指示了新像素在LUT上的纵坐标, <span class="math inline">\(B\)</span>分量指示了新像素所属的色块编号, <span class="math inline">\(R\)</span>分量指示了新像素在某个色块内部的横坐标.</p>
+<h2 id="编写shader">编写Shader</h2>
+<p>我们需要编写的Shader文件是<code>color_grading.frag</code>, 可以在<code>\engine\shader\glsl\</code>中找到.</p>
+<p>这个shader已经提供了原像素的颜色<code>in_color</code>和LUT的2D采样器<code>color_grading_lut_texture_sampler</code>. 我们需要根据原像素的颜色计算出调色后的颜色并将其赋值给<code>out_color</code>作为输出.</p>
+<p>在计算前, 需要获取像素的颜色值:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">highp</span> <span class="type">vec4</span> color = subpassLoad(in_color).rgba;</span><br></pre></td></tr></table></figure>
+<p>颜色值是一个四维向量, 四个维度分别代表R、G、B和alpha, 均为<span class="math inline">\([0,1]\)</span>的实数.</p>
+<p>在计算出坐标后, 需要从LUT上获取对应的颜色:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">highp</span> <span class="type">vec4</span> color_sampled = <span class="built_in">texture</span>(color_grading_lut_texture_sampler, uv);</span><br></pre></td></tr></table></figure>
+<p>其中<code>color_grading_lut_texture_sampler</code>已经提供, <code>uv</code>是一个二维向量, <span class="math inline">\(u\)</span>代表横坐标, <span class="math inline">\(v\)</span>代表纵坐标, 坐标原点在图片的左上角, <span class="math inline">\(x\)</span>轴方向向右, <span class="math inline">\(y\)</span>轴方向向下. <span class="math inline">\(u,v\)</span>也是<span class="math inline">\([0,1]\)</span>上的实数.</p>
+<p>我们还需要获取LUT的长宽:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">highp</span> <span class="type">ivec2</span> lut_tex_size = <span class="built_in">textureSize</span>(color_grading_lut_texture_sampler, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>有了如上函数, 不难计算出每个像素在LUT上的对应位置. 设<span class="math inline">\(C\)</span>是LUT的宽, <span class="math inline">\(R,G,B\)</span>分别为像素的原颜色分量, 则有: <span class="math display">\[
+u = \frac{\lfloor B \cdot C \rfloor + R}{C}\\
+v = G
+\]</span> 为了提高准确度和防止越界, 可以在LUT的边界上各留出0.5个像素, 将RGB值映射到<span class="math inline">\(C-1\)</span>个像素中去. 具体细节见代码:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 310 es</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#extension GL_GOOGLE_include_directive : enable</span></span><br><span class="line"><span class="comment">//#extension GL_KHR_vulkan_glsl : enable</span></span><br><span class="line"><span class="meta">#include &quot;constants.h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span>(input_attachment_index = <span class="number">0</span>, set = <span class="number">0</span>, <span class="keyword">binding</span> = <span class="number">0</span>) <span class="keyword">uniform</span> <span class="keyword">highp</span> subpassInput in_color;</span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span>(set = <span class="number">0</span>, <span class="keyword">binding</span> = <span class="number">1</span>) <span class="keyword">uniform</span> <span class="type">sampler2D</span> color_grading_lut_texture_sampler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span>(<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">out</span> <span class="keyword">highp</span> <span class="type">vec4</span> out_color;</span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">highp</span> <span class="type">ivec2</span> lut_tex_size = <span class="built_in">textureSize</span>(color_grading_lut_texture_sampler, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> COLORS       = <span class="type">float</span>(lut_tex_size.y);<span class="comment">//LUT的每一维的颜色数量</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">vec4</span>  color        = subpassLoad(in_color).rgba;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> max_color = COLORS - <span class="number">1.0</span>;<span class="comment">//允许使用的最大元素</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> half_pix_u = <span class="number">0.5</span> / <span class="type">float</span>(lut_tex_size.x);<span class="comment">//预留出半个像素</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> half_pix_v = <span class="number">0.5</span> / <span class="type">float</span>(lut_tex_size.y);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> part = <span class="built_in">floor</span>(color.b * max_color);<span class="comment">//根据B计算出该像素所属的色块编号</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> threshold = max_color / COLORS;<span class="comment">//现在只有COLORS-1个颜色可用</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> u = (half_pix_u + threshold * color.r + part) / COLORS;</span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> v = (half_pix_v + threshold * color.g);</span><br><span class="line">    <span class="comment">//预留出0.5像素的边界.例如假设COLORS = 32,在G = 0时v = 0.5/32,G = 1时v = 31.5/32</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">vec2</span> uv = <span class="type">vec2</span>(u,v);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">highp</span> <span class="type">vec4</span> color_sampled = <span class="built_in">texture</span>(color_grading_lut_texture_sampler, uv);</span><br><span class="line"></span><br><span class="line">    out_color =  color_sampled;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="效果展示与自定义lut">效果展示与自定义LUT</h2>
+<p>在<code>\engine\asset\texture\lut</code>中存放着不同的LUT. 通过修改<code>\engine\asset\global\rendering.global.json</code>中<code>"color_grading_map"</code>项可以替换不同的LUT.</p>
+<p>在不进行调色时的效果是这样的:</p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529161702147.png" alt="image-20220529161702147" /><figcaption aria-hidden="true">image-20220529161702147</figcaption>
+</figure>
+<p>调色后的效果:</p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529162809564.png" alt="image-20220529162809564" /><figcaption aria-hidden="true">image-20220529162809564</figcaption>
+</figure>
+<p>要创建自定义的LUT, 只需在GIMP或者PhotoShop等工具编辑原始LUT图像(可以附一张截图方便观察调色效果).</p>
+<p>负片效果的LUT:</p>
+<p><img src="E:\Github\Pilot_Homework2\engine\asset\texture\lut\LUT32_Invert.png" /></p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529165605604.png" alt="image-20220529165605604" /><figcaption aria-hidden="true">image-20220529165605604</figcaption>
+</figure>
+<p>偏冷色调(好像太绿了):</p>
+<p><img src="E:\Github\Pilot_Homework2\engine\asset\texture\lut\LUT32_qwq.png" /></p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529165831153.png" alt="image-20220529165831153" /><figcaption aria-hidden="true">image-20220529165831153</figcaption>
+</figure>
+<p>PS:调色后会出现看上去很奇怪的色块, 目前还不知道如何解决</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES104-homework-2.assets\image-20220529165922432.png" alt="image-20220529165922432" style="zoom:33%;" /></p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES104-homework-2.assets\image-20220529165936292.png" alt="image-20220529165936292" style="zoom:33%;" /></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2022/04/30/demo-render/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/30/demo-render/" class="post-title-link" itemprop="url">[笔记]从0开始搓一个简单的render</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-30 11:39:36" itemprop="dateCreated datePublished" datetime="2022-04-30T11:39:36+08:00">2022-04-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-22 09:06:49" itemprop="dateModified" datetime="2022-06-22T09:06:49+08:00">2022-06-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文的主要内容是对Dmitry V. Sokolov的<a target="_blank" rel="noopener" href="https://github.com/ssloy/tinyrenderer">tinyrender</a>课程的记录和补充.</p>
+<h1 id="step-0环境搭建">Step 0：环境搭建</h1>
+<p>我们需要<code>tgaimage.h</code>来操作TGA文件, <code>model.h</code>来操作模型. 头文件和实现可以在这里找到:</p>
+<p>https://github.com/ssloy/tinyrenderer/tree/f6fecb7ad493264ecd15e230411bfb1cca539a12</p>
+<p>可以用如下代码来测试:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;tgaimage.h&quot;</span></span></span><br><span class="line"><span class="keyword">const</span> TGAColor white = <span class="built_in">TGAColor</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line"><span class="keyword">const</span> TGAColor red   = <span class="built_in">TGAColor</span>(<span class="number">255</span>, <span class="number">0</span>,   <span class="number">0</span>,   <span class="number">255</span>);</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">        <span class="function">TGAImage <span class="title">image</span><span class="params">(<span class="number">100</span>, <span class="number">100</span>, TGAImage::RGB)</span></span>;</span><br><span class="line">        image.<span class="built_in">set</span>(<span class="number">52</span>, <span class="number">41</span>, red);</span><br><span class="line">        image.<span class="built_in">flip_vertically</span>(); <span class="comment">// i want to have the origin at the left bottom corner of the image</span></span><br><span class="line">        image.<span class="built_in">write_tga_file</span>(<span class="string">&quot;output.tga&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>得到一个有红点的TGA文件:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220430115033896.png" alt="image-20220430115033896" style="zoom:25%;" /></p>
+<h1 id="step-1画一条直线">Step 1：画一条直线</h1>
+<h2 id="朴素算法">朴素算法</h2>
+<p>我们需要在二维位图上画一条从<span class="math inline">\((x_0,y_0)\)</span>到<span class="math inline">\((x_1,y_1)\)</span>的直线.</p>
+<p>直线的两点式为: <span class="math display">\[
+\frac{y - y_0}{y_1 - y_0} = \frac{x - x_0}{x_1 - x_0}
+\]</span> 因而对任一点<span class="math inline">\(x\)</span>, 有 <span class="math display">\[
+y = \frac{x - x_0}{x_1 - x_0} \cdot(y_1 - y_0) + y_0
+\]</span> 我们只要枚举<span class="math inline">\(x\)</span>, 计算出每个<span class="math inline">\(x\)</span>对应的<span class="math inline">\(y\)</span>即可画出直线. 需要注意的是, 这个算法默认<span class="math inline">\((x_1,y_1)\)</span>在<span class="math inline">\((x_0,y_0)\)</span>的右上方, 并且绘制时需要枚举<span class="math inline">\(\Delta x,\Delta y\)</span>中较大的一方以保证线段不会断开.</p>
+<p>代码如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Line</span><span class="params">(<span class="keyword">int</span> x0, <span class="keyword">int</span> y0, <span class="keyword">int</span> x1, <span class="keyword">int</span> y1, TGAColor color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> flip = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">abs</span>(x0 - x1) &lt; <span class="built_in">abs</span>(y0 - y1))&#123;</span><br><span class="line">        flip = <span class="number">1</span>;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,y0),std::<span class="built_in">swap</span>(x1,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x0 &gt; x1)&#123;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,x1),std::<span class="built_in">swap</span>(y0,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = x0;x &lt;= x1;x++)&#123;</span><br><span class="line">        <span class="keyword">double</span> t = (<span class="keyword">double</span>)(x - x0)/(x1 - x0);</span><br><span class="line">        <span class="keyword">int</span> y = t * (y1 - y0) + y0;</span><br><span class="line">        <span class="keyword">if</span>(!flip)<span class="built_in">set</span>(x,y,color);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">set</span>(y,x,color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="bresenham直线算法">Bresenham直线算法</h2>
+<p>朴素算法已经能够满足绘图需要, 但是使用了浮点乘法除法, 效率很低.</p>
+<p>我们设直线的斜率<span class="math inline">\(k = \frac{y_1 - y_0}{x_1 - x_0}\)</span>, 有 <span class="math display">\[
+y = (x - x_0) \cdot k + y_0
+\]</span> 我们假设当前画笔所在位置的是<span class="math inline">\((x,y_c)\)</span>, 误差为<span class="math inline">\(E = y- y_c\)</span>. 当<span class="math inline">\(x\)</span>加<span class="math inline">\(1\)</span>时, <span class="math inline">\(E\)</span>增加<span class="math inline">\(k\)</span>. 当<span class="math inline">\(E \ge \frac{1}{2}\)</span>时, 我们需要将<span class="math inline">\(y_c\)</span>加或减<span class="math inline">\(1\)</span>同时<span class="math inline">\(E\)</span>减去<span class="math inline">\(1\)</span>. 这样便避免了每次都要进行的浮点除法运算.</p>
+<p>具体来说, 我们只需将不等式的两边乘上<span class="math inline">\(2 \cdot (x_1 - x_0)\)</span>即可. 此时误差每次增加<span class="math inline">\(2 \cdot (y_1 - y_0)\)</span>. 当<span class="math inline">\(E \ge (x_1 - x_0)\)</span>时需要将<span class="math inline">\(y_c\)</span>加或减<span class="math inline">\(1\)</span>同时<span class="math inline">\(E\)</span>减去<span class="math inline">\(2 \cdot (x_1 - x_0)\)</span>.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Line</span><span class="params">(<span class="keyword">int</span> x0, <span class="keyword">int</span> y0, <span class="keyword">int</span> x1, <span class="keyword">int</span> y1, TGAColor color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> flip = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">abs</span>(x0 - x1) &lt; <span class="built_in">abs</span>(y0 - y1))&#123;</span><br><span class="line">        flip = <span class="number">1</span>;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,y0),std::<span class="built_in">swap</span>(x1,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x0 &gt; x1)&#123;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,x1),std::<span class="built_in">swap</span>(y0,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> dx = x1 - x0,dy = y1 - y0;</span><br><span class="line">    <span class="keyword">int</span> e = <span class="number">0</span>,de = <span class="number">2</span>*<span class="built_in">abs</span>(dy);</span><br><span class="line">    <span class="keyword">int</span> y = y0;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = x0;x &lt;= x1;x++)&#123;</span><br><span class="line">        e += de;</span><br><span class="line">        <span class="keyword">if</span>(e &gt;= dx) &#123;</span><br><span class="line">            e -= dx*<span class="number">2</span>;</span><br><span class="line">            y += (dy &gt; <span class="number">0</span>?<span class="number">1</span>:<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!flip)<span class="built_in">set</span>(x,y,color);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">set</span>(y,x,color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="step-2画一个三角形">Step 2：画一个三角形</h1>
+<h2 id="扫描线法">扫描线法</h2>
+<p>我们先用一种十分古老的方法来画一个三角形: 用水平或者竖直的线一行一行地绘制.</p>
+<p>在绘制前, 先对三角形的三个顶点按横坐标递增进行排序, 然后标号为<span class="math inline">\(P_0,P_1,P_2\)</span>(以下默认左下角为坐标原点). 同时将边<span class="math inline">\(P_0P_1\)</span>标为<span class="math inline">\(L_0\)</span>, <span class="math inline">\(P_1P_2\)</span>标为<span class="math inline">\(L_1\)</span>, <span class="math inline">\(P_2P_3\)</span>标为<span class="math inline">\(L_2\)</span>, 如图:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220501154945120.png" alt="image-20220501154945120" style="zoom:50%;" /></p>
+<p>标号后的三角形可按<span class="math inline">\(x = x_1\)</span>​这条直线分割成两部分. 对两部分分别进行绘制即可. 注意处理一下斜率不存在时的细节.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(Vec2i t0, Vec2i t1, Vec2i t2, TGAColor color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x0,y0,x1,y1,x2,y2;</span><br><span class="line">    std::vector&lt;std::pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; &gt;top = &#123;&#123;t0.u,t0.v&#125;,&#123;t1.u,t1.v&#125;,&#123;t2.u,t2.v&#125;&#125;;</span><br><span class="line">    std::<span class="built_in">sort</span>(top.<span class="built_in">begin</span>(),top.<span class="built_in">end</span>());</span><br><span class="line">    std::<span class="built_in">tie</span>(x0,y0) = top[<span class="number">0</span>];</span><br><span class="line">    std::<span class="built_in">tie</span>(x1,y1) = top[<span class="number">1</span>];</span><br><span class="line">    std::<span class="built_in">tie</span>(x2,y2) = top[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> mx = std::<span class="built_in">max</span>(x1,x2);</span><br><span class="line">    <span class="keyword">double</span> k0 = (<span class="keyword">double</span>)(y1 - y0)/(x1 == x0?<span class="number">1</span>:x1 - x0);</span><br><span class="line">    <span class="keyword">double</span> k1 = (<span class="keyword">double</span>)(y2 - y1)/(x2 == x1?<span class="number">1</span>:x2 - x1);</span><br><span class="line">    <span class="keyword">double</span> k2 = (<span class="keyword">double</span>)(y2 - y0)/(x2 == x0?<span class="number">1</span>:x2 - x0);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = x0;x &lt;= x2;x++)&#123;</span><br><span class="line">        <span class="keyword">int</span> yc2 = (x - x0) * k2 + y0;</span><br><span class="line">        <span class="keyword">if</span>(x &lt;= x1)&#123;</span><br><span class="line">            <span class="keyword">int</span> yc0 = (x - x0) * k0 + y0;</span><br><span class="line">            <span class="built_in">Line</span>(x,yc0,x,yc2,color);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">int</span> yc1 = (x - x1) * k1 + y1;</span><br><span class="line">            <span class="built_in">Line</span>(x,yc1,x,yc2,color);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重心坐标系">重心坐标系</h2>
+<h3 id="一般定义">一般定义</h3>
+<p>设<span class="math inline">\(V_1,...,V_n\)</span>是<span class="math inline">\(n\)</span>维向量空间<span class="math inline">\(V\)</span>中<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Simplex">单纯形</a>的顶点, 对于<span class="math inline">\(V\)</span>中任意一点<span class="math inline">\(P\)</span>, 有 <span class="math display">\[
+(\sum_{i = 1}^n \lambda_i)\cdot P = \sum_{i = 1}^n \lambda_i \cdot V_i
+\]</span> 则系数<span class="math inline">\(\lambda_1,...,\lambda_n\)</span>称为<span class="math inline">\(P\)</span>关于<span class="math inline">\(V_1,...V_n\)</span>的重心坐标. 一般规定<span class="math inline">\(\sum_{i = 1}^n \lambda_i = 1\)</span>, 此时称为<strong>正规化</strong>的重心坐标. 以下讨论的重心坐标均为正规化的.</p>
+<h3 id="二维平面中的重心坐标系">二维平面中的重心坐标系</h3>
+<h4 id="定义">定义</h4>
+<p>二维平面上, 单纯形为三角形. 假设给出一三角形<span class="math inline">\(\Delta ABC\)</span>和三角形所在平面上的一点<span class="math inline">\(P\)</span>, 则<span class="math inline">\(P\)</span>可被如下重心坐标表示: <span class="math display">\[
+P = \alpha A + \beta B + \gamma C
+\]</span> 考虑<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144360079">下图(来源见链接)</a>:</p>
+<p><img src="https://pic2.zhimg.com/80/v2-34f542500eb2b8b4679dc351609398ad_720w.jpg" alt="img" style="zoom: 50%;" /></p>
+<p>将<span class="math inline">\(\vec{AB},\vec{AC}\)</span>作为坐标系, 可以得到 <span class="math display">\[
+\begin{align}
+P =&amp; A + \beta(\vec{AB}) + \gamma(\vec{AC})\\
+=&amp; A + \beta(B - A) + \gamma(C - A)\\
+=&amp; (1 - \beta - \gamma)A + \beta B + \gamma C
+\end{align}
+\]</span> 这样便可以从坐标系的角度来解释重心坐标, 同时能得到 <span class="math display">\[
+\alpha = 1 - \beta - \gamma
+\]</span></p>
+<h4 id="求解解方程组">求解:解方程组</h4>
+<p>将点带入重心坐标的定义, 可以得到: <span class="math display">\[
+\left \{
+\begin{array}{cccc} 
+   x_p = (1 - \beta - \gamma) x_a + \beta x_b + \gamma x_c \\
+   y_p = (1 - \beta - \gamma) y_a + \beta y_b + \gamma y_c
+\end{array}
+\right.
+\]</span> 提取出<span class="math inline">\(\beta \space \gamma\)</span>: <span class="math display">\[
+\left \{
+\begin{array}{cccc}
+x_p - x_a = \beta(x_b - x_a) + \gamma (x_c - x_a)\\
+y_p - y_a = \beta(y_b - y_a) + \gamma (y_c - y_a)
+\end{array}
+\right.
+\]</span> 转化为矩阵形式: <span class="math display">\[
+\left[
+\begin{array}{}
+    x_b - x_a &amp; x_c - x_a\\
+    y_b - y_a &amp; y_c - y_a
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\beta \\
+\gamma
+\end{array}
+\right]
+=
+\left[
+\begin{array}{}
+x_p - x_a\\
+y_p - y_a
+\end{array}
+\right]
+\]</span> 这样便可求解出<span class="math inline">\(\beta \space \gamma\)</span>进而求出<span class="math inline">\(\alpha\)</span></p>
+<h4 id="求解向量叉积">求解:向量叉积</h4>
+<p>把坐标系的表达式变换一下: <span class="math display">\[
+\beta \vec{AB} + \gamma \vec{AC} + \vec{PA} = 0
+\]</span> 拆开后: <span class="math display">\[
+\left \{
+\begin{array}{cccc} 
+\beta\vec{AB}_x + \gamma \vec{AC}_x + \vec{PA}_x = 0\\
+\beta\vec{AB}_y + \gamma \vec{AC}_y + \vec{PA}_y = 0
+\end{array}
+\right.
+\]</span> 转化为矩阵形式: <span class="math display">\[
+\left[
+\begin{array}{}
+\beta &amp; \gamma &amp; 1
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\vec{AB}_x\\
+\vec{AC}_x\\
+\vec{PA}_x
+\end{array}
+\right] = 0\\
+\left[
+\begin{array}{}
+\beta &amp; \gamma &amp; 1
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\vec{AB}_y\\
+\vec{AC}_y\\
+\vec{PA}_y
+\end{array}
+\right] = 0\\
+\]</span> 从几何意义考虑, 这相当于<span class="math inline">\([\beta ,\gamma,1]\)</span>这个向量和后两个向量分别垂直. 因而我们求出后两个向量的叉积(假设结果为<span class="math inline">\([x,y,z]\)</span>), 则<span class="math inline">\([\frac{x}{z}, \frac{y}{z},1]\)</span>等于<span class="math inline">\([\beta,\gamma,1]\)</span>​.</p>
+<p>需要注意<span class="math inline">\(z = 0\)</span>的特殊情况, 根据叉乘的定义, 此时有<span class="math inline">\(\vec{AB}_x \cdot \vec{AC}_y - \vec{AB}_y \cdot \vec{AC}_x = 0\)</span>, 即<span class="math inline">\(\vec{AB} \cdot \vec{AC} = 0\)</span>, 说明<span class="math inline">\(ABC\)</span>三点共线. 这时返回一个任意的负重心坐标即可.</p>
+<h4 id="求解三角形面积">求解:三角形面积</h4>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502193646986.png" alt="image-20220502193646986" style="zoom:50%;" /></p>
+<p>如图, 假设三角形面积分别为<span class="math inline">\(S_A,S_B,S_C\)</span>. 则 <span class="math display">\[
+\alpha = \frac{S_A}{S_A+S_B+S_C}\\
+\beta = \frac{S_B}{S_A+S_B+S_C}\\
+\gamma = \frac{S_C}{S_A+S_B+S_C}
+\]</span></p>
+<h3 id="应用">应用</h3>
+<p>重心坐标有很多应用, 在这里我们能用到的结论是: 若<span class="math inline">\(\alpha,\beta,\gamma\)</span>均大于<span class="math inline">\(0\)</span>, 则点<span class="math inline">\(P\)</span>在三角形<span class="math inline">\(\Delta ABC\)</span>的内部; 若<span class="math inline">\(\alpha,\beta,\gamma\)</span>有一个等于<span class="math inline">\(0\)</span>, 则点<span class="math inline">\(P\)</span>在三角形的边上; 若<span class="math inline">\(\alpha,\beta,\gamma\)</span>有两个等于<span class="math inline">\(0\)</span>, 则点<span class="math inline">\(P\)</span>在三角形的顶点上.</p>
+<p>在绘图时, 用一个最小的矩形包围住三角形, 再枚举并判断每个点是否在三角形内部即可. 下面的代码采用了向量叉积法:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Vec3f <span class="title">Drawer::Barycentric</span><span class="params">(<span class="keyword">const</span> Vec2i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> Vec2i &amp; P)</span></span>&#123;</span><br><span class="line">    Vec3f result =  <span class="comment">//cal cross</span></span><br><span class="line">            <span class="built_in">Vec3f</span>(vertex[<span class="number">1</span>].x - vertex[<span class="number">0</span>].x,vertex[<span class="number">2</span>].x - vertex[<span class="number">0</span>].x,vertex[<span class="number">0</span>].x - P.x) ^</span><br><span class="line">            <span class="built_in">Vec3f</span>(vertex[<span class="number">1</span>].y - vertex[<span class="number">0</span>].y,vertex[<span class="number">2</span>].y - vertex[<span class="number">0</span>].y,vertex[<span class="number">0</span>].y - P.y);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">fabs</span>(result.z) &lt; <span class="number">1</span>)<span class="keyword">return</span> <span class="built_in">Vec3f</span>(<span class="number">-1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    result.x /= result.z,result.y /= result.z;</span><br><span class="line">    <span class="keyword">return</span> &#123;(<span class="keyword">float</span>)<span class="number">1.0</span> - result.x - result.y,result.x,result.y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(<span class="keyword">const</span> Vec2i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> TGAColor &amp; color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lx = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="number">0</span>),rx = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="built_in">get_width</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">int</span> ly = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y&#125;),<span class="number">0</span>),ry = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y,&#125;),<span class="built_in">get_height</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = lx;x &lt;= rx;x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y = ly;y &lt;= ry;y++)&#123;</span><br><span class="line">            Vec3f bary = <span class="built_in">Barycentric</span>(vertex,<span class="built_in">Vec2i</span>(x,y));</span><br><span class="line">            <span class="keyword">bool</span> out = (bary.x &lt; <span class="number">0</span> <span class="keyword">or</span> bary.y &lt; <span class="number">0</span> <span class="keyword">or</span> bary.z &lt; <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span>(!out)<span class="built_in">set</span>(x,y,color);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用<a target="_blank" rel="noopener" href="https://github.com/ssloy/tinyrenderer/tree/024ad4619b824f9179c86dc144145e2b8b155f52">tinyrender提供的模型</a>来测试一下我们的三角形绘制程序(先给每个面一个随机颜色):</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502215053686.png" alt="image-20220502215053686" style="zoom:25%;" /></p>
+<p>加上一点阴影并剔除背面的三角形:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502215757516.png" alt="image-20220502215757516" style="zoom:25%;" /></p>
+<h1 id="step-3-z-buffer">Step 3 ：z-buffer</h1>
+<p>现在我们需要考虑剔除掉不能被我们看见的像素(Step 2通过Back-face culling剔除了一些面, 但是仍然不正确, 例如嘴部整个消失了). z-buffer的思想是维护一个像素点在待渲染平面上的一个距离buffer, 每次用离相机更近的点来剔除已经存在的点. z-buffer的实现非常简单, 下面主要讨论如何求每个点距相机的距离.</p>
+<p>首先考虑一维的情形. 假设我们要绘制从<span class="math inline">\(A(x_0,y_0)\)</span>到<span class="math inline">\(B(x_1,y_1)\)</span>的一条线段, 当前绘制到点<span class="math inline">\(P(x,y)\)</span>, 摄像机的视角与<span class="math inline">\(y\)</span>轴的反方向相同:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220503101100866.png" alt="image-20220503101100866" style="zoom:50%;" /></p>
+<p>在绘制时我们要通过<span class="math inline">\(x\)</span>坐标计算出<span class="math inline">\(y\)</span>来. 不难得到 <span class="math display">\[
+\frac{y - y_0}{y1 - y_0} = \frac{x - x_0}{x_1 - x_0}
+\]</span> 我们设<span class="math inline">\(\beta = \frac{x - x_0}{x_1 - x_0}\)</span>, 则有 <span class="math display">\[
+y = (1 - \beta)y_0 + \beta y_1
+\]</span> 是不是很熟悉? <span class="math inline">\(\alpha = 1 - \beta\)</span>和<span class="math inline">\(\beta\)</span>就是<span class="math inline">\(P\)</span>关于线段<span class="math inline">\(AB\)</span>的重心坐标(一维单纯形是线段). 我们将其推广到二维, 便能求出三角形每个点距离相机的距离<span class="math inline">\(z\)</span>: <span class="math display">\[
+z = \alpha z_0+ \beta z_1 + \gamma z_2
+\]</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(<span class="keyword">const</span> Vec3i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> TGAColor &amp; color,<span class="keyword">double</span> * zbuffer)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">-1e-6</span>;<span class="comment">//防止三角形接合处有未绘制的点</span></span><br><span class="line">    <span class="keyword">int</span> lx = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="number">0</span>),rx = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="built_in">get_width</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">int</span> ly = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y&#125;),<span class="number">0</span>),ry = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y,&#125;),<span class="built_in">get_height</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = lx;x &lt;= rx;x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y = ly;y &lt;= ry;y++)&#123;</span><br><span class="line">            Vec3f bary = <span class="built_in">Barycentric</span>(vertex,<span class="built_in">Vec2i</span>(x,y));</span><br><span class="line">            <span class="keyword">if</span>(bary.x &lt; eps <span class="keyword">or</span> bary.y &lt; eps <span class="keyword">or</span> bary.z &lt; eps)<span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> idx = x + y * <span class="built_in">get_width</span>();</span><br><span class="line">            <span class="keyword">double</span> z = bary.x * vertex[<span class="number">0</span>].z + bary.y * vertex[<span class="number">1</span>].z + bary.z * vertex[<span class="number">2</span>].z;</span><br><span class="line">            <span class="keyword">if</span>(zbuffer[idx] &lt; z)&#123;</span><br><span class="line">                zbuffer[idx] = z;</span><br><span class="line">                <span class="built_in">set</span>(x,y,color);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220503104500854.png" alt="image-20220503104500854" style="zoom:25%;" /></p>
+<h1 id="step-4-透视投影">Step 4: 透视投影</h1>
+<p>这一部分tinyrender讲得很含糊而且不直观, 所以我直接按照GAMES101的内容去实现.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -881,201 +1236,6 @@
 <p>对于操作3, 只需把最高位拆出来单独维护即可. 注意操作2会影响到拆出来的最高位.</p>
 <h2 id="代码">代码</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(chrono::steady_clock::now().time_since_epoch().count())</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">2e5</span>+<span class="number">10</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">998244353</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">int</span> p2[maxn];</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d)</span></span>&#123;ll ta=<span class="number">1</span>;<span class="keyword">if</span>(d==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;x %= p;ll a=<span class="built_in">Pow</span>(x,d/<span class="number">2</span>);ta=a*a%p;<span class="keyword">if</span>(d%<span class="number">2</span>)ta=ta*x%p;<span class="keyword">return</span> ta%p;&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Segtree</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> siz = <span class="number">1</span>;</span><br><span class="line">	vector&lt;<span class="keyword">int</span>&gt;hbit,addv,subv,sumv;</span><br><span class="line">	vector&lt;<span class="keyword">bool</span>&gt;full;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(siz &lt; n)siz *= <span class="number">2</span>;</span><br><span class="line">		hbit.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">		addv.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">		sumv.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">		full.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">ls</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)|<span class="number">1</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">2</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> x &amp; -x;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">highbit</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">30</span>;i &gt;= <span class="number">0</span>;i--)<span class="keyword">if</span>((<span class="number">1</span>&lt;&lt;i)&amp;x)<span class="keyword">return</span> (<span class="number">1</span>&lt;&lt;i);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(full[<span class="built_in">ls</span>(x)] <span class="keyword">and</span> full[<span class="built_in">rs</span>(x)])full[x] = <span class="number">1</span>;</span><br><span class="line">		sumv[x] = (sumv[<span class="built_in">ls</span>(x)] + sumv[<span class="built_in">rs</span>(x)])%p;</span><br><span class="line">		hbit[x] = (hbit[<span class="built_in">ls</span>(x)] + hbit[<span class="built_in">rs</span>(x)])%p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(addv[x])&#123;</span><br><span class="line">			<span class="keyword">int</span> &amp; v = addv[x];</span><br><span class="line">			addv[<span class="built_in">ls</span>(x)] += v,addv[<span class="built_in">rs</span>(x)] += v;</span><br><span class="line">			hbit[<span class="built_in">ls</span>(x)] = (hbit[<span class="built_in">ls</span>(x)] * p2[v])%p;</span><br><span class="line">			hbit[<span class="built_in">rs</span>(x)] = (hbit[<span class="built_in">rs</span>(x)] * p2[v])%p;</span><br><span class="line">			v = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; in,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(lx &lt; (<span class="keyword">int</span>)in.<span class="built_in">size</span>())&#123;</span><br><span class="line">				<span class="keyword">int</span> h = <span class="built_in">highbit</span>(in[lx]);</span><br><span class="line">				hbit[x] = h;</span><br><span class="line">				in[lx] -= h;</span><br><span class="line">				sumv[x] = in[lx];</span><br><span class="line">				<span class="keyword">if</span>(!sumv[x] <span class="keyword">and</span> !hbit[x])full[x] = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="built_in">build</span>(in,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		<span class="built_in">build</span>(in,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="built_in">pushup</span>(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; in)</span></span>&#123;</span><br><span class="line">		<span class="built_in">build</span>(in,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx &gt; <span class="number">1</span>)<span class="built_in">pushdown</span>(x);</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)&#123;</span><br><span class="line">			hbit[x] = (hbit[x]*<span class="number">2</span>)%p;</span><br><span class="line">			addv[x]++;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="built_in">add</span>(l,r,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		<span class="built_in">add</span>(l,r,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="built_in">pushup</span>(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		<span class="built_in">add</span>(l,r,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx &gt; <span class="number">1</span>)<span class="built_in">pushdown</span>(x);</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)&#123;</span><br><span class="line">			<span class="keyword">if</span>(full[x])&#123;</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span>(!sumv[x])&#123;</span><br><span class="line">					full[x] = <span class="number">1</span>;</span><br><span class="line">					hbit[x] = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				sumv[x] -= <span class="built_in">lowbit</span>(sumv[x]);</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="built_in">sub</span>(l,r,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		<span class="built_in">sub</span>(l,r,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="built_in">pushup</span>(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		<span class="built_in">sub</span>(l,r,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">sum</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx &gt; <span class="number">1</span>)<span class="built_in">pushdown</span>(x);</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)&#123;</span><br><span class="line">			<span class="keyword">return</span> (sumv[x] + hbit[x])%p;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		ll s1 = <span class="built_in">sum</span>(l,r,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		ll s2 = <span class="built_in">sum</span>(l,r,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="keyword">return</span> (s1+s2)%p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">sum</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">sum</span>(l,r,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	cout.<span class="built_in">setf</span>(ios::fixed,ios::floatfield);</span><br><span class="line">	cout.<span class="built_in">precision</span>(<span class="number">12</span>);</span><br><span class="line">	p2[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; maxn;i++)p2[i] = p2[i<span class="number">-1</span>]*<span class="number">2</span>%p;	 </span><br><span class="line">	<span class="keyword">int</span> __;</span><br><span class="line">	cin &gt;&gt; __;</span><br><span class="line">	<span class="keyword">while</span>(__--)&#123;</span><br><span class="line">		<span class="keyword">int</span> n;</span><br><span class="line">		cin &gt;&gt; n;</span><br><span class="line">		vector&lt;<span class="keyword">int</span>&gt;<span class="built_in">in</span>(n+<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)cin &gt;&gt; in[i];</span><br><span class="line">		Segtree seg;</span><br><span class="line">		seg.<span class="built_in">init</span>(n+<span class="number">10</span>);</span><br><span class="line">		seg.<span class="built_in">build</span>(in);</span><br><span class="line">		<span class="keyword">int</span> q;</span><br><span class="line">		cin &gt;&gt; q;</span><br><span class="line">		<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">			<span class="keyword">int</span> opt,l,r;</span><br><span class="line">			cin &gt;&gt; opt &gt;&gt; l &gt;&gt; r;</span><br><span class="line">			<span class="keyword">if</span>(opt == <span class="number">1</span>)cout &lt;&lt; seg.<span class="built_in">sum</span>(l,r) &lt;&lt; endl;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(opt == <span class="number">2</span>)seg.<span class="built_in">sub</span>(l,r);</span><br><span class="line">			<span class="keyword">else</span> seg.<span class="built_in">add</span>(l,r);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2021/09/14/solution-CF1567E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="LinkinPony">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I always love dashie">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/14/solution-CF1567E/" class="post-title-link" itemprop="url">[题解]-CF1567E Non-Decreasing Dilemma</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-14 21:40:50" itemprop="dateCreated datePublished" datetime="2021-09-14T21:40:50+08:00">2021-09-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 19:51:37" itemprop="dateModified" datetime="2021-09-16T19:51:37+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BA%BF%E6%AE%B5%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">线段树</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="题意">题意</h2>
-<p>给出<span class="math inline">\(raw[]\)</span>和两种操作:</p>
-<ol type="1">
-<li><span class="math inline">\(x\space v\)</span>, 将<span class="math inline">\(raw[x]\)</span>修改为<span class="math inline">\(v\)</span></li>
-<li><span class="math inline">\(l \space r\)</span>, 询问<span class="math inline">\(raw[l],raw[l+1],...,raw[r]\)</span>中有多少合法的数对<span class="math inline">\((i,j)\)</span>满足<span class="math inline">\(l \leq i \leq j \leq r\)</span>且<span class="math inline">\(raw[i]...raw[j]\)</span>单调不降</li>
-</ol>
-<p><span class="math inline">\(1 \leq n,q \leq 2\cdot10^5\)</span></p>
-<h2 id="题解">题解</h2>
-<p>线段树维护区间合并. 以下<span class="math inline">\(x\)</span>代表线段树节点标号, <span class="math inline">\(ls(x)\)</span>和<span class="math inline">\(rs(x)\)</span>分别代表左右儿子节点标号</p>
-<p>容易发现对于每段长度为<span class="math inline">\(m\)</span>的单调不降子序列, 其对答案的贡献是<span class="math inline">\(\frac{m\cdot (m+1)}2\)</span></p>
-<p>建一颗线段树, 维护如下信息:</p>
-<p>​ <span class="math inline">\(prev[x]\)</span>: 自节点<span class="math inline">\(x\)</span>的最左端开始的最长单调不降子序列的长度</p>
-<p>​ <span class="math inline">\(sufv[x]\)</span>: 自节点<span class="math inline">\(x\)</span>的最右端结束的最长单调不降子序列的长度</p>
-<p>​ <span class="math inline">\(totv[x]\)</span>: 节点<span class="math inline">\(x\)</span>有多少合法数对<span class="math inline">\((i,j)\)</span>满足题意</p>
-<p>有几点细节需要注意:</p>
-<ol type="1">
-<li><p>对于<span class="math inline">\(prev[x]\)</span>, 只有其左儿子的<span class="math inline">\(prev[ls(x)]\)</span>等于区间长度, 并且左儿子和右儿子的连接处不降(即<span class="math inline">\(raw[m-1] &lt;= raw[m])\)</span>时才有<span class="math inline">\(prev[x] = prev[ls(x)] + prev[rs(x)]\)</span>. <span class="math inline">\(sufv[]\)</span>的维护同理</p></li>
-<li><p>对于<span class="math inline">\(totv[x]\)</span>, 显然有<span class="math inline">\(totv[x] += totv[ls(x)] + totv[rs(x)]\)</span>. 而当其左儿子和右儿子的连接处不降时, 还需加上<span class="math inline">\(sufv[ls(x)] \cdot prev[rs(x)]\)</span>, 即新增合法区间的左端点全部从左儿子中选, 右端点全部从右儿子中选.</p></li>
-<li><p>在统计答案时, 需要处理当前节点区间比询问区间大的情况</p></li>
-</ol>
-<h2 id="代码">代码</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(chrono::steady_clock::now().time_since_epoch().count())</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">8e5</span>+<span class="number">10</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">1e9</span>+<span class="number">7</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">int</span> raw[maxn];</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d,ll p)</span></span>&#123;ll ta=<span class="number">1</span>;<span class="keyword">if</span>(d==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;x %= p;ll a=<span class="built_in">Pow</span>(x,d/<span class="number">2</span>,p);ta=a*a%p;<span class="keyword">if</span>(d%<span class="number">2</span>)ta=ta*x%p;<span class="keyword">return</span> ta%p;&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Segtree</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> siz = <span class="number">1</span>;</span><br><span class="line">	vector&lt;<span class="keyword">int</span>&gt;prev,sufv,totv;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(siz &lt; n)siz *= <span class="number">2</span>;</span><br><span class="line">		prev.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">		sufv.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">		totv.<span class="built_in">assign</span>(siz*<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">ls</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)|<span class="number">1</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> (x&lt;&lt;<span class="number">1</span>)+<span class="number">2</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> x*(x+<span class="number">1</span>)/<span class="number">2</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> len = (rx - lx)/<span class="number">2</span>;</span><br><span class="line">		totv[x] = totv[<span class="built_in">ls</span>(x)] + totv[<span class="built_in">rs</span>(x)];</span><br><span class="line">		totv[x] += (raw[m<span class="number">-1</span>] &lt;= raw[m]?sufv[<span class="built_in">ls</span>(x)]*prev[<span class="built_in">rs</span>(x)]:<span class="number">0</span>);</span><br><span class="line">		prev[x] = <span class="built_in">max</span>(prev[<span class="built_in">ls</span>(x)],(prev[<span class="built_in">ls</span>(x)] == len <span class="keyword">and</span> raw[m<span class="number">-1</span>] &lt;= raw[m])?prev[<span class="built_in">ls</span>(x)] + prev[<span class="built_in">rs</span>(x)]:<span class="number">0</span>);</span><br><span class="line">		sufv[x] = <span class="built_in">max</span>(sufv[<span class="built_in">rs</span>(x)],(sufv[<span class="built_in">rs</span>(x)] == len <span class="keyword">and</span> raw[m<span class="number">-1</span>] &lt;= raw[m])?sufv[<span class="built_in">rs</span>(x)] + sufv[<span class="built_in">ls</span>(x)]:<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> idx,<span class="keyword">int</span> v,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(rx - lx == <span class="number">1</span>)&#123;</span><br><span class="line">			raw[idx] = v;</span><br><span class="line">			prev[x] = sufv[x] = totv[x] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(lx &lt;= idx <span class="keyword">and</span> idx &lt; m)<span class="built_in">Set</span>(idx,v,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">Set</span>(idx,v,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		<span class="built_in">pushup</span>(x,lx,rx);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">int</span> idx,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		<span class="built_in">Set</span>(idx,v,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">cal</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> x,<span class="keyword">int</span> lx,<span class="keyword">int</span> rx)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(l &gt;= rx <span class="keyword">or</span> lx &gt;= r)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(l &lt;= lx <span class="keyword">and</span> rx &lt;= r)<span class="keyword">return</span> totv[x];</span><br><span class="line">		<span class="keyword">int</span> m = (lx+rx)/<span class="number">2</span>;</span><br><span class="line">		ll s1 = <span class="built_in">cal</span>(l,r,<span class="built_in">ls</span>(x),lx,m);</span><br><span class="line">		ll s2 = <span class="built_in">cal</span>(l,r,<span class="built_in">rs</span>(x),m,rx);</span><br><span class="line">		ll ans = s1+s2;</span><br><span class="line">		<span class="keyword">if</span>(raw[m<span class="number">-1</span>] &lt;= raw[m])&#123;</span><br><span class="line">			ans += <span class="built_in">max</span>(<span class="built_in">min</span>(m - l,sufv[<span class="built_in">ls</span>(x)]),<span class="number">0LL</span>)*<span class="built_in">max</span>(<span class="built_in">min</span>(r - m,prev[<span class="built_in">rs</span>(x)]),<span class="number">0LL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">cal</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">		r++;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">cal</span>(l,r,<span class="number">0</span>,<span class="number">0</span>,siz);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	cout.<span class="built_in">setf</span>(ios::fixed,ios::floatfield);</span><br><span class="line">	cout.<span class="built_in">precision</span>(<span class="number">12</span>);	 </span><br><span class="line">	<span class="keyword">int</span> n,q;</span><br><span class="line">	Segtree seg;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)raw[i] = <span class="number">0</span>;</span><br><span class="line">	seg.<span class="built_in">init</span>(n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> v;</span><br><span class="line">		cin &gt;&gt; v;</span><br><span class="line">		seg.<span class="built_in">Set</span>(i,v);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> opt,l,r;</span><br><span class="line">		cin &gt;&gt; opt &gt;&gt; l &gt;&gt; r;</span><br><span class="line">		<span class="keyword">if</span>(opt == <span class="number">1</span>)seg.<span class="built_in">Set</span>(l,r);</span><br><span class="line">		<span class="keyword">else</span> cout &lt;&lt; seg.<span class="built_in">cal</span>(l,r) &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2021/08/25/solution-CF1561D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="LinkinPony">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="I always love dashie">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/25/solution-CF1561D/" class="post-title-link" itemprop="url">[题解]CF1561D/CF1560B-Up the Strip</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-08-25 01:24:50 / Modified: 02:06:41" itemprop="dateCreated datePublished" datetime="2021-08-25T01:24:50+08:00">2021-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="题解">题解</h2>
-<p>设<span class="math inline">\(f[i]\)</span>为从<span class="math inline">\(n\)</span>走到<span class="math inline">\(i\)</span>的方案数. 分减法和整除两种情况分别讨论: <span class="math display">\[
-\begin{align}
-减法:&amp;\\
-f[i] &amp;= \sum_{j = i}^nf[j]\\
-整除:&amp;\\
-f[i] &amp;= \sum_{j = i}^{i*j&lt;= n}\sum_{\lfloor \frac{k}{j} \rfloor = i}f[k]\\
-&amp;= \sum_{j = i}^{i*j&lt;= n}\sum_{k = i*j}^{(i+1)*j - 1}f[k]\\
-&amp;= \sum_{j = i}^{i*j&lt;= n}suf[j] - suf[(i+1)*j]\\
-其中&amp;suf[i] = \sum_{j = i}^n f[i]\\
-\end{align}
-\]</span></p>
-<p>综上, 递推式为 <span class="math display">\[
-\begin{align}
-f[n] &amp;= suf[n] = 1\\
-suf[i] &amp;=suf[i+1] + f[i]\\
-f[i] &amp;= suf[i+1]+\sum_{j = 1}^{i*j &lt;= n}suf[j] - suf[(i+1)*j]
-\end{align}
-\]</span> 注意处理<span class="math inline">\((i+1)*j\)</span>越界的问题. 复杂度<span class="math inline">\(O(n\ln n)\)</span></p>
-<h2 id="代码">代码</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="function">mt19937 <span class="title">Rand</span><span class="params">(chrono::steady_clock::now().time_since_epoch().count())</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">4e6</span>+<span class="number">10</span>;<span class="comment">//CHANGE IT!</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn*<span class="number">2</span>;</span><br><span class="line"><span class="keyword">int</span> p;</span><br><span class="line"><span class="function">ll <span class="title">Pow</span><span class="params">(ll x,ll d)</span></span>&#123;ll ta=<span class="number">1</span>;<span class="keyword">if</span>(d==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>%p;ll a=<span class="built_in">Pow</span>(x,d/<span class="number">2</span>);ta=a*a%p;<span class="keyword">if</span>(d%<span class="number">2</span>)ta=ta*x%p;<span class="keyword">return</span> ta%p;&#125;</span><br><span class="line">ll f[maxn],pre[maxn];</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">	cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">	cout.<span class="built_in">setf</span>(ios::fixed,ios::floatfield);</span><br><span class="line">	cout.<span class="built_in">precision</span>(<span class="number">12</span>);	 </span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; p;</span><br><span class="line">	f[n] = pre[n] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>;i &gt;= <span class="number">1</span>;i--)&#123;</span><br><span class="line">		f[i] = pre[i+<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">2</span>;i*j &lt;= n;j++)&#123;</span><br><span class="line">			f[i] = (f[i] + (pre[i*j] - ((i+<span class="number">1</span>)*(j) &gt; maxn?<span class="number">0</span>:pre[(i+<span class="number">1</span>)*(j)])))%p;</span><br><span class="line">		&#125;</span><br><span class="line">		pre[i] = (f[i] + pre[i+<span class="number">1</span>])%p;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; f[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>

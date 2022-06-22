@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="本文的主要内容是对Dmitry V. Sokolov的tinyrender课程的记录和补充. Step 0：环境搭建 我们需要tgaimage.h来操作TGA文件, model.h来操作模型. 头文件和实现可以在这里找到: https:&#x2F;&#x2F;github.com&#x2F;ssloy&#x2F;tinyrenderer&#x2F;tree&#x2F;f6fecb7ad493264ecd15e230411bfb1cca539a12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[笔记]从0开始搓一个简单的render">
+<meta property="og:url" content="http://linkinpony.github.io/2022/04/30/demo-render/index.html">
+<meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="本文的主要内容是对Dmitry V. Sokolov的tinyrender课程的记录和补充. Step 0：环境搭建 我们需要tgaimage.h来操作TGA文件, model.h来操作模型. 头文件和实现可以在这里找到: https:&#x2F;&#x2F;github.com&#x2F;ssloy&#x2F;tinyrenderer&#x2F;tree&#x2F;f6fecb7ad493264ecd15e230411bfb1cca539a12">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220430115033896.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220501154945120.png">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-34f542500eb2b8b4679dc351609398ad_720w.jpg">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220502193646986.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220502215053686.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220502215757516.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220503101100866.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220503104500854.png">
+<meta property="article:published_time" content="2022-04-30T03:39:36.000Z">
+<meta property="article:modified_time" content="2022-06-22T01:06:49.960Z">
+<meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="图形学">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="render">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:/Github/hexo/source/_posts/demo-render.assets/image-20220430115033896.png">
+
+
+<link rel="canonical" href="http://linkinpony.github.io/2022/04/30/demo-render/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2022/04/30/demo-render/","path":"2022/04/30/demo-render/","title":"[笔记]从0开始搓一个简单的render"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[笔记]从0开始搓一个简单的render | I always love dashie</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">I always love dashie</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#step-0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">Step 0：环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-1%E7%94%BB%E4%B8%80%E6%9D%A1%E7%9B%B4%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">Step 1：画一条直线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%B4%E7%B4%A0%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">朴素算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bresenham%E7%9B%B4%E7%BA%BF%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">Bresenham直线算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-2%E7%94%BB%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2"><span class="nav-number">3.</span> <span class="nav-text">Step 2：画一个三角形</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%AB%E6%8F%8F%E7%BA%BF%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">扫描线法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">3.2.</span> <span class="nav-text">重心坐标系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%AE%9A%E4%B9%89"><span class="nav-number">3.2.1.</span> <span class="nav-text">一般定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%AD%E7%9A%84%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">3.2.2.</span> <span class="nav-text">二维平面中的重心坐标系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3%E8%A7%A3%E6%96%B9%E7%A8%8B%E7%BB%84"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">求解:解方程组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF"><span class="nav-number">3.2.2.3.</span> <span class="nav-text">求解:向量叉积</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3%E4%B8%89%E8%A7%92%E5%BD%A2%E9%9D%A2%E7%A7%AF"><span class="nav-number">3.2.2.4.</span> <span class="nav-text">求解:三角形面积</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">3.2.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-3-z-buffer"><span class="nav-number">4.</span> <span class="nav-text">Step 3 ：z-buffer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-4-%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1"><span class="nav-number">5.</span> <span class="nav-text">Step 4: 透视投影</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LinkinPony</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://acker.fun/" title="https:&#x2F;&#x2F;acker.fun&#x2F;" rel="noopener" target="_blank">Acker</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kmguan-528.github.io/" title="https:&#x2F;&#x2F;kmguan-528.github.io&#x2F;" rel="noopener" target="_blank">KMGuan</a>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2022/04/30/demo-render/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [笔记]从0开始搓一个简单的render
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-30 11:39:36" itemprop="dateCreated datePublished" datetime="2022-04-30T11:39:36+08:00">2022-04-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-22 09:06:49" itemprop="dateModified" datetime="2022-06-22T09:06:49+08:00">2022-06-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本文的主要内容是对Dmitry V. Sokolov的<a target="_blank" rel="noopener" href="https://github.com/ssloy/tinyrenderer">tinyrender</a>课程的记录和补充.</p>
+<h1 id="step-0环境搭建">Step 0：环境搭建</h1>
+<p>我们需要<code>tgaimage.h</code>来操作TGA文件, <code>model.h</code>来操作模型. 头文件和实现可以在这里找到:</p>
+<p>https://github.com/ssloy/tinyrenderer/tree/f6fecb7ad493264ecd15e230411bfb1cca539a12</p>
+<p>可以用如下代码来测试:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;tgaimage.h&quot;</span></span></span><br><span class="line"><span class="keyword">const</span> TGAColor white = <span class="built_in">TGAColor</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line"><span class="keyword">const</span> TGAColor red   = <span class="built_in">TGAColor</span>(<span class="number">255</span>, <span class="number">0</span>,   <span class="number">0</span>,   <span class="number">255</span>);</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">        <span class="function">TGAImage <span class="title">image</span><span class="params">(<span class="number">100</span>, <span class="number">100</span>, TGAImage::RGB)</span></span>;</span><br><span class="line">        image.<span class="built_in">set</span>(<span class="number">52</span>, <span class="number">41</span>, red);</span><br><span class="line">        image.<span class="built_in">flip_vertically</span>(); <span class="comment">// i want to have the origin at the left bottom corner of the image</span></span><br><span class="line">        image.<span class="built_in">write_tga_file</span>(<span class="string">&quot;output.tga&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>得到一个有红点的TGA文件:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220430115033896.png" alt="image-20220430115033896" style="zoom:25%;" /></p>
+<h1 id="step-1画一条直线">Step 1：画一条直线</h1>
+<h2 id="朴素算法">朴素算法</h2>
+<p>我们需要在二维位图上画一条从<span class="math inline">\((x_0,y_0)\)</span>到<span class="math inline">\((x_1,y_1)\)</span>的直线.</p>
+<p>直线的两点式为: <span class="math display">\[
+\frac{y - y_0}{y_1 - y_0} = \frac{x - x_0}{x_1 - x_0}
+\]</span> 因而对任一点<span class="math inline">\(x\)</span>, 有 <span class="math display">\[
+y = \frac{x - x_0}{x_1 - x_0} \cdot(y_1 - y_0) + y_0
+\]</span> 我们只要枚举<span class="math inline">\(x\)</span>, 计算出每个<span class="math inline">\(x\)</span>对应的<span class="math inline">\(y\)</span>即可画出直线. 需要注意的是, 这个算法默认<span class="math inline">\((x_1,y_1)\)</span>在<span class="math inline">\((x_0,y_0)\)</span>的右上方, 并且绘制时需要枚举<span class="math inline">\(\Delta x,\Delta y\)</span>中较大的一方以保证线段不会断开.</p>
+<p>代码如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Line</span><span class="params">(<span class="keyword">int</span> x0, <span class="keyword">int</span> y0, <span class="keyword">int</span> x1, <span class="keyword">int</span> y1, TGAColor color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> flip = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">abs</span>(x0 - x1) &lt; <span class="built_in">abs</span>(y0 - y1))&#123;</span><br><span class="line">        flip = <span class="number">1</span>;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,y0),std::<span class="built_in">swap</span>(x1,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x0 &gt; x1)&#123;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,x1),std::<span class="built_in">swap</span>(y0,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = x0;x &lt;= x1;x++)&#123;</span><br><span class="line">        <span class="keyword">double</span> t = (<span class="keyword">double</span>)(x - x0)/(x1 - x0);</span><br><span class="line">        <span class="keyword">int</span> y = t * (y1 - y0) + y0;</span><br><span class="line">        <span class="keyword">if</span>(!flip)<span class="built_in">set</span>(x,y,color);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">set</span>(y,x,color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="bresenham直线算法">Bresenham直线算法</h2>
+<p>朴素算法已经能够满足绘图需要, 但是使用了浮点乘法除法, 效率很低.</p>
+<p>我们设直线的斜率<span class="math inline">\(k = \frac{y_1 - y_0}{x_1 - x_0}\)</span>, 有 <span class="math display">\[
+y = (x - x_0) \cdot k + y_0
+\]</span> 我们假设当前画笔所在位置的是<span class="math inline">\((x,y_c)\)</span>, 误差为<span class="math inline">\(E = y- y_c\)</span>. 当<span class="math inline">\(x\)</span>加<span class="math inline">\(1\)</span>时, <span class="math inline">\(E\)</span>增加<span class="math inline">\(k\)</span>. 当<span class="math inline">\(E \ge \frac{1}{2}\)</span>时, 我们需要将<span class="math inline">\(y_c\)</span>加或减<span class="math inline">\(1\)</span>同时<span class="math inline">\(E\)</span>减去<span class="math inline">\(1\)</span>. 这样便避免了每次都要进行的浮点除法运算.</p>
+<p>具体来说, 我们只需将不等式的两边乘上<span class="math inline">\(2 \cdot (x_1 - x_0)\)</span>即可. 此时误差每次增加<span class="math inline">\(2 \cdot (y_1 - y_0)\)</span>. 当<span class="math inline">\(E \ge (x_1 - x_0)\)</span>时需要将<span class="math inline">\(y_c\)</span>加或减<span class="math inline">\(1\)</span>同时<span class="math inline">\(E\)</span>减去<span class="math inline">\(2 \cdot (x_1 - x_0)\)</span>.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Line</span><span class="params">(<span class="keyword">int</span> x0, <span class="keyword">int</span> y0, <span class="keyword">int</span> x1, <span class="keyword">int</span> y1, TGAColor color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> flip = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">abs</span>(x0 - x1) &lt; <span class="built_in">abs</span>(y0 - y1))&#123;</span><br><span class="line">        flip = <span class="number">1</span>;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,y0),std::<span class="built_in">swap</span>(x1,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(x0 &gt; x1)&#123;</span><br><span class="line">        std::<span class="built_in">swap</span>(x0,x1),std::<span class="built_in">swap</span>(y0,y1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> dx = x1 - x0,dy = y1 - y0;</span><br><span class="line">    <span class="keyword">int</span> e = <span class="number">0</span>,de = <span class="number">2</span>*<span class="built_in">abs</span>(dy);</span><br><span class="line">    <span class="keyword">int</span> y = y0;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = x0;x &lt;= x1;x++)&#123;</span><br><span class="line">        e += de;</span><br><span class="line">        <span class="keyword">if</span>(e &gt;= dx) &#123;</span><br><span class="line">            e -= dx*<span class="number">2</span>;</span><br><span class="line">            y += (dy &gt; <span class="number">0</span>?<span class="number">1</span>:<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!flip)<span class="built_in">set</span>(x,y,color);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">set</span>(y,x,color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="step-2画一个三角形">Step 2：画一个三角形</h1>
+<h2 id="扫描线法">扫描线法</h2>
+<p>我们先用一种十分古老的方法来画一个三角形: 用水平或者竖直的线一行一行地绘制.</p>
+<p>在绘制前, 先对三角形的三个顶点按横坐标递增进行排序, 然后标号为<span class="math inline">\(P_0,P_1,P_2\)</span>(以下默认左下角为坐标原点). 同时将边<span class="math inline">\(P_0P_1\)</span>标为<span class="math inline">\(L_0\)</span>, <span class="math inline">\(P_1P_2\)</span>标为<span class="math inline">\(L_1\)</span>, <span class="math inline">\(P_2P_3\)</span>标为<span class="math inline">\(L_2\)</span>, 如图:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220501154945120.png" alt="image-20220501154945120" style="zoom:50%;" /></p>
+<p>标号后的三角形可按<span class="math inline">\(x = x_1\)</span>​这条直线分割成两部分. 对两部分分别进行绘制即可. 注意处理一下斜率不存在时的细节.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(Vec2i t0, Vec2i t1, Vec2i t2, TGAColor color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x0,y0,x1,y1,x2,y2;</span><br><span class="line">    std::vector&lt;std::pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; &gt;top = &#123;&#123;t0.u,t0.v&#125;,&#123;t1.u,t1.v&#125;,&#123;t2.u,t2.v&#125;&#125;;</span><br><span class="line">    std::<span class="built_in">sort</span>(top.<span class="built_in">begin</span>(),top.<span class="built_in">end</span>());</span><br><span class="line">    std::<span class="built_in">tie</span>(x0,y0) = top[<span class="number">0</span>];</span><br><span class="line">    std::<span class="built_in">tie</span>(x1,y1) = top[<span class="number">1</span>];</span><br><span class="line">    std::<span class="built_in">tie</span>(x2,y2) = top[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> mx = std::<span class="built_in">max</span>(x1,x2);</span><br><span class="line">    <span class="keyword">double</span> k0 = (<span class="keyword">double</span>)(y1 - y0)/(x1 == x0?<span class="number">1</span>:x1 - x0);</span><br><span class="line">    <span class="keyword">double</span> k1 = (<span class="keyword">double</span>)(y2 - y1)/(x2 == x1?<span class="number">1</span>:x2 - x1);</span><br><span class="line">    <span class="keyword">double</span> k2 = (<span class="keyword">double</span>)(y2 - y0)/(x2 == x0?<span class="number">1</span>:x2 - x0);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = x0;x &lt;= x2;x++)&#123;</span><br><span class="line">        <span class="keyword">int</span> yc2 = (x - x0) * k2 + y0;</span><br><span class="line">        <span class="keyword">if</span>(x &lt;= x1)&#123;</span><br><span class="line">            <span class="keyword">int</span> yc0 = (x - x0) * k0 + y0;</span><br><span class="line">            <span class="built_in">Line</span>(x,yc0,x,yc2,color);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">int</span> yc1 = (x - x1) * k1 + y1;</span><br><span class="line">            <span class="built_in">Line</span>(x,yc1,x,yc2,color);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重心坐标系">重心坐标系</h2>
+<h3 id="一般定义">一般定义</h3>
+<p>设<span class="math inline">\(V_1,...,V_n\)</span>是<span class="math inline">\(n\)</span>维向量空间<span class="math inline">\(V\)</span>中<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Simplex">单纯形</a>的顶点, 对于<span class="math inline">\(V\)</span>中任意一点<span class="math inline">\(P\)</span>, 有 <span class="math display">\[
+(\sum_{i = 1}^n \lambda_i)\cdot P = \sum_{i = 1}^n \lambda_i \cdot V_i
+\]</span> 则系数<span class="math inline">\(\lambda_1,...,\lambda_n\)</span>称为<span class="math inline">\(P\)</span>关于<span class="math inline">\(V_1,...V_n\)</span>的重心坐标. 一般规定<span class="math inline">\(\sum_{i = 1}^n \lambda_i = 1\)</span>, 此时称为<strong>正规化</strong>的重心坐标. 以下讨论的重心坐标均为正规化的.</p>
+<h3 id="二维平面中的重心坐标系">二维平面中的重心坐标系</h3>
+<h4 id="定义">定义</h4>
+<p>二维平面上, 单纯形为三角形. 假设给出一三角形<span class="math inline">\(\Delta ABC\)</span>和三角形所在平面上的一点<span class="math inline">\(P\)</span>, 则<span class="math inline">\(P\)</span>可被如下重心坐标表示: <span class="math display">\[
+P = \alpha A + \beta B + \gamma C
+\]</span> 考虑<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144360079">下图(来源见链接)</a>:</p>
+<p><img src="https://pic2.zhimg.com/80/v2-34f542500eb2b8b4679dc351609398ad_720w.jpg" alt="img" style="zoom: 50%;" /></p>
+<p>将<span class="math inline">\(\vec{AB},\vec{AC}\)</span>作为坐标系, 可以得到 <span class="math display">\[
+\begin{align}
+P =&amp; A + \beta(\vec{AB}) + \gamma(\vec{AC})\\
+=&amp; A + \beta(B - A) + \gamma(C - A)\\
+=&amp; (1 - \beta - \gamma)A + \beta B + \gamma C
+\end{align}
+\]</span> 这样便可以从坐标系的角度来解释重心坐标, 同时能得到 <span class="math display">\[
+\alpha = 1 - \beta - \gamma
+\]</span></p>
+<h4 id="求解解方程组">求解:解方程组</h4>
+<p>将点带入重心坐标的定义, 可以得到: <span class="math display">\[
+\left \{
+\begin{array}{cccc} 
+   x_p = (1 - \beta - \gamma) x_a + \beta x_b + \gamma x_c \\
+   y_p = (1 - \beta - \gamma) y_a + \beta y_b + \gamma y_c
+\end{array}
+\right.
+\]</span> 提取出<span class="math inline">\(\beta \space \gamma\)</span>: <span class="math display">\[
+\left \{
+\begin{array}{cccc}
+x_p - x_a = \beta(x_b - x_a) + \gamma (x_c - x_a)\\
+y_p - y_a = \beta(y_b - y_a) + \gamma (y_c - y_a)
+\end{array}
+\right.
+\]</span> 转化为矩阵形式: <span class="math display">\[
+\left[
+\begin{array}{}
+    x_b - x_a &amp; x_c - x_a\\
+    y_b - y_a &amp; y_c - y_a
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\beta \\
+\gamma
+\end{array}
+\right]
+=
+\left[
+\begin{array}{}
+x_p - x_a\\
+y_p - y_a
+\end{array}
+\right]
+\]</span> 这样便可求解出<span class="math inline">\(\beta \space \gamma\)</span>进而求出<span class="math inline">\(\alpha\)</span></p>
+<h4 id="求解向量叉积">求解:向量叉积</h4>
+<p>把坐标系的表达式变换一下: <span class="math display">\[
+\beta \vec{AB} + \gamma \vec{AC} + \vec{PA} = 0
+\]</span> 拆开后: <span class="math display">\[
+\left \{
+\begin{array}{cccc} 
+\beta\vec{AB}_x + \gamma \vec{AC}_x + \vec{PA}_x = 0\\
+\beta\vec{AB}_y + \gamma \vec{AC}_y + \vec{PA}_y = 0
+\end{array}
+\right.
+\]</span> 转化为矩阵形式: <span class="math display">\[
+\left[
+\begin{array}{}
+\beta &amp; \gamma &amp; 1
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\vec{AB}_x\\
+\vec{AC}_x\\
+\vec{PA}_x
+\end{array}
+\right] = 0\\
+\left[
+\begin{array}{}
+\beta &amp; \gamma &amp; 1
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\vec{AB}_y\\
+\vec{AC}_y\\
+\vec{PA}_y
+\end{array}
+\right] = 0\\
+\]</span> 从几何意义考虑, 这相当于<span class="math inline">\([\beta ,\gamma,1]\)</span>这个向量和后两个向量分别垂直. 因而我们求出后两个向量的叉积(假设结果为<span class="math inline">\([x,y,z]\)</span>), 则<span class="math inline">\([\frac{x}{z}, \frac{y}{z},1]\)</span>等于<span class="math inline">\([\beta,\gamma,1]\)</span>​.</p>
+<p>需要注意<span class="math inline">\(z = 0\)</span>的特殊情况, 根据叉乘的定义, 此时有<span class="math inline">\(\vec{AB}_x \cdot \vec{AC}_y - \vec{AB}_y \cdot \vec{AC}_x = 0\)</span>, 即<span class="math inline">\(\vec{AB} \cdot \vec{AC} = 0\)</span>, 说明<span class="math inline">\(ABC\)</span>三点共线. 这时返回一个任意的负重心坐标即可.</p>
+<h4 id="求解三角形面积">求解:三角形面积</h4>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502193646986.png" alt="image-20220502193646986" style="zoom:50%;" /></p>
+<p>如图, 假设三角形面积分别为<span class="math inline">\(S_A,S_B,S_C\)</span>. 则 <span class="math display">\[
+\alpha = \frac{S_A}{S_A+S_B+S_C}\\
+\beta = \frac{S_B}{S_A+S_B+S_C}\\
+\gamma = \frac{S_C}{S_A+S_B+S_C}
+\]</span></p>
+<h3 id="应用">应用</h3>
+<p>重心坐标有很多应用, 在这里我们能用到的结论是: 若<span class="math inline">\(\alpha,\beta,\gamma\)</span>均大于<span class="math inline">\(0\)</span>, 则点<span class="math inline">\(P\)</span>在三角形<span class="math inline">\(\Delta ABC\)</span>的内部; 若<span class="math inline">\(\alpha,\beta,\gamma\)</span>有一个等于<span class="math inline">\(0\)</span>, 则点<span class="math inline">\(P\)</span>在三角形的边上; 若<span class="math inline">\(\alpha,\beta,\gamma\)</span>有两个等于<span class="math inline">\(0\)</span>, 则点<span class="math inline">\(P\)</span>在三角形的顶点上.</p>
+<p>在绘图时, 用一个最小的矩形包围住三角形, 再枚举并判断每个点是否在三角形内部即可. 下面的代码采用了向量叉积法:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Vec3f <span class="title">Drawer::Barycentric</span><span class="params">(<span class="keyword">const</span> Vec2i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> Vec2i &amp; P)</span></span>&#123;</span><br><span class="line">    Vec3f result =  <span class="comment">//cal cross</span></span><br><span class="line">            <span class="built_in">Vec3f</span>(vertex[<span class="number">1</span>].x - vertex[<span class="number">0</span>].x,vertex[<span class="number">2</span>].x - vertex[<span class="number">0</span>].x,vertex[<span class="number">0</span>].x - P.x) ^</span><br><span class="line">            <span class="built_in">Vec3f</span>(vertex[<span class="number">1</span>].y - vertex[<span class="number">0</span>].y,vertex[<span class="number">2</span>].y - vertex[<span class="number">0</span>].y,vertex[<span class="number">0</span>].y - P.y);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">fabs</span>(result.z) &lt; <span class="number">1</span>)<span class="keyword">return</span> <span class="built_in">Vec3f</span>(<span class="number">-1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    result.x /= result.z,result.y /= result.z;</span><br><span class="line">    <span class="keyword">return</span> &#123;(<span class="keyword">float</span>)<span class="number">1.0</span> - result.x - result.y,result.x,result.y&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(<span class="keyword">const</span> Vec2i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> TGAColor &amp; color)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lx = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="number">0</span>),rx = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="built_in">get_width</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">int</span> ly = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y&#125;),<span class="number">0</span>),ry = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y,&#125;),<span class="built_in">get_height</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = lx;x &lt;= rx;x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y = ly;y &lt;= ry;y++)&#123;</span><br><span class="line">            Vec3f bary = <span class="built_in">Barycentric</span>(vertex,<span class="built_in">Vec2i</span>(x,y));</span><br><span class="line">            <span class="keyword">bool</span> out = (bary.x &lt; <span class="number">0</span> <span class="keyword">or</span> bary.y &lt; <span class="number">0</span> <span class="keyword">or</span> bary.z &lt; <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span>(!out)<span class="built_in">set</span>(x,y,color);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用<a target="_blank" rel="noopener" href="https://github.com/ssloy/tinyrenderer/tree/024ad4619b824f9179c86dc144145e2b8b155f52">tinyrender提供的模型</a>来测试一下我们的三角形绘制程序(先给每个面一个随机颜色):</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502215053686.png" alt="image-20220502215053686" style="zoom:25%;" /></p>
+<p>加上一点阴影并剔除背面的三角形:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220502215757516.png" alt="image-20220502215757516" style="zoom:25%;" /></p>
+<h1 id="step-3-z-buffer">Step 3 ：z-buffer</h1>
+<p>现在我们需要考虑剔除掉不能被我们看见的像素(Step 2通过Back-face culling剔除了一些面, 但是仍然不正确, 例如嘴部整个消失了). z-buffer的思想是维护一个像素点在待渲染平面上的一个距离buffer, 每次用离相机更近的点来剔除已经存在的点. z-buffer的实现非常简单, 下面主要讨论如何求每个点距相机的距离.</p>
+<p>首先考虑一维的情形. 假设我们要绘制从<span class="math inline">\(A(x_0,y_0)\)</span>到<span class="math inline">\(B(x_1,y_1)\)</span>的一条线段, 当前绘制到点<span class="math inline">\(P(x,y)\)</span>, 摄像机的视角与<span class="math inline">\(y\)</span>轴的反方向相同:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220503101100866.png" alt="image-20220503101100866" style="zoom:50%;" /></p>
+<p>在绘制时我们要通过<span class="math inline">\(x\)</span>坐标计算出<span class="math inline">\(y\)</span>来. 不难得到 <span class="math display">\[
+\frac{y - y_0}{y1 - y_0} = \frac{x - x_0}{x_1 - x_0}
+\]</span> 我们设<span class="math inline">\(\beta = \frac{x - x_0}{x_1 - x_0}\)</span>, 则有 <span class="math display">\[
+y = (1 - \beta)y_0 + \beta y_1
+\]</span> 是不是很熟悉? <span class="math inline">\(\alpha = 1 - \beta\)</span>和<span class="math inline">\(\beta\)</span>就是<span class="math inline">\(P\)</span>关于线段<span class="math inline">\(AB\)</span>的重心坐标(一维单纯形是线段). 我们将其推广到二维, 便能求出三角形每个点距离相机的距离<span class="math inline">\(z\)</span>: <span class="math display">\[
+z = \alpha z_0+ \beta z_1 + \gamma z_2
+\]</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Drawer::Triangle</span><span class="params">(<span class="keyword">const</span> Vec3i (&amp;vertex)[<span class="number">3</span>],<span class="keyword">const</span> TGAColor &amp; color,<span class="keyword">double</span> * zbuffer)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">-1e-6</span>;<span class="comment">//防止三角形接合处有未绘制的点</span></span><br><span class="line">    <span class="keyword">int</span> lx = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="number">0</span>),rx = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].x,vertex[<span class="number">1</span>].x,vertex[<span class="number">2</span>].x&#125;),<span class="built_in">get_width</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">int</span> ly = std::<span class="built_in">max</span>(std::<span class="built_in">min</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y&#125;),<span class="number">0</span>),ry = std::<span class="built_in">min</span>(std::<span class="built_in">max</span>(&#123;vertex[<span class="number">0</span>].y,vertex[<span class="number">1</span>].y,vertex[<span class="number">2</span>].y,&#125;),<span class="built_in">get_height</span>()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = lx;x &lt;= rx;x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y = ly;y &lt;= ry;y++)&#123;</span><br><span class="line">            Vec3f bary = <span class="built_in">Barycentric</span>(vertex,<span class="built_in">Vec2i</span>(x,y));</span><br><span class="line">            <span class="keyword">if</span>(bary.x &lt; eps <span class="keyword">or</span> bary.y &lt; eps <span class="keyword">or</span> bary.z &lt; eps)<span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> idx = x + y * <span class="built_in">get_width</span>();</span><br><span class="line">            <span class="keyword">double</span> z = bary.x * vertex[<span class="number">0</span>].z + bary.y * vertex[<span class="number">1</span>].z + bary.z * vertex[<span class="number">2</span>].z;</span><br><span class="line">            <span class="keyword">if</span>(zbuffer[idx] &lt; z)&#123;</span><br><span class="line">                zbuffer[idx] = z;</span><br><span class="line">                <span class="built_in">set</span>(x,y,color);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="E:\Github\hexo\source\_posts\demo-render.assets\image-20220503104500854.png" alt="image-20220503104500854" style="zoom:25%;" /></p>
+<h1 id="step-4-透视投影">Step 4: 透视投影</h1>
+<p>这一部分tinyrender讲得很含糊而且不直观, 所以我直接按照GAMES101的内容去实现.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag"># 图形学</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/render/" rel="tag"># render</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/18/solution-CF1642F/" rel="prev" title="[题解]CF1642F - Two Arrays">
+                  <i class="fa fa-chevron-left"></i> [题解]CF1642F - Two Arrays
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/29/GAMES104-homework-2/" rel="next" title="[GAMES104]-作业2">
+                  [GAMES104]-作业2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LinkinPony</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

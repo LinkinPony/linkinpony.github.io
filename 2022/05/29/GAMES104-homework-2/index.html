@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="因为一直要赶一堆莫名其妙的ddl和考试 task3没做 日后再补_(:з」∠)_ Color Grading与LUT 调色是增强画面表现力的一种很有效的手段. 本次作业我们处理的颜色在sRGB空间内, 红、绿、蓝三个颜色分别用一个\([0,1]\)的实数来表示. 将三原色分别用一个坐标轴来表示, 便构成了如图所示的色彩空间(图片来自defold.com):  在进行调色时, 我们对渲染结果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[GAMES104]-作业2">
+<meta property="og:url" content="http://linkinpony.github.io/2022/05/29/GAMES104-homework-2/index.html">
+<meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="因为一直要赶一堆莫名其妙的ddl和考试 task3没做 日后再补_(:з」∠)_ Color Grading与LUT 调色是增强画面表现力的一种很有效的手段. 本次作业我们处理的颜色在sRGB空间内, 红、绿、蓝三个颜色分别用一个\([0,1]\)的实数来表示. 将三原色分别用一个坐标轴来表示, 便构成了如图所示的色彩空间(图片来自defold.com):  在进行调色时, 我们对渲染结果">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://defold.com/tutorials/images/grading/color_cube.png">
+<meta property="og:image" content="e:/Github/Pilot_Homework2/engine/asset/texture/lut/color_grading_LUT.jpg">
+<meta property="og:image" content="e:/Github/hexo/source_posts/GAMES104-homework-2.assets/image-20220529161702147.png">
+<meta property="og:image" content="e:/Github/hexo/source_posts/GAMES104-homework-2.assets/image-20220529162809564.png">
+<meta property="og:image" content="e:/Github/Pilot_Homework2/engine/asset/texture/lut/LUT32_Invert.png">
+<meta property="og:image" content="e:/Github/hexo/source_posts/GAMES104-homework-2.assets/image-20220529165605604.png">
+<meta property="og:image" content="e:/Github/Pilot_Homework2/engine/asset/texture/lut/LUT32_qwq.png">
+<meta property="og:image" content="e:/Github/hexo/source_posts/GAMES104-homework-2.assets/image-20220529165831153.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES104-homework-2.assets/image-20220529165922432.png">
+<meta property="og:image" content="e:/Github/hexo/source/_posts/GAMES104-homework-2.assets/image-20220529165936292.png">
+<meta property="article:published_time" content="2022-05-28T23:50:50.000Z">
+<meta property="article:modified_time" content="2022-05-29T09:05:30.353Z">
+<meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="图形学">
+<meta property="article:tag" content="游戏引擎">
+<meta property="article:tag" content="GAMES104">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://defold.com/tutorials/images/grading/color_cube.png">
+
+
+<link rel="canonical" href="http://linkinpony.github.io/2022/05/29/GAMES104-homework-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2022/05/29/GAMES104-homework-2/","path":"2022/05/29/GAMES104-homework-2/","title":"[GAMES104]-作业2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[GAMES104]-作业2 | I always love dashie</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">I always love dashie</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#color-grading%E4%B8%8Elut"><span class="nav-number">1.</span> <span class="nav-text">Color Grading与LUT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99shader"><span class="nav-number">2.</span> <span class="nav-text">编写Shader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89lut"><span class="nav-number">3.</span> <span class="nav-text">效果展示与自定义LUT</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LinkinPony</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://acker.fun/" title="https:&#x2F;&#x2F;acker.fun&#x2F;" rel="noopener" target="_blank">Acker</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kmguan-528.github.io/" title="https:&#x2F;&#x2F;kmguan-528.github.io&#x2F;" rel="noopener" target="_blank">KMGuan</a>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2022/05/29/GAMES104-homework-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [GAMES104]-作业2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-29 07:50:50 / Modified: 17:05:30" itemprop="dateCreated datePublished" datetime="2022-05-29T07:50:50+08:00">2022-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GAMES104/" itemprop="url" rel="index"><span itemprop="name">GAMES104</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>因为一直要赶一堆莫名其妙的ddl和考试 task3没做 日后再补_(:з」∠)_</p>
+<h2 id="color-grading与lut">Color Grading与LUT</h2>
+<p>调色是增强画面表现力的一种很有效的手段. 本次作业我们处理的颜色在sRGB空间内, 红、绿、蓝三个颜色分别用一个<span class="math inline">\([0,1]\)</span>的实数来表示. 将三原色分别用一个坐标轴来表示, 便构成了如图所示的色彩空间(图片来自<a target="_blank" rel="noopener" href="https://defold.com/tutorials/grading/">defold.com</a>):</p>
+<p><img src="https://defold.com/tutorials/images/grading/color_cube.png" alt="color cube" style="zoom:33%;" /></p>
+<p>在进行调色时, 我们对渲染结果的每个像素进行处理, 根据像素原本的RGB值将其映射到一个新的色彩空间. 这种映射一般采用LUT(look up table)图来进行. LUT有1D和3D之分, Pilot Engine使用的是3D的LUT, 它看上去像这个样子:</p>
+<p><img src="E:\Github\Pilot_Homework2\engine\asset\texture\lut\color_grading_LUT.jpg" /></p>
+<p>这张图片的长为<span class="math inline">\(1024\)</span>个像素, 宽为<span class="math inline">\(32\)</span>个像素, 可以看出它由<span class="math inline">\(32\)</span>个小色块组成. 将这些小方块自上而下拼接在一起, 便组成了一个<span class="math inline">\(32 \times 32 \times 32\)</span>的色彩空间. 我们需要做的便是根据每个像素的RGB分量找到它在这张图上对应的像素. 具体来说, 原像素的<span class="math inline">\(G\)</span>分量指示了新像素在LUT上的纵坐标, <span class="math inline">\(B\)</span>分量指示了新像素所属的色块编号, <span class="math inline">\(R\)</span>分量指示了新像素在某个色块内部的横坐标.</p>
+<h2 id="编写shader">编写Shader</h2>
+<p>我们需要编写的Shader文件是<code>color_grading.frag</code>, 可以在<code>\engine\shader\glsl\</code>中找到.</p>
+<p>这个shader已经提供了原像素的颜色<code>in_color</code>和LUT的2D采样器<code>color_grading_lut_texture_sampler</code>. 我们需要根据原像素的颜色计算出调色后的颜色并将其赋值给<code>out_color</code>作为输出.</p>
+<p>在计算前, 需要获取像素的颜色值:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">highp</span> <span class="type">vec4</span> color = subpassLoad(in_color).rgba;</span><br></pre></td></tr></table></figure>
+<p>颜色值是一个四维向量, 四个维度分别代表R、G、B和alpha, 均为<span class="math inline">\([0,1]\)</span>的实数.</p>
+<p>在计算出坐标后, 需要从LUT上获取对应的颜色:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">highp</span> <span class="type">vec4</span> color_sampled = <span class="built_in">texture</span>(color_grading_lut_texture_sampler, uv);</span><br></pre></td></tr></table></figure>
+<p>其中<code>color_grading_lut_texture_sampler</code>已经提供, <code>uv</code>是一个二维向量, <span class="math inline">\(u\)</span>代表横坐标, <span class="math inline">\(v\)</span>代表纵坐标, 坐标原点在图片的左上角, <span class="math inline">\(x\)</span>轴方向向右, <span class="math inline">\(y\)</span>轴方向向下. <span class="math inline">\(u,v\)</span>也是<span class="math inline">\([0,1]\)</span>上的实数.</p>
+<p>我们还需要获取LUT的长宽:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">highp</span> <span class="type">ivec2</span> lut_tex_size = <span class="built_in">textureSize</span>(color_grading_lut_texture_sampler, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>有了如上函数, 不难计算出每个像素在LUT上的对应位置. 设<span class="math inline">\(C\)</span>是LUT的宽, <span class="math inline">\(R,G,B\)</span>分别为像素的原颜色分量, 则有: <span class="math display">\[
+u = \frac{\lfloor B \cdot C \rfloor + R}{C}\\
+v = G
+\]</span> 为了提高准确度和防止越界, 可以在LUT的边界上各留出0.5个像素, 将RGB值映射到<span class="math inline">\(C-1\)</span>个像素中去. 具体细节见代码:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 310 es</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#extension GL_GOOGLE_include_directive : enable</span></span><br><span class="line"><span class="comment">//#extension GL_KHR_vulkan_glsl : enable</span></span><br><span class="line"><span class="meta">#include &quot;constants.h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span>(input_attachment_index = <span class="number">0</span>, set = <span class="number">0</span>, <span class="keyword">binding</span> = <span class="number">0</span>) <span class="keyword">uniform</span> <span class="keyword">highp</span> subpassInput in_color;</span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span>(set = <span class="number">0</span>, <span class="keyword">binding</span> = <span class="number">1</span>) <span class="keyword">uniform</span> <span class="type">sampler2D</span> color_grading_lut_texture_sampler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span>(<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">out</span> <span class="keyword">highp</span> <span class="type">vec4</span> out_color;</span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">highp</span> <span class="type">ivec2</span> lut_tex_size = <span class="built_in">textureSize</span>(color_grading_lut_texture_sampler, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> COLORS       = <span class="type">float</span>(lut_tex_size.y);<span class="comment">//LUT的每一维的颜色数量</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">vec4</span>  color        = subpassLoad(in_color).rgba;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> max_color = COLORS - <span class="number">1.0</span>;<span class="comment">//允许使用的最大元素</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> half_pix_u = <span class="number">0.5</span> / <span class="type">float</span>(lut_tex_size.x);<span class="comment">//预留出半个像素</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> half_pix_v = <span class="number">0.5</span> / <span class="type">float</span>(lut_tex_size.y);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> part = <span class="built_in">floor</span>(color.b * max_color);<span class="comment">//根据B计算出该像素所属的色块编号</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> threshold = max_color / COLORS;<span class="comment">//现在只有COLORS-1个颜色可用</span></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> u = (half_pix_u + threshold * color.r + part) / COLORS;</span><br><span class="line">    <span class="keyword">highp</span> <span class="type">float</span> v = (half_pix_v + threshold * color.g);</span><br><span class="line">    <span class="comment">//预留出0.5像素的边界.例如假设COLORS = 32,在G = 0时v = 0.5/32,G = 1时v = 31.5/32</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">highp</span> <span class="type">vec2</span> uv = <span class="type">vec2</span>(u,v);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">highp</span> <span class="type">vec4</span> color_sampled = <span class="built_in">texture</span>(color_grading_lut_texture_sampler, uv);</span><br><span class="line"></span><br><span class="line">    out_color =  color_sampled;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="效果展示与自定义lut">效果展示与自定义LUT</h2>
+<p>在<code>\engine\asset\texture\lut</code>中存放着不同的LUT. 通过修改<code>\engine\asset\global\rendering.global.json</code>中<code>"color_grading_map"</code>项可以替换不同的LUT.</p>
+<p>在不进行调色时的效果是这样的:</p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529161702147.png" alt="image-20220529161702147" /><figcaption aria-hidden="true">image-20220529161702147</figcaption>
+</figure>
+<p>调色后的效果:</p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529162809564.png" alt="image-20220529162809564" /><figcaption aria-hidden="true">image-20220529162809564</figcaption>
+</figure>
+<p>要创建自定义的LUT, 只需在GIMP或者PhotoShop等工具编辑原始LUT图像(可以附一张截图方便观察调色效果).</p>
+<p>负片效果的LUT:</p>
+<p><img src="E:\Github\Pilot_Homework2\engine\asset\texture\lut\LUT32_Invert.png" /></p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529165605604.png" alt="image-20220529165605604" /><figcaption aria-hidden="true">image-20220529165605604</figcaption>
+</figure>
+<p>偏冷色调(好像太绿了):</p>
+<p><img src="E:\Github\Pilot_Homework2\engine\asset\texture\lut\LUT32_qwq.png" /></p>
+<figure>
+<img src="E:\Github\hexo\source_posts\GAMES104-homework-2.assets\image-20220529165831153.png" alt="image-20220529165831153" /><figcaption aria-hidden="true">image-20220529165831153</figcaption>
+</figure>
+<p>PS:调色后会出现看上去很奇怪的色块, 目前还不知道如何解决</p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES104-homework-2.assets\image-20220529165922432.png" alt="image-20220529165922432" style="zoom:33%;" /></p>
+<p><img src="E:\Github\hexo\source\_posts\GAMES104-homework-2.assets\image-20220529165936292.png" alt="image-20220529165936292" style="zoom:33%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag"># 图形学</a>
+              <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/" rel="tag"># 游戏引擎</a>
+              <a href="/tags/GAMES104/" rel="tag"># GAMES104</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/30/demo-render/" rel="prev" title="[笔记]从0开始搓一个简单的render">
+                  <i class="fa fa-chevron-left"></i> [笔记]从0开始搓一个简单的render
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LinkinPony</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
