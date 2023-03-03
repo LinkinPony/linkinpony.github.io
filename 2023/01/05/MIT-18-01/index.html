@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"linkinpony.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="常用公式 三角函数 \[ \sin^2x + \cos ^ 2 x &#x3D; 1\\ \] 求导 三角函数求导 \[ \sin&#39;x &#x3D; \cos x\\ \cos&#39;x &#x3D; - \sin x\\ \tan&#39;x &#x3D; \frac{1}{\cos^2x} &#x3D; \sec^2x\\ \arctan&#39; x &#x3D; \frac{1}{1+x^2}\\ \] 指数函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT 18.01 单变量微积分">
+<meta property="og:url" content="http://linkinpony.github.io/2023/01/05/MIT-18-01/index.html">
+<meta property="og:site_name" content="I always love dashie">
+<meta property="og:description" content="常用公式 三角函数 \[ \sin^2x + \cos ^ 2 x &#x3D; 1\\ \] 求导 三角函数求导 \[ \sin&#39;x &#x3D; \cos x\\ \cos&#39;x &#x3D; - \sin x\\ \tan&#39;x &#x3D; \frac{1}{\cos^2x} &#x3D; \sec^2x\\ \arctan&#39; x &#x3D; \frac{1}{1+x^2}\\ \] 指数函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230105165932729.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106095142833.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106102935887.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106105337764.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106110147320.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106110459943.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106110512348.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106111047720.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106142515063.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106143147259.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106142937484.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106143422550.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106144002234.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106144101961.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106150417303.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106153822818.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106160612420.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106160652701.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230106154306445.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230111103645235.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230111103618880.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230111105348577.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230111111834201.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115092644053.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115092735531.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115093300221.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115095829432.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115095838093.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115100903420.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115104051068.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115101543407.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115103931577.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115103954784.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115104005007.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230115104013455.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230118095423689.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230118095433488.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230118101022744.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230118101033927.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230118101203685.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230130153834142.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230130154812720.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230130162129715.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230130162139973.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230201094512497.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230130163838707.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230201094623798.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230201100855010.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230201101459064.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230201101611151.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230201101621823.png">
+<meta property="og:image" content="http://linkinpony.github.io/.io//image-20230201101928665.png">
+<meta property="article:published_time" content="2023-01-05T08:48:45.000Z">
+<meta property="article:modified_time" content="2023-02-01T02:27:59.710Z">
+<meta property="article:author" content="LinkinPony">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="微积分">
+<meta property="article:tag" content="MIT 18.01">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linkinpony.github.io/.io//image-20230105165932729.png">
+
+
+<link rel="canonical" href="http://linkinpony.github.io/2023/01/05/MIT-18-01/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://linkinpony.github.io/2023/01/05/MIT-18-01/","path":"2023/01/05/MIT-18-01/","title":"MIT 18.01 单变量微积分"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MIT 18.01 单变量微积分 | I always love dashie</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">I always love dashie</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%85%AC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">常用公式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">三角函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E5%AF%BC"><span class="nav-number">1.2.</span> <span class="nav-text">求导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC"><span class="nav-number">1.2.1.</span> <span class="nav-text">三角函数求导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">指数函数和对数函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E6%95%B0derivative"><span class="nav-number">2.</span> <span class="nav-text">导数（derivative)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture1-%E5%AF%BC%E6%95%B0%E7%9A%84%E5%87%A0%E4%BD%95%E8%A7%A3%E9%87%8A"><span class="nav-number">2.1.</span> <span class="nav-text">Lecture1: 导数的几何解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%AC%A6%E5%8F%B7"><span class="nav-number">2.1.1.</span> <span class="nav-text">一些符号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture2-%E6%9E%81%E9%99%90-%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90"><span class="nav-number">2.2.</span> <span class="nav-text">Lecture2: 极限, 连续性和三角函数的极限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#limits-and-continuity"><span class="nav-number">2.2.1.</span> <span class="nav-text">Limits and Continuity</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A6%E5%8F%B3%E6%9E%81%E9%99%90left-and-right-limt"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">左右极限(Left and Right Limt)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E6%80%A7continuity"><span class="nav-number">2.2.2.</span> <span class="nav-text">连续性(Continuity)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E6%95%B0%E7%9A%84%E5%9B%BE%E5%83%8Fpicturing-the-derivative"><span class="nav-number">2.2.3.</span> <span class="nav-text">导数的图像(Picturing the derivative)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%86-%E5%8F%AF%E5%AF%BC%E5%BF%85%E8%BF%9E%E7%BB%ADtheorem-differentiable-implies-continuous"><span class="nav-number">2.2.4.</span> <span class="nav-text">定理: 可导必连续(Theorem: Differentiable Implies Continuous)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-3-%E5%AF%BC%E6%95%B0%E7%9A%84%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E5%8F%8A%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.</span> <span class="nav-text">Lecture 3: 导数的四则运算及三角函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%AF%BC%E5%85%AC%E5%BC%8Fderivative-formulas"><span class="nav-number">2.3.1.</span> <span class="nav-text">求导公式(Derivative Formulas)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%B1%82%E5%AF%BC%E5%85%AC%E5%BC%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">特殊求导公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sin-cos"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">sin, cos</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%B1%82%E5%AF%BC%E5%85%AC%E5%BC%8F"><span class="nav-number">2.3.3.</span> <span class="nav-text">一般求导公式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-4%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%E5%92%8C%E9%AB%98%E9%98%B6%E5%AF%BC%E6%95%B0"><span class="nav-number">2.4.</span> <span class="nav-text">Lecture 4:链式法则和高阶导数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99chain-rule"><span class="nav-number">2.4.1.</span> <span class="nav-text">链式法则(Chain Rule)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E9%98%B6%E5%AF%BC%E6%95%B0higher-derivatives"><span class="nav-number">2.4.2.</span> <span class="nav-text">高阶导数(Higher Derivatives)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-5-%E9%9A%90%E5%87%BD%E6%95%B0%E5%BE%AE%E5%88%86%E5%8F%8A%E9%80%86%E5%87%BD%E6%95%B0%E5%AF%BC%E6%95%B0"><span class="nav-number">2.5.</span> <span class="nav-text">Lecture 5 隐函数微分及逆函数导数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E5%87%BD%E6%95%B0%E5%BE%AE%E5%88%86implicit-differentiation"><span class="nav-number">2.5.1.</span> <span class="nav-text">隐函数微分(Implicit Differentiation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%87%BD%E6%95%B0inverse-function"><span class="nav-number">2.5.2.</span> <span class="nav-text">反函数(Inverse Function)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-6-%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E4%B8%8E%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0%E5%AF%B9%E6%95%B0%E5%BE%AE%E5%88%86%E5%8F%8C%E6%9B%B2%E7%BA%BF%E5%87%BD%E6%95%B0"><span class="nav-number">2.6.</span> <span class="nav-text">Lecture 6 指数函数与对数函数，对数微分，双曲线函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E8%87%AA%E7%84%B6%E5%AF%B9%E6%95%B0"><span class="nav-number">2.6.1.</span> <span class="nav-text">指数函数，对数函数和自然对数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-7-%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%80%83%E8%AF%95%E5%A4%8D%E4%B9%A0"><span class="nav-number">2.7.</span> <span class="nav-text">Lecture 7 连续性和第一次考试复习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E6%95%B0%E4%BC%AA%E8%A3%85%E7%9A%84%E6%9E%81%E9%99%90"><span class="nav-number">2.7.1.</span> <span class="nav-text">导数伪装的极限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leture-9-%E7%BA%BF%E6%80%A7%E5%92%8C%E4%BA%8C%E9%98%B6%E8%BF%91%E4%BC%BC"><span class="nav-number">2.8.</span> <span class="nav-text">Leture 9 线性和二阶近似</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%BF%91%E4%BC%BClinear-approximation"><span class="nav-number">2.8.1.</span> <span class="nav-text">线性近似(Linear Approximation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%98%B6%E8%BF%91%E4%BC%BCquadratic-approximations"><span class="nav-number">2.8.2.</span> <span class="nav-text">二阶近似(Quadratic Approximations)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-10-%E6%9B%B2%E7%BA%BF%E6%9E%84%E5%9B%BE"><span class="nav-number">2.9.</span> <span class="nav-text">Lecture 10: 曲线构图</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LinkinPony</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LinkinPony" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/LinkinPony" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;LinkinPony" rel="noopener" target="_blank"><i class="code fa-fw"></i>CodeForces</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://acker.fun/" title="https:&#x2F;&#x2F;acker.fun&#x2F;" rel="noopener" target="_blank">Acker</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kmguan-528.github.io/" title="https:&#x2F;&#x2F;kmguan-528.github.io&#x2F;" rel="noopener" target="_blank">KMGuan</a>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://linkinpony.github.io/2023/01/05/MIT-18-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LinkinPony">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I always love dashie">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MIT 18.01 单变量微积分
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-05 16:48:45" itemprop="dateCreated datePublished" datetime="2023-01-05T16:48:45+08:00">2023-01-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-01 10:27:59" itemprop="dateModified" datetime="2023-02-01T10:27:59+08:00">2023-02-01</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="常用公式">常用公式</h1>
+<h2 id="三角函数">三角函数</h2>
+<p><span class="math display">\[
+\sin^2x + \cos ^ 2 x = 1\\
+\]</span></p>
+<h2 id="求导">求导</h2>
+<h3 id="三角函数求导">三角函数求导</h3>
+<p><span class="math display">\[
+\sin&#39;x = \cos x\\
+\cos&#39;x = - \sin x\\
+\tan&#39;x = \frac{1}{\cos^2x} = \sec^2x\\
+\arctan&#39; x = \frac{1}{1+x^2}\\
+\]</span></p>
+<h3 id="指数函数和对数函数">指数函数和对数函数</h3>
+<p><span class="math display">\[
+\frac{\text d}{\text d x}\ln x = \frac{1}{x}\\
+\frac{\text d}{\text d x}e^x = e^x\\
+\frac{\text d}{\text dx}a^x = \ln a \cdot a^x\\
+\frac{\text d}{\text d x} \ln u = \frac{1}{u}\frac{\text d u}{\text d x}
+\]</span></p>
+<h1 id="导数derivative">导数（derivative)</h1>
+<h2 id="lecture1-导数的几何解释">Lecture1: 导数的几何解释</h2>
+<p><img src="/.io//image-20230105165932729.png" alt="image-20230105165932729" style="zoom:67%;"></p>
+<p>如图, <span class="math inline">\(P\)</span>点的导数便是过<span class="math inline">\(P\)</span>点的切线(tangent line)的斜率, 记作<span class="math inline">\(f&#39;(P)\)</span>.</p>
+<p>什么样子的线是切线? 我们先看由点<span class="math inline">\(PQ\)</span>构成的割线(secant line). 当<span class="math inline">\(PQ\)</span>两点的距离趋于<span class="math inline">\(0\)</span>时, 割线与切线便无限接近.</p>
+<p><img src="/.io//image-20230106095142833.png" alt="image-20230106095142833" style="zoom:67%;"></p>
+<p>如图. 可得 <span class="math display">\[
+f&#39;(x) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
+\]</span></p>
+<h3 id="一些符号">一些符号</h3>
+<p><img src="/.io//image-20230106102935887.png" alt="image-20230106102935887" style="zoom:67%;"></p>
+<p>导数(牛顿记法): <span class="math inline">\(f&#39;\)</span></p>
+<p>导数(莱布尼兹记法): <span class="math inline">\(\frac{\text df}{\text dx},\frac{\text dy}{\text d x},\frac{\text d}{\text dx}f,\frac{\text d}{\text dx}y\)</span></p>
+<p>一个有用的公式(推导见手写笔记): <span class="math display">\[
+\frac{\text d}{\text d x}x^n = n \cdot x^{n-1}
+\]</span></p>
+<h2 id="lecture2-极限-连续性和三角函数的极限">Lecture2: 极限, 连续性和三角函数的极限</h2>
+<p><img src="/.io//image-20230106105337764.png" alt="image-20230106105337764" style="zoom:67%;"></p>
+<p>我们用<span class="math inline">\(\frac{\Delta y}{\Delta x}\)</span>来计量某个函数在一段时间内的平均变化率. 当<span class="math inline">\(\Delta x \to 0\)</span>时, 这便变成了瞬时变化率.</p>
+<p><img src="/.io//image-20230106110147320.png" alt="image-20230106110147320" style="zoom:50%;"></p>
+<p><img src="/.io//image-20230106110459943.png" alt="image-20230106110459943" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230106110512348.png" alt="image-20230106110512348" style="zoom:50%;"></p>
+<h3 id="limits-and-continuity">Limits and Continuity</h3>
+<p>简单的极限可以直接带入运算:</p>
+<p><img src="/.io//image-20230106111047720.png" alt="image-20230106111047720" style="zoom: 67%;"></p>
+<p>但是对于 <span class="math display">\[
+\lim_{\Delta x \to 0}\frac{\Delta f}{\Delta x}
+\]</span> 它不是一个简单极限. 因为我们不能将<span class="math inline">\(\Delta x = 0\)</span>代入运算, 这样永远会得到<span class="math inline">\(\frac{0}{0}\)</span>. <strong>注意</strong>: <span class="math display">\[
+\lim_{x \to x_0}
+\]</span> 暗示了<span class="math inline">\(x \neq x_0\)</span>.</p>
+<h4 id="左右极限left-and-right-limt">左右极限(Left and Right Limt)</h4>
+<p>我们用以下两个记号来表示左极限和右极限: <span class="math display">\[
+\lim_{x\to x_0^-} (左极限, 此时x &lt; x_0)\\
+\lim_{x\to x_0^+} (右极限, 此时x &gt; x_0)\\
+\]</span></p>
+<h3 id="连续性continuity">连续性(Continuity)</h3>
+<p>我们称<span class="math inline">\(f(x)\)</span>在<span class="math inline">\(x_0\)</span>连续, 当且仅当 <span class="math display">\[
+\lim_{x \to x_0}f(x) = f(x_0)
+\]</span> 这意味着:</p>
+<ol type="1">
+<li><span class="math inline">\(f(x)\)</span>在点<span class="math inline">\(x_0\)</span>的极限必须存在, 且左右极限相等</li>
+<li><span class="math inline">\(f(x_0)\)</span>是有定义的</li>
+<li><span class="math inline">\(\lim_{x\to x_0}f(x)\)</span>与<span class="math inline">\(f(x_0)\)</span>相等</li>
+</ol>
+<p><img src="/.io//image-20230106142515063.png" alt="image-20230106142515063" style="zoom:50%;"></p>
+<p>如图, <span class="math inline">\(\lim_{x \to 0^+}f(x) = 1\)</span>, 但是<span class="math inline">\(f(0) = 0\)</span>. 因此该函数在点<span class="math inline">\(0\)</span>不连续.</p>
+<p>以下是不连续的几种情况:</p>
+<ol type="1">
+<li>Removable Discontinuity</li>
+</ol>
+<p><img src="/.io//image-20230106143147259.png" alt="image-20230106143147259" style="zoom:50%;"></p>
+<p>该点的左右极限存在且相等, 但与该点的函数值不等(或该点的函数值未定义)</p>
+<ol start="2" type="1">
+<li>Jump Discontinuity</li>
+</ol>
+<p>​ <img src="/.io//image-20230106142937484.png" alt="image-20230106142937484" style="zoom:50%;"></p>
+<p>左右极限均存在, 但不相等.</p>
+<ol start="3" type="1">
+<li>Infinite Discontinuity</li>
+</ol>
+<p><img src="/.io//image-20230106143422550.png" alt="image-20230106143422550" style="zoom:50%;"></p>
+<p><span class="math inline">\(x = 0\)</span>时, 左极限为负无穷, 右极限为正无穷.</p>
+<ol start="4" type="1">
+<li>Other (ugly) discontinuities</li>
+</ol>
+<p><img src="/.io//image-20230106144002234.png" alt="image-20230106144002234" style="zoom:50%;"></p>
+<h3 id="导数的图像picturing-the-derivative">导数的图像(Picturing the derivative)</h3>
+<p><img src="/.io//image-20230106144101961.png" alt="image-20230106144101961" style="zoom:50%;"></p>
+<p>注意导数的图像和原函数的图像没有什么相关性. 而且对一个奇函数求导, 它的导数一定是一个偶函数.</p>
+<h3 id="定理-可导必连续theorem-differentiable-implies-continuous">定理: 可导必连续(Theorem: Differentiable Implies Continuous)</h3>
+<p><span class="math display">\[
+如果f在x_0处可导, 那么f必定在x_0处连续.
+\]</span></p>
+<p><img src="/.io//image-20230106150417303.png" alt="image-20230106150417303" style="zoom: 80%;"></p>
+<h2 id="lecture-3-导数的四则运算及三角函数">Lecture 3: 导数的四则运算及三角函数</h2>
+<h3 id="求导公式derivative-formulas">求导公式(Derivative Formulas)</h3>
+<p><img src="/.io//image-20230106153822818.png" alt="image-20230106153822818" style="zoom:67%;"></p>
+<h3 id="特殊求导公式">特殊求导公式</h3>
+<p><span class="math display">\[
+\lim_{\theta \to 0}\frac{\sin\theta}{\theta} = 1\\
+\lim_{\theta\to0}\frac{1 - cos\theta}{\theta} = 0
+\]</span></p>
+<p>证明:</p>
+<p><img src="/.io//image-20230106160612420.png" alt="image-20230106160612420" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230106160652701.png" alt="image-20230106160652701" style="zoom:67%;"></p>
+<h4 id="sin-cos">sin, cos</h4>
+<p><span class="math display">\[
+\frac{\text d}{\text d x}\sin x = \cos x\\
+\frac{\text d}{\text d x}\cos x = -\sin x\\
+\]</span></p>
+<p>推导过程:</p>
+<p><img src="/.io//image-20230106154306445.png" alt="image-20230106154306445" style="zoom:67%;"></p>
+<h3 id="一般求导公式">一般求导公式</h3>
+<ul>
+<li><p>加法法则 <span class="math display">\[
+  (u+v)&#39; = u&#39; + v&#39;
+  \]</span></p></li>
+<li><p>乘积法则</p></li>
+</ul>
+<p><span class="math display">\[
+(uv)&#39; = u&#39;v + uv&#39;
+\]</span></p>
+<ul>
+<li><p>除法法则(quotient rule) <span class="math display">\[
+  (\frac{u}{v})&#39; = \frac{u&#39;v - uv&#39;}{v^2}(v \neq 0)
+  \]</span></p></li>
+<li><p>证明: 加法法则</p>
+<p><img src="/.io//image-20230111103645235.png" alt="image-20230111103645235" style="zoom:67%;"></p></li>
+<li><p>证明: 乘法法则</p></li>
+</ul>
+<p><img src="/.io//image-20230111103618880.png" alt="image-20230111103618880" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230111105348577.png" alt="image-20230111105348577" style="zoom:67%;"></p>
+<p>几何上的理解: <span class="math inline">\((uv)&#39; \cdot \Delta x = (u + \Delta u)(v + \Delta v) - uv\)</span>, 即图中粉色, 白色, 黄色部分之和. 又因为<span class="math inline">\(\Delta u \cdot \Delta v \approx 0\)</span>, 所以有 <span class="math display">\[
+(uv)&#39; \approx \frac{u \Delta v + v \Delta u}{\Delta x} \\
+= uv’ +u&#39;v
+\]</span></p>
+<ul>
+<li>证明: 除法法则</li>
+</ul>
+<p><img src="/.io//image-20230111111834201.png" alt="image-20230111111834201" style="zoom:67%;"></p>
+<h2 id="lecture-4链式法则和高阶导数">Lecture 4:链式法则和高阶导数</h2>
+<h3 id="链式法则chain-rule">链式法则(Chain Rule)</h3>
+<p><span class="math display">\[
+\frac{\text{d}y}{\text{d}t} = \frac{\text{d} y}{\text{d}x} \cdot \frac{\text{d}x}{\text{d}t}
+\]</span></p>
+<p><img src="/.io//image-20230115092644053.png" alt="image-20230115092644053" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230115092735531.png" alt="image-20230115092735531" style="zoom: 67%;"></p>
+<h3 id="高阶导数higher-derivatives">高阶导数(Higher Derivatives)</h3>
+<p><img src="/.io//image-20230115093300221.png" alt="image-20230115093300221" style="zoom:67%;"></p>
+<h2 id="lecture-5-隐函数微分及逆函数导数">Lecture 5 隐函数微分及逆函数导数</h2>
+<h3 id="隐函数微分implicit-differentiation">隐函数微分(Implicit Differentiation)</h3>
+<p>有些函数(例如<span class="math inline">\(x^2 + y^2 = 1\)</span>)不具有明显的<span class="math inline">\(y = f(x)\)</span>形式, 但是能通过变形得到(本例可得<span class="math inline">\(y = \sqrt{1 - x^2}\)</span>). 这样的函数称为隐函数. 对隐函数求导, 可在方程两边同时对<span class="math inline">\(x\)</span>求导, 得到一个包含<span class="math inline">\(\frac{\text{d}y}{\text{d}x}\)</span>的式子, 再求解<span class="math inline">\(\frac{\text{d}y}{\text{d}x}\)</span>即可.</p>
+<p><img src="/.io//image-20230115095829432.png" alt="image-20230115095829432" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230115095838093.png" alt="image-20230115095838093" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230115100903420.png" alt="image-20230115100903420" style="zoom:67%;"></p>
+<h3 id="反函数inverse-function">反函数(Inverse Function)</h3>
+<p>若<span class="math inline">\(y = f(x),g(x) = y\)</span>, 则<span class="math inline">\(g\)</span>是<span class="math inline">\(f\)</span>的反函数, 记作<span class="math inline">\(f^{-1}\)</span>. 函数和它的反函数关于<span class="math inline">\(y = x\)</span>对称.</p>
+<p><img src="/.io//image-20230115104051068.png" alt="image-20230115104051068" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230115101543407.png" alt="image-20230115101543407" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230115103931577.png" alt="image-20230115103931577" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230115103954784.png" alt="image-20230115103954784" style="zoom:50%;"></p>
+<p><img src="/.io//image-20230115104005007.png" alt="image-20230115104005007" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230115104013455.png" alt="image-20230115104013455" style="zoom:67%;"></p>
+<h2 id="lecture-6-指数函数与对数函数对数微分双曲线函数">Lecture 6 指数函数与对数函数，对数微分，双曲线函数</h2>
+<h3 id="指数函数对数函数和自然对数">指数函数，对数函数和自然对数</h3>
+<p>见课程pdf和手写笔记</p>
+<p>### 对数微分(Logarithmic Differentiation)</p>
+<p><img src="/.io//image-20230118095423689.png" alt="image-20230118095423689" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230118095433488.png" alt="image-20230118095433488" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230118101022744.png" alt="image-20230118101022744" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230118101033927.png" alt="image-20230118101033927" style="zoom:67%;"></p>
+<figure>
+<img src="/.io//image-20230118101203685.png" alt="image-20230118101203685"><figcaption aria-hidden="true">image-20230118101203685</figcaption>
+</figure>
+<h2 id="lecture-7-连续性和第一次考试复习">Lecture 7 连续性和第一次考试复习</h2>
+<h3 id="导数伪装的极限">导数伪装的极限</h3>
+<p>(普林斯顿微积分读本修订版，人民邮电出版社，ISBN: 978-7-115-43559-0, P101)</p>
+<h2 id="leture-9-线性和二阶近似">Leture 9 线性和二阶近似</h2>
+<h3 id="线性近似linear-approximation">线性近似(Linear Approximation)</h3>
+<p><span class="math display">\[
+f(x) \approx f(x_0) + f&#39;(x_0)(x - x_0)
+\]</span> <img src="/.io//image-20230130153834142.png" alt="image-20230130153834142" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230130154812720.png" alt="image-20230130154812720" style="zoom: 67%;"></p>
+<p>注意上表近似符号左边和右边的函数. 如果<span class="math inline">\(f(x_0) + f&#39;(x)(x - x_0)\)</span>比<span class="math inline">\(f(x)\)</span>更容易计算, 便可以用线性近似来加速计算.</p>
+<p><img src="/.io//image-20230130162129715.png" alt="image-20230130162129715" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230130162139973.png" alt="image-20230130162139973" style="zoom:67%;"></p>
+<h3 id="二阶近似quadratic-approximations">二阶近似(Quadratic Approximations)</h3>
+<p>一阶(线性)近似可能精度不够, 这时便需要二阶或更高阶的近似. <span class="math display">\[
+f(x) \approx f(x_0) + f&#39;(x_0)(x - x_0) + \frac{f&#39;&#39;(x_0)}{2}(x-x_0)^2
+\]</span></p>
+<p>关于为什么二阶导的系数是<span class="math inline">\(\frac{1}{2}\)</span>:</p>
+<figure>
+<img src="/.io//image-20230201094512497.png" alt="image-20230201094512497"><figcaption aria-hidden="true">image-20230201094512497</figcaption>
+</figure>
+<p>可以看出, 二阶近似的效果更好:</p>
+<p><img src="/.io//image-20230130163838707.png" alt="image-20230130163838707" style="zoom:67%;"></p>
+<p>基础的结论:</p>
+<p><img src="/.io//image-20230201094623798.png" alt="image-20230201094623798" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230201100855010.png" alt="image-20230201100855010" style="zoom:67%;"></p>
+<h2 id="lecture-10-曲线构图">Lecture 10: 曲线构图</h2>
+<p>Lecture 10: Curve Sketching</p>
+<p>利用<span class="math inline">\(f&#39;\)</span>和<span class="math inline">\(f&#39;&#39;\)</span>的符号来画出<span class="math inline">\(f\)</span>的近似图像</p>
+<ul>
+<li><span class="math inline">\(f&#39; &gt; 0\)</span>, <span class="math inline">\(f\)</span>递增. 反之亦然</li>
+<li><span class="math inline">\(f&#39;&#39; &gt; 0\)</span>, <span class="math inline">\(f&#39;\)</span>递增, 反之亦然</li>
+</ul>
+<p>画图的一般步骤:</p>
+<p><img src="/.io//image-20230201101459064.png" alt="image-20230201101459064" style="zoom:67%;"></p>
+<p>当<span class="math inline">\(f&#39;(x_0) = 0\)</span>时, 点<span class="math inline">\(x_0\)</span>称为驻点(临界点, critical points).</p>
+<p>当<span class="math inline">\(f&#39;&#39;(x_0) = 0\)</span>时, 点<span class="math inline">\(x_0\)</span>称为拐点(inflection point).</p>
+<p><img src="/.io//image-20230201101611151.png" alt="image-20230201101611151" style="zoom:67%;"></p>
+<p><img src="/.io//image-20230201101621823.png" alt="image-20230201101621823" style="zoom:67%;"></p>
+<figure>
+<img src="/.io//image-20230201101928665.png" alt="image-20230201101928665"><figcaption aria-hidden="true">image-20230201101928665</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" rel="tag"># 微积分</a>
+              <a href="/tags/MIT-18-01/" rel="tag"># MIT 18.01</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/23/template-math/" rel="prev" title="[模板]数学">
+                  <i class="fa fa-chevron-left"></i> [模板]数学
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/06/GAMES-202/" rel="next" title="GAMES-202">
+                  GAMES-202 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LinkinPony</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","cdn":"//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
